@@ -6,3 +6,4 @@ MIEMBROS:
 * M. Victoria Urcola
 * Claudia Yon
 * Lautaro Nieto
+* Julieta de los Angeles Negrete
