@@ -5,3 +5,4 @@ MIEMBROS:
 * Denisse Araceli Sabeff
 * M. Victoria Urcola
 * Claudia Yon
+* Lautaro Nieto
