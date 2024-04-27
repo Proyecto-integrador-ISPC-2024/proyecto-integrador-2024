@@ -4,3 +4,4 @@ MIEMBROS:
 * Gustavo Toscano
 * Denisse Araceli Sabeff
 * M. Victoria Urcola
+* Claudia Yon
