@@ -9,3 +9,4 @@ MIEMBROS:
 * M. Victoria Urcola
 * Claudia Yon
 * Lautaro Pena
+* Pablo Scarponi
