@@ -8,3 +8,4 @@ MIEMBROS:
 * Gustavo Toscano
 * M. Victoria Urcola
 * Claudia Yon
+* Lautaro Pena
