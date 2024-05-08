@@ -1,0 +1,4 @@
+En esta carpeta (layout) se tienen que crear los componentes:
+
+HEADER
+FOOTER
