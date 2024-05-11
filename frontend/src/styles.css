@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+:root {
+  --green: #366608;
+  --white: #f5f5f5;
+  --black: #222222;
+  --primaryRed: #b92f2f;
+  --greenCart: #198754;
+  --redCart: #dc3545;
+  --yellowCart: #ffc107;
+  --brown: #24160f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+body{
+  /* #dfe9f3 */
+  background: linear-gradient(120deg, var(--white) 10%, var(--green) 80%);
+  /* background-image: url("../img/background.jpg"); */
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
+p,
+a,
+small,
+label,
+span,
+li,
+.cartBtn,
+.form-select {
+  font-family: 'Montserrat', sans-serif;
+}
