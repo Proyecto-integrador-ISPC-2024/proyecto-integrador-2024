@@ -1,0 +1,15 @@
+#buttonDelete {
+  background-color: var(--redCart);
+}
+
+#buttonAdd {
+  background-color: var(--greenCart);
+}
+
+#buttonDelete:hover {
+  background-color: var(--primaryRed);
+}
+
+#buttonAdd:hover {
+  background-color: var(--greenCart);
+}
