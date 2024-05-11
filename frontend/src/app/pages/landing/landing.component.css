@@ -1,0 +1,50 @@
+
+*{
+  --green: #366608;
+  --white: #f5f5f5;
+  --black: #222222;
+  --primaryRed: #b92f2f;
+  --greenCart: #198754;
+  --redCart: #dc3545;
+  --yellowCart: #ffc107;
+  --brown: #24160f;
+}
+
+.material-symbols-sharp {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 300,
+  'GRAD' 30,
+  'opsz' 40
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+#mainId{
+  /* #dfe9f3 */
+  background: linear-gradient(120deg, var(--white) 20%, var(--green) 90%);
+  /* background-image: url("../img/background.jpg"); */
+
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Poppins', sans-serif;
+}
+p, a, small, label, span, .cartBtn, li, .form-select{
+  font-family: 'Montserrat', sans-serif;
+}
+
+.button{
+  border: none;
+  padding: 8px;
+  background: transparent;
+}
+
+
