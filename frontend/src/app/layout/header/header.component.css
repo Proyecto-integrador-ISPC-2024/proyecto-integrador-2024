@@ -1,0 +1,34 @@
+#bodyId{
+    /* #dfe9f3 */
+    background: linear-gradient(120deg, var(--white) 10%, var(--green) 80%);
+    /* background-image: url("../img/background.jpg"); */
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Poppins', sans-serif;
+}
+p, a, small, label, span, .cartBtn, li, .form-select{
+    font-family: 'Montserrat', sans-serif;
+}
+
+#logo{
+    width: 5rem;
+    height: 5rem;
+}
+
+.mainTitle{
+    vertical-align: middle;
+}
+
+.navbarItemsContainer{
+    display: flex;
+    justify-content: end;
+}
+
+.button{
+    border: none;
+    padding: 8px;
+    background: transparent;
+}
