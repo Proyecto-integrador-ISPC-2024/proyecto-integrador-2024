@@ -1,0 +1,102 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Product_name",
+      "description": "Product_description",
+      "price": 0.0,
+      "createdAt": "",
+      "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
+    },
+    {
+      "id": 2,
+      "name": "Product_name",
+      "description": "Product_description",
+      "price": 0.0,
+      "createdAt": "date_data",
+      "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
+    },
+    {
+      "id": 3,
+      "name": "Product_name",
+      "description": "Product_description",
+      "price": 0.0,
+      "createdAt": "date_data",
+      "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
+    },
+    {
+      "id": 4,
+      "name": "Product_name",
+      "description": "Product_description",
+      "price": 0.0,
+      "createdAt": "date_data",
+      "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
+    },
+    {
+      "id": 5,
+      "name": "Product_name",
+      "description": "Product_description",
+      "price": 0.0,
+      "createdAt": "date_data",
+      "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "",
+      "lastName": "",
+      "idNum": "",
+      "address": "",
+      "username": "",
+      "email": "",
+      "password": "",
+      "createdAt": "",
+      "updatedAt": "",
+      "isAdmin": false
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "createdAt": "",
+      "requestedBy": "",
+      "items": [],
+      "totalPrice": "",
+      "status": ""
+    },
+    {
+      "id": 2,
+      "createdAt": "",
+      "requestedBy": "",
+      "items": [],
+      "totalPrice": "",
+      "status": ""
+    },
+    {
+      "id": 3,
+      "createdAt": "",
+      "requestedBy": "",
+      "items": [],
+      "totalPrice": "",
+      "status": ""
+    },
+    {
+      "id": 4,
+      "createdAt": "",
+      "requestedBy": "",
+      "items": [],
+      "totalPrice": "",
+      "status": ""
+    }
+  ],
+  "payments": [
+    {
+      "mastercard": "../assets/images/payments/mastercard.svg",
+      "visa": "../assets/images/payments/visa.svg",
+      "paypal": "../assets/images/payments/paypal.svg",
+      "americanExpress": "../assets/images/payments/amex.svg"
+    }
+  ]
+
+}
