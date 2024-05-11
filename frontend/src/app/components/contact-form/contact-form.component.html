@@ -1,0 +1,42 @@
+<div class="container-fluid p-2 mx-0 rounded">
+    <form action="#" method="GET" id="contactForm" [formGroup]="formGroup" (ngSubmit)="onEnviar($event)" >
+        <h2 class="fs-2 text-center">Contacto</h2>
+        <div class="mb-3">
+            <label for="inputNombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="inputNombre" placeholder="Escribí tu nombre..."
+                formControlName="name">
+                @if (this.formGroup.controls.name.hasError('required')) {
+                    <p class="text-danger">Por favor, ingresa tu nombre</p>
+                }
+        </div>
+        <div class="mb-3">
+            <label for="inputApellido" class="form-label">Apellido:</label>
+            <input type="text" class="form-control" id="inputApellido" placeholder="Escribí tu apellido..." 
+                formControlName="lastName">
+                @if (this.formGroup.controls.lastName.hasError('required')) {
+                    <p class="text-danger">Por favor, ingresa tu apellido</p>
+                }
+        </div>
+        <div class="mb-3">
+            <label for="inputEmail" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="inputEmail" placeholder="example@example.com" 
+                formControlName="email">
+            @if (this.formGroup.controls.email.hasError('required') || this.formGroup.controls.email.hasError('email')) {
+                <p class="text-danger">Por favor, ingresa un email valido</p>
+            }
+        </div>
+        <div class="mb-3">
+            <label for="inputMensaje" class="form-label">Dejanos un mensaje:</label>
+            <textarea class="form-control" id="inputMensaje" rows="3" placeholder="Escribí tu mensaje acá..." 
+                formControlName="message"></textarea>
+                @if (this.formGroup.controls.message.hasError('required')) {
+                    <p class="text-danger">Por favor, ingresa tu consulta</p>
+                }
+        </div>
+        <button type="submit" class="btn btn-success my-3 mx-3 float-end" id="buttonContacto"
+            (click)="clickRegister()">Enviar</button>
+        <!-- <div class="alert alert-success mt-3" id="confirmationMessage" style="display: none;">
+            ¡Formulario enviado con éxito! Gracias por tu mensaje. Te responderemos a la brevedad.
+        </div> -->
+    </form>
+</div>
