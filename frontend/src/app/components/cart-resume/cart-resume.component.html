@@ -60,7 +60,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form action="#" method="get" class="">
+          <form action="#" method="get" class="" [formGroup]="formGroup" (ngSubmit)="onEnviar($event)">
             <div class="mb-3">
               <label for="inputNombreCompleto" class="form-label"
                 >Nombre completo</label
@@ -71,8 +71,11 @@
                 id="inputNombreCompleto"
                 aria-describedby="inputNombreCompleto"
                 placeholder="Tu nombre completo"
-                required
+                formControlName="name"
               />
+              @if (this.formGroup.controls.name.hasError('required')) {
+                <p class="text-danger">Por favor, ingresa tu nombre completo</p>
+            }
             </div>
             <div class="mb-3">
               <label for="inputEmail" class="form-label"
@@ -84,8 +87,11 @@
                 id="inputEmail"
                 aria-describedby="inputEmail"
                 placeholder="email@ejemplo.com"
-                required
+                formControlName="email"
               />
+              @if (this.formGroup.controls.email.hasError('required')) {
+                <p class="text-danger">Por favor, ingresa un formato de mail valido</p>
+            }
             </div>
             <div class="mb-3">
               <label for="inputTelefono" class="form-label"
@@ -97,32 +103,62 @@
                 id="inputTelefono"
                 aria-describedby="inputTelefono"
                 placeholder="(Código de área) + Número"
-                required
+                formControlName="phone"
               />
+              @if (this.formGroup.controls.phone.hasError('required')) {
+                <p class="text-danger">Por favor, ingresa tu numero de telefono</p>
+            }
+            </div>
+            <div class="mb-3">
+              <label for="inputAddress" class="form-label"
+                >Tu dirección</label
+              >
+              <input
+                type="input"
+                class="form-control"
+                id="inputAddress"
+                aria-describedby="inputAddress"
+                placeholder="Tu dirección"
+                formControlName="address"
+              />
+              @if (this.formGroup.controls.address.hasError('required')) {
+                <p class="text-danger">Por favor, ingresa tu dirección</p>
+            }
             </div>
             <select
               class="my-4 form-select"
               aria-label="Default select example"
               id="payments"
+              formControlName="payment"
             >
-              <option selected label="Selecciona un medio de pago"></option>
+              <option label="Selecciona un medio de pago"></option>
               <option value="transferencia">Transferencia bancaria</option>
               <option value="efectivo">Efectivo-contado</option>
               <option value="credito">Crédito</option>
+
+              @if (this.formGroup.controls.phone.hasError('required')) {
+                <p class="text-danger">Por favor, selecciona un metodo de pago</p>
+            }
             </select>
+            
             <div class="my-3 form-check">
               <input
                 type="checkbox"
                 class="form-check-input"
                 id="checkTerms"
-                required
+                formControlName="terms"
               />
+              
               <label class="form-check-label" for="checkTerms"
                 >Acepto los
                 <a href="#" class="text-decoration-underline link-offset-3"
                   >términos y condiciones de compra</a
                 >.</label
               >
+              @if (this.formGroup.controls.terms.hasError('required')) {
+                <p class="text-danger">Por favor, para realizar la comprar acepta los terminos y condiciones</p>
+            }
+              
             </div>
             <div class="mt-5 d-flex flex-row justify-content-evenly">
               <button
@@ -132,7 +168,7 @@
               >
                 Cerrar
               </button>
-              <button type="submit" class="btn btn-success mx-1 w-50 cartBtn">
+              <button type="submit" class="btn btn-success mx-1 w-50 cartBtn" (click)="clickRegister()">
                 Finalizar compra
               </button>
             </div>
