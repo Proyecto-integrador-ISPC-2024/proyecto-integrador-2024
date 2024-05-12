@@ -3,7 +3,6 @@
     {
       "id": 1,
       "name": "Product_name",
-      "description": "Product_description",
       "price": 0.0,
       "createdAt": "",
       "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
@@ -11,7 +10,6 @@
     {
       "id": 2,
       "name": "Product_name",
-      "description": "Product_description",
       "price": 0.0,
       "createdAt": "date_data",
       "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
@@ -19,7 +17,6 @@
     {
       "id": 3,
       "name": "Product_name",
-      "description": "Product_description",
       "price": 0.0,
       "createdAt": "date_data",
       "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
@@ -27,7 +24,6 @@
     {
       "id": 4,
       "name": "Product_name",
-      "description": "Product_description",
       "price": 0.0,
       "createdAt": "date_data",
       "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
@@ -35,7 +31,41 @@
     {
       "id": 5,
       "name": "Product_name",
-      "description": "Product_description",
+      "price": 0.0,
+      "createdAt": "date_data",
+      "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
+    },
+    {
+      "id": 6,
+      "name": "Product_name",
+      "price": 0.0,
+      "createdAt": "date_data",
+      "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
+    },
+    {
+      "id": 7,
+      "name": "Product_name",
+      "price": 0.0,
+      "createdAt": "date_data",
+      "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
+    },
+    {
+      "id": 8,
+      "name": "Product_name",
+      "price": 0.0,
+      "createdAt": "date_data",
+      "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
+    },
+    {
+      "id": 9,
+      "name": "Product_name",
+      "price": 0.0,
+      "createdAt": "date_data",
+      "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
+    },
+    {
+      "id": 10,
+      "name": "Product_name",
       "price": 0.0,
       "createdAt": "date_data",
       "image": "/assets/images/products/Alemania/Alemania-1954-primera.svg"
@@ -43,51 +73,26 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": 8,
       "name": "",
       "lastName": "",
-      "idNum": "",
       "address": "",
       "username": "",
       "email": "",
       "password": "",
       "createdAt": "",
-      "updatedAt": "",
       "isAdmin": false
-    }
-  ],
-  "orders": [
-    {
-      "id": 1,
-      "createdAt": "",
-      "requestedBy": "",
-      "items": [],
-      "totalPrice": "",
-      "status": ""
     },
     {
       "id": 2,
+      "name": "",
+      "lastName": "",
+      "address": "",
+      "username": "",
+      "email": "",
+      "password": "",
       "createdAt": "",
-      "requestedBy": "",
-      "items": [],
-      "totalPrice": "",
-      "status": ""
-    },
-    {
-      "id": 3,
-      "createdAt": "",
-      "requestedBy": "",
-      "items": [],
-      "totalPrice": "",
-      "status": ""
-    },
-    {
-      "id": 4,
-      "createdAt": "",
-      "requestedBy": "",
-      "items": [],
-      "totalPrice": "",
-      "status": ""
+      "isAdmin": true
     }
   ],
   "payments": [
