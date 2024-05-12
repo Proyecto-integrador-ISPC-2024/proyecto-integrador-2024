@@ -109,6 +109,22 @@
                 <p class="text-danger">Por favor, ingresa tu numero de telefono</p>
             }
             </div>
+            <div class="mb-3">
+              <label for="inputAddress" class="form-label"
+                >Tu dirección</label
+              >
+              <input
+                type="input"
+                class="form-control"
+                id="inputAddress"
+                aria-describedby="inputAddress"
+                placeholder="Tu dirección"
+                formControlName="address"
+              />
+              @if (this.formGroup.controls.address.hasError('required')) {
+                <p class="text-danger">Por favor, ingresa tu dirección</p>
+            }
+            </div>
             <select
               class="my-4 form-select"
               aria-label="Default select example"
