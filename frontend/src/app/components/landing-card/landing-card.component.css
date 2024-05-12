@@ -1,0 +1,11 @@
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Poppins', sans-serif;
+}
+p, a, small, label, span, .cartBtn, li, .form-select{
+  font-family: 'Montserrat', sans-serif;
+}
+.button{
+  border: none;
+  padding: 8px;
+  background: transparent;
+}
