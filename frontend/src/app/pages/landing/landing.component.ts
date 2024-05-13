@@ -1,0 +1,15 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { LandingCardComponent } from '../../components/landing-card/landing-card.component';
+import { CarouselComponent } from '../../components/carousel/carousel.component';
+
+@Component({
+  selector: 'app-landing',
+  standalone: true,
+  imports: [CommonModule,CarouselComponent, LandingCardComponent],
+  templateUrl: './landing.component.html',
+  styleUrl: './landing.component.css'
+})
+export class LandingComponent {
+
+}
