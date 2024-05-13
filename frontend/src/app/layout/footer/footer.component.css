@@ -1,0 +1,15 @@
+#footerId {
+    width: 100%;
+    background-color: var(--white);
+}
+
+#footerId .footerItem {
+    color: #222222;
+}
+
+#footerId .list-unstyled {
+    display: flex;
+    justify-content: flex-end;
+}
+
+

@@ -5,6 +5,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 export const routes: Routes = [
   { path:'', component: LandingComponent },
@@ -19,4 +20,5 @@ export const routes: Routes = [
 
   { path: '**', component: NotFoundComponent },
 
+  {path: "footer", component:FooterComponent   }
 ];
