@@ -7,11 +7,12 @@ import { CartComponent } from './pages/cart/cart.component';
 import { DashboardComponent } from '././pages/dashboard/dashboard.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, LandingComponent, CartComponent, DashboardComponent, HeaderComponent, ProductsComponent,],
+  imports: [RouterOutlet, RouterLink, CommonModule, LandingComponent, CartComponent, DashboardComponent, HeaderComponent, ProductsComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
