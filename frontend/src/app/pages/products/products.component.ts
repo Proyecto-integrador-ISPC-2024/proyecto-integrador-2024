@@ -9,14 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './products.component.css'
 })
 export class ProductsComponent {
-  title = 'app-products';
-  welcome= 'Bienvenidos';
-  tasks= [
-    'Instalar Angular',
-    'Crear Proyecto',
-    'Crear Componente',
-    'Crear Servicio',
-  ]
 
 }
 
