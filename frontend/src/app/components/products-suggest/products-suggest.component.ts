@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './products-suggest.component.css'
 })
 export class ProductsSuggestComponent {
+  nextSlide() {
 
+  }
+  prevSlide() {
+    
+  }
 }

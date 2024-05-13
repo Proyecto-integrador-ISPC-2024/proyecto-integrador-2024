@@ -1,54 +1,31 @@
-<div class="card text-center" data-bs-theme="dark">
+<div class="card text-center products-summary-card">
   <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item">
-        <a class="nav-link p-3 active" aria-current="true" href="#"
-          >Resumen de compras</a
-        >
+    <ul class="nav nav-tabs card-header-tabs align-items-end">
+      <li class="nav-item ms-0">
+        <a class="nav-link py-2 px-3 text-center me-2 btn-block btn-custom" href="#" style="color: #ffffff; background-color: #21ad6c;">Resumen de compras</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link p-3" href="#">Historial de compras</a>
+      <li class="nav-item ms-0">
+        <a class="nav-link py-2 px-3 text-center btn-block btn-custom" href="#" style="color: #ffffff; background-color: #166b43;">Historial de compras</a>
       </li>
     </ul>
   </div>
+  
   <div class="card-body">
-    <div
-      class="card d-flex flex-column justify-content-between align-items-start p-3"
-    >
+    <div class="card d-flex flex-column justify-content-between align-items-start p-3">
       <h4>Orden N°12345</h4>
-      <div
-        class="w-100 d-flex flex-row flex-wrap align-items-stretch justify-content-between"
-      >
-        <div class="border w-50">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <h6 class="text-start my-1">- Productos de la orden:</h6>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-start">
-                      Camiseta Argentina 2022
-                    </li>
-                    <li class="list-group-item text-start">
-                      Camiseta Argentina 2018
-                    </li>
-                    <li class="list-group-item text-start">
-                      Camiseta Argentina 2014
-                    </li>
-                  </ul>
-                </li>
-                <li class="list-group-item">
-                  <h6 class="text-start my-1">- Precio total:</h6>
-                  <p class="text-start">$100000</p>
-                </li>
-              </ul>
-            </li>
+      <div class="w-100 d-flex flex-column flex-md-row flex-wrap align-items-stretch justify-content-between">
+        <div class="border-bottom border-md-end w-100">
+          <ul class="list-group list-group-flush">         
+            <li class="list-group-item text-start">Camiseta Argentina 2022</li>
+            <li class="list-group-item text-start">Camiseta Argentina 2018</li>
+            <li class="list-group-item text-start">Camiseta Argentina 2014</li>
           </ul>
         </div>
-        <div class="border w-50">
+        <div class="border-md-start w-100">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <h6 class="text-start my-1">- Datos de entrega:</h6>
+              <hr class="my-2"> 
               <ul class="list-group list-group-flush">
                 <li class="list-group-item my-1">
                   <h6>Fecha estimada de entrega:</h6>
@@ -64,46 +41,30 @@
         </div>
       </div>
     </div>
-
-    <hr />
-
-    <div
-      class="card d-flex flex-column justify-content-between align-items-start p-3"
-    >
+    <div class="row justify-content-end mt-3">
+      <div class="col-md-6 text-end">
+        <button type="button" class="btn btn-danger me-2">Eliminar Orden</button>
+        <button type="button" class="btn btn-primary btn-custom-green">Editar Orden</button>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="card-body">
+    <div class="card d-flex flex-column justify-content-between align-items-start p-3">
       <h4>Orden N°12345</h4>
-      <div
-        class="w-100 d-flex flex-row flex-wrap align-items-stretch justify-content-between"
-      >
-        <div class="border w-50">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <h6 class="text-start my-1">- Productos de la orden:</h6>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-start">
-                      Camiseta Argentina 2022
-                    </li>
-                    <li class="list-group-item text-start">
-                      Camiseta Argentina 2018
-                    </li>
-                    <li class="list-group-item text-start">
-                      Camiseta Argentina 2014
-                    </li>
-                  </ul>
-                </li>
-                <li class="list-group-item">
-                  <h6 class="text-start my-1">- Precio total:</h6>
-                  <p class="text-start">$50000</p>
-                </li>
-              </ul>
-            </li>
+      <div class="w-100 d-flex flex-column flex-md-row flex-wrap align-items-stretch justify-content-between">
+        <div class="border-bottom border-md-end w-100">
+          <ul class="list-group list-group-flush">         
+            <li class="list-group-item text-start">Camiseta Argentina 2022</li>
+            <li class="list-group-item text-start">Camiseta Argentina 2018</li>
+            <li class="list-group-item text-start">Camiseta Argentina 2014</li>
           </ul>
         </div>
-        <div class="border w-50">
+        <div class="border-md-start w-100">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <h6 class="text-start my-1">- Datos de entrega:</h6>
+              <hr class="my-2"> 
               <ul class="list-group list-group-flush">
                 <li class="list-group-item my-1">
                   <h6>Fecha estimada de entrega:</h6>
@@ -119,6 +80,11 @@
         </div>
       </div>
     </div>
-    <hr />
+    <div class="row justify-content-end mt-3">
+      <div class="col-md-6 text-end">
+        <button type="button" class="btn btn-danger me-2">Eliminar Orden</button>
+        <button type="button" class="btn btn-primary btn-custom-green">Editar Orden</button>
+      </div>
+    </div>
   </div>
 </div>
