@@ -1,0 +1,110 @@
+<header class="container-fluid headerClass mx-0 px-0 mb-5 sticky-top">
+  <nav
+    class="navbar navbar-expand-lg bg-body-tertiary nav-underline"
+    id="navbarId"
+  >
+    <div class="container-fluid">
+      <div class="d-flex flex-wrap">
+        <a href="/" rel="prefetch">
+          <img
+            class="mx-2"
+            src="/assets/images/logo-light.png"
+            alt="logo"
+            id="logo"
+            loading="lazy"
+          />
+        </a>
+        <p
+          class="navbar-brand mainTitle d-flex flex-wrap align-items-center mx-2 my-3"
+        >
+          Tienda de campeones
+        </p>
+      </div>
+      <button
+        class="navbar-toggler my-2 mx-2"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse navbarItemsContainer" id="navbarNav">
+        <ul class="navbar-nav mx-5 list-unstyled">
+          <li class="navItem nav-item my-0 mx-1 p-0">
+            <a class="nav-link fw-medium" href="/products" rel="prefetch"
+              >Productos</a
+            >
+          </li>
+          <li class="navItem nav-item my-0 mx-1 p-0">
+            <a class="nav-link fw-medium" href="/about" rel="prefetch"
+              >Nosotros</a
+            >
+          </li>
+        </ul>
+        <ul class="list-unstyled mx-2 my-0 d-flex flex-row">
+          <li class="p-0 my-0 mx-1 navItem nav-item d-block" id="log">
+            <!-- Button trigger modal -->
+            <button
+              type="button"
+              class="material-symbols-sharp button text-decoration-none"
+              id="loginBtn"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+            >
+              Login
+            </button>
+          </li>
+          <li id="logoutBtn" class="p-0 my-0 mx-1 navItem nav-item d-none">
+            <button
+              class="material-symbols-sharp button"
+              id="logoutBtn"
+              data-bs-toggle="modal"
+              data-bs-target="#logoutModal"
+            >
+              logout
+            </button>
+          </li>
+          <li class="p-0 my-0 mx-1 navItem nav-item">
+            <a
+              href="/cart"
+              class="material-symbols-sharp button text-decoration-none"
+              id="cartBtn"
+              rel="prefetch"
+            >
+              shopping_cart
+            </a>
+          </li>
+          <li>
+            <div class="dropdown">
+              <a
+                class="btn btn-secondary dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Settings
+              </a>
+
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="/dashboard">Panel de control</a>
+                </li>
+                <li><a class="dropdown-item" href="/settings">Configuración</a></li>
+                <li>
+                  <a class="dropdown-item" href="/about">Contacto</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li id="togglerBtnDM" class="p-0 my-0 mx-1 navItem nav-item">
+            <app-theme-button></app-theme-button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

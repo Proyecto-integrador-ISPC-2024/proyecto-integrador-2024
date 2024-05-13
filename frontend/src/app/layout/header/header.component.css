@@ -1,0 +1,19 @@
+#logo{
+    width: 5rem;
+    height: 5rem;
+}
+
+.mainTitle{
+    vertical-align: middle;
+}
+
+.navbarItemsContainer{
+    display: flex;
+    justify-content: end;
+}
+
+.button{
+    border: none;
+    padding: 8px;
+    background: transparent;
+}
