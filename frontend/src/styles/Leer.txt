@@ -1,0 +1,1 @@
+Acá se pueden guardar estilos globales

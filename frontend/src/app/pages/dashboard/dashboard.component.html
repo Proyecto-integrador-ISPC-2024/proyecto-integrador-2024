@@ -1,0 +1,12 @@
+<section class="px-1 d-flex flex-column align-items-stretch justify-content-evenly">
+  <h1 class="mx-5 my-1">¡Bienvenido/a!</h1>
+  <h2 class="mx-5 my-1">Seleccioná la opción correspondiente</h2>
+  <div class="p-4 mx-5 my-5 d-flex flex-row flex-wrap justify-content-evenly align-items-stretch rounded">
+    <a class="nav-link fw-bold fs-3 btn btn-success p-5 m-3 dashboard-choice" [routerLink]="['/client-dashboard']"
+      >Panel de control de clientes</a
+    >
+    <a class="nav-link fw-bold fs-3 btn btn-success p-5 m-3 dashboard-choice" [routerLink]="['/admin-dashboard']"
+      >Panel de control de administración</a
+    >
+  </div>
+</section>

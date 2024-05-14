@@ -1,0 +1,9 @@
+.dashboard-choice{
+  background-color: #198754;
+  box-shadow: 0 0 .5rem transparent;
+  transition: box-shadow .5s ;
+}
+
+.dashboard-choice:hover{
+  box-shadow: 0 0 .5rem #07663a;
+}
