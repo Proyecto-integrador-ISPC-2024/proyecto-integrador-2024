@@ -1,0 +1,100 @@
+<section>
+  <h2 class="my-3">Gestión de productos</h2>
+  <div class="mb-4">
+    <form>
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar producto..."
+          aria-label="Buscar producto"
+          aria-describedby="button-addon3"
+        />
+        <button class="btn btn-success" type="button" id="button-addon3">
+          Buscar
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="card text-center products-summary-card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs align-items-end">
+        <li class="nav-item m-0">
+          <a
+            class="nav-link py-2 px-3 text-center btn-block btn-custom"
+            href="#"
+            style="color: #ffffff; background-color: #21ad6c"
+            >Lista de productos</a
+          >
+        </li>
+        <li class="nav-item m-0">
+          <a
+            class="nav-link py-2 px-3 text-center btn-block btn-custom"
+            href="#"
+            style="color: #ffffff; background-color: #166b43"
+            >Agregar producto</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="card-body">
+      <div
+        class="card d-flex flex-column justify-content-between align-items-start p-3"
+      >
+        <div
+          class="card-header w-100 d-flex flex-row align-items-center justify-content-start p-2"
+        >
+          <h4>Camisetas de Argentina</h4>
+        </div>
+        <div
+          class="card-body w-100 d-flex flex-column flex-md-row flex-wrap align-items-stretch justify-content-between"
+        >
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Imagen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Camiseta Argentina 2021</td>
+                <td>$12345</td>
+                <td>"Argentina-2021-Primera.webp"</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Camiseta Argentina 2021</td>
+                <td>$12345</td>
+                <td>"Argentina-2021-Primera.webp"</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Camiseta Argentina 2021</td>
+                <td>$12345</td>
+                <td>"Argentina-2021-Primera.webp"</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card-footer w-100">
+          <div
+            class="d-flex flex-row align-items-center justify-content-end p-2"
+          >
+            <button type="button" class="btn btn-danger me-2">
+              Eliminar producto
+            </button>
+            <button type="button" class="btn btn-warning btn-custom-green">
+              Editar producto
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,108 @@
+<section>
+  <h2 class="my-3">Gestión de pedidos</h2>
+  <div class="mb-4">
+    <form>
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar pedido..."
+          aria-label="Buscar orden"
+          aria-describedby="button-addon2"
+        />
+        <button class="btn btn-success" type="button" id="button-addon2">
+          Buscar
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="card text-center products-summary-card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs align-items-end">
+        <li class="nav-item m-0">
+          <a
+            class="nav-link py-2 px-3 text-center btn-block btn-custom"
+            href="#"
+            style="color: #ffffff; background-color: #21ad6c"
+            >Resumen de pedidos</a
+          >
+        </li>
+        <li class="nav-item m-0">
+          <a
+            class="nav-link py-2 px-3 text-center btn-block btn-custom"
+            href="#"
+            style="color: #ffffff; background-color: #166b43"
+            >Historial de pedidos</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="card-body">
+      <div
+        class="card d-flex flex-column justify-content-between align-items-start p-3"
+      >
+        <div
+          class="w-100 d-flex flex-row align-items-center justify-content-start p-2"
+        >
+          <h4>Orden N°12345</h4>
+        </div>
+        <div
+          class="w-100 d-flex flex-column flex-md-row flex-wrap align-items-stretch justify-content-between"
+        >
+          <div class="border-bottom border-md-end w-100">
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item d-flex flex-row align-items-center justify-content-between py-1 my-1"
+              >
+                <span>Camiseta Argentina 2022</span>
+                <span>$12345</span>
+              </li>
+              <li
+                class="list-group-item d-flex flex-row align-items-center justify-content-between py-1 my-1"
+              >
+                <span>Camiseta Argentina 2018</span>
+                <span>$12345</span>
+              </li>
+              <li
+                class="list-group-item d-flex flex-row align-items-center justify-content-between py-1 my-1"
+              >
+                <span>Camiseta Argentina 2014</span>
+                <span>$12345</span>
+              </li>
+            </ul>
+          </div>
+          <div class="border-md-start w-100 my-3">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item m-0">
+                <h6 class="text-start my-1 fs-5">Datos de entrega:</h6>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item my-1">
+                    <h6>Fecha estimada de entrega:</h6>
+                    <p>A definir | 18/10/1998 | Entregado</p>
+                  </li>
+                  <li class="list-group-item my-1">
+                    <h6>Estado:</h6>
+                    <p>Pendiente/Enviando/Entregado</p>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="w-100">
+          <div
+            class="d-flex flex-row align-items-center justify-content-end p-2"
+          >
+            <button type="button" class="btn btn-danger me-2">
+              Eliminar Orden
+            </button>
+            <!-- <button type="button" class="btn btn-primary btn-custom-green">
+              Editar Orden
+            </button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
