@@ -1,32 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { Options } from '../interfaces/options';
-import { Product } from '../interfaces/product';
+import { Products } from '../interfaces/products';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class ProductsService {
-  constructor(private httpClient: HttpClient) {}
+    constructor(private apiService: ApiService) {}
 
-  // Get
-  get<T>(url: string, options: Options): Observable<T> {
-    return this.httpClient.get<T>(url, options) as Observable<T>;
-  }
+    // Get/Read
+    getProducts = (
+        url: string,
+    ): Observable<Products> => {
+        return this.apiService.get(url, {
+            responseType: 'json',
+        });
+    };
 
-  // Post
-  post<T>(url: string, body: Product, options: Options): Observable<T> {
-    return this.httpClient.post<T>(url, body, options) as Observable<T>;
-  }
+    // Create
+    addProduct = (url: string, body: any): Observable<any> => {
+        return this.apiService.post(url, body, {});
+    };
 
-  // Put
-  put<T>(url: string, body: Product, options: Options): Observable<T> {
-    return this.httpClient.put<T>(url, body, options) as Observable<T>;
-  }
+    // Update
+    editProduct = (url: string, body: any): Observable<any> => {
+        return this.apiService.put(url, body, {});
+    };
 
-  // Delete
-  delete<T>(url: string, options: Options): Observable<T> {
-    return this.httpClient.delete<T>(url, options) as Observable<T>;
-  }
+    // Delete
+    deleteProduct = (url: string): Observable<any> => {
+        return this.apiService.delete(url, {});
+    };
 }
