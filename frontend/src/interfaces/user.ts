@@ -1,4 +1,4 @@
-export interface User {
+/* export interface User {
   id?: number;
   name: string;
   lastName: string;
@@ -8,4 +8,13 @@ export interface User {
   password: string;
   createdAt: string;
   isAdmin: boolean;
+}
+ */
+export class User {
+  name: string = "";
+  lastName: string = "";
+  address: string = "";
+  password: string = "";
+  email: string = "";
+  id: number = 0;
 }

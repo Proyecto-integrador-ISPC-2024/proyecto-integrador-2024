@@ -131,7 +131,7 @@
   </nav>
 </header>
 
-<!-- Modal -->
+
 <section>
   <div
     class="modal fade"
@@ -209,6 +209,7 @@
             class="btn btn-success"
             data-bs-toggle="modal"
             data-bs-target="#registerModal"
+            (click)="modalRegisterForm()"
           >
             Registrarme
           </button>
@@ -230,165 +231,6 @@
   </div>
 </section>
 
-<section>
-  <!-- Modal to register -->
-  <div
-    class="modal fade"
-    id="registerModal"
-    tabindex="-1"
-    aria-labelledby="registerModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content" id="registerForm">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="registerModalLabel">Registrarse</h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <form id="regForm">
-            <div class="mb-3">
-              <label for="inputRegisterFullName" class="form-label"
-                >Nombre</label
-              >
-              <input
-                type="text"
-                name="nombre"
-                class="form-control"
-                id="inputRegisterFullName"
-                aria-describedby="nameHelp"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputRegisterLastName" class="form-label"
-                >Apellido</label
-              >
-              <input
-                type="text"
-                name="apellido"
-                class="form-control"
-                id="inputRegisterLastName"
-                aria-describedby="apellidoHelp"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputRegisterDNI" class="form-label">DNI</label>
-              <input
-                type="text"
-                name="dni"
-                class="form-control"
-                id="inputRegisterDNI"
-                aria-describedby="dniHelp"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputRegisterDomicilio" class="form-label"
-                >Domicilio</label
-              >
-              <input
-                type="text"
-                name="domicilio"
-                class="form-control"
-                id="inputRegisterDomicilio"
-                aria-describedby="domicilioHelp"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputRegisterEmail" class="form-label"
-                >Correo electrónico</label
-              >
-              <input
-                type="email"
-                name="registerEmail"
-                class="form-control"
-                id="inputRegisterEmail"
-                aria-describedby="emailHelp"
-              />
-              <div id="emailHelp" class="form-text">
-                Nunca compartiremos tu correo electrónico con entidades
-                externas.
-              </div>
-            </div>
-            <div>
-              <label for="inputRegisterPassword" class="form-label"
-                >Contraseña</label
-              >
-              <div
-                class="mb-3 d-flex flex-row align-items-center justify-content-evenly"
-              >
-                <input
-                  type="password"
-                  name="registerPassword"
-                  class="form-control"
-                  id="inputRegisterPassword"
-                  aria-describedby="passwordHelp"
-                  minlength="8"
-                  required
-                />
-                <span
-                  class="material-symbols-sharp ms-2 d-block"
-                  id="registerVisibilityOn"
-                  >visibility</span
-                >
-                <span
-                  class="material-symbols-sharp ms-2 d-none"
-                  id="registerVisibilityOff"
-                  >visibility_off</span
-                >
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="inputRegisterConfirmPassword" class="form-label"
-                >Confirmar Contraseña</label
-              >
-              <input
-                type="password"
-                name="registerConfirmPassword"
-                class="form-control"
-                id="inputRegisterConfirmPassword"
-                aria-describedby="confirmPasswordHelp"
-                minlength="8"
-                required
-              />
-            </div>
-            <div id="passwordHelp" class="form-text">
-              Tu contraseña debe tener al menos 8 caracteres y debe incluir
-              números, letras mayúsculas/minúsculas y símbolos.
-            </div>
-            <input type="submit" style="display: none" id="submitRegisterBtn" />
-            <div
-              id="successMessage"
-              style="display: none"
-              class="alert alert-success mt-3"
-            >
-              Usuario registrado con éxito.
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-            data-bs-targer="#loginModal"
-          >
-            Cancelar
-          </button>
-          <button type="submit" class="btn btn-success" id="registerBtn">
-            Registrarse
-          </button>
-          <input type="submit" style="display: none" id="submitRegisterBtn" />
-        </div>
-      </div>
-    </div>
-  </div>
+<section *ngIf="modalFormVisible">
+  <app-register-form></app-register-form>
 </section>
