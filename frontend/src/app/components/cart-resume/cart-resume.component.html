@@ -93,7 +93,7 @@
                 <p class="text-danger">Por favor, ingresa un formato de mail valido</p>
             }
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
               <label for="inputTelefono" class="form-label"
                 >Teléfono de contacto</label
               >
@@ -108,8 +108,8 @@
               @if (this.formGroup.controls.phone.hasError('required')) {
                 <p class="text-danger">Por favor, ingresa tu numero de telefono</p>
             }
-            </div>
-            <div class="mb-3">
+            </div> -->
+            <!-- <div class="mb-3">
               <label for="inputAddress" class="form-label"
                 >Tu dirección</label
               >
@@ -124,7 +124,7 @@
               @if (this.formGroup.controls.address.hasError('required')) {
                 <p class="text-danger">Por favor, ingresa tu dirección</p>
             }
-            </div>
+            </div> -->
             <select
               class="my-4 form-select"
               aria-label="Default select example"
@@ -136,7 +136,7 @@
               <option value="efectivo">Efectivo-contado</option>
               <option value="credito">Crédito</option>
 
-              @if (this.formGroup.controls.phone.hasError('required')) {
+              @if (this.formGroup.controls.payment.hasError('required')) {
                 <p class="text-danger">Por favor, selecciona un metodo de pago</p>
             }
             </select>
@@ -168,7 +168,7 @@
               >
                 Cerrar
               </button>
-              <button type="submit" class="btn btn-success mx-1 w-50 cartBtn" (click)="clickRegister()">
+              <button type="submit" class="btn btn-success mx-1 w-50 cartBtn" (click)="clickRegister()" [disabled]="formGroup.invalid">
                 Finalizar compra
               </button>
             </div>
