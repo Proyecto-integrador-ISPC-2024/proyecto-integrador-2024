@@ -53,7 +53,7 @@ export class LoginFormComponent {
             response => {
               if (response.authenticated) {
                 alert('Bienvenido ' + response.user.email);
-                this.router.navigate(['contact-form']);
+                this.router.navigate(['login-form']);
               } else {
                 this.loginAttempts++;
                 if (this.loginAttempts >= this.maxLoginAttempts) {

@@ -55,7 +55,7 @@ export class RegisterFormComponent {
               (response: any) => {
                 if (response.authenticated) {
                   alert('Inicio de sesión exitoso. Bienvenido ' + response.user.email);
-                  this.router.navigate(['/']);
+                  this.router.navigate(['/login-form']);
                 } else {
                   alert('Ocurrió un error durante el inicio de sesión. Por favor, inténtalo de nuevo.');
                 }
