@@ -8,6 +8,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ClientDashboardComponent } from './pages/client-dashboard/client-dashboard.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -27,6 +29,10 @@ export const routes: Routes = [
   { path: 'client-dashboard', component: ClientDashboardComponent },
 
   { path: '**', component: NotFoundComponent },
+
+  {path: 'login', component: LoginFormComponent},
+  
+  {path: 'registro', component: RegisterFormComponent},
 ];
 /*@NgModule({
   imports: [RouterModule.forRoot(routes)],
