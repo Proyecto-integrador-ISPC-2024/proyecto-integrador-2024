@@ -38,6 +38,7 @@ export class LoginFormComponent {
     return this.form.get('loginEmail');
   }
   validarUsuario() {
+    console.log('Formulario válido:', this.form.valid);
     if (this.form && this.form.valid) {
       const emailControl = this.form.get('loginEmail');
       const passwordControl = this.form.get('loginPassword');
@@ -48,9 +49,10 @@ export class LoginFormComponent {
           password: passwordControl.value
         };
 
-        this.http.post<any>('https://66525119813d78e6d6d53814.mockapi.io/users/authenticate', loginData)
+        this.http.post<any>('https://66525119813d78e6d6d53814.mockapi.io/users', loginData)
           .subscribe(
             response => {
+              console.log('Respuesta de la API:', response);
               if (response.authenticated) {
                 alert('Bienvenido ' + response.user.email);
                 this.router.navigate(['login-form']);
