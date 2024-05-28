@@ -4,18 +4,19 @@ import { User } from '../../../interfaces/user';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CommonModule, NgIf } from '@angular/common';
+import { LoginFormComponent } from '../login-form/login-form.component';
 
 @Component({
   selector: 'app-register-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,LoginFormComponent],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css'
 })
 export class RegisterFormComponent {
   form: FormGroup;
   usuario: User = new User();
-  constructor(private formBuilder: FormBuilder, 
+  constructor(private formBuilder: FormBuilder,
   private authService: AuthService, private router: Router) {
     this.form = this.formBuilder.nonNullable.group(
       {
@@ -38,7 +39,7 @@ export class RegisterFormComponent {
       }
       return password.value === confirmPassword.value ? { passwordsMatch : true } : null;
     };
-  } 
+  }
 
   onEnviar(event: Event): void {
     event.preventDefault;
@@ -50,14 +51,38 @@ export class RegisterFormComponent {
           console.log(this.form.value as User)
           if (data.id > 0) {
             alert("Registro exitoso. A continuación, por favor Inicie Sesión.");
-            this.router.navigate(['/iniciar-sesion']) // falta agregar el modal de inicio de sesion
-  }
+            // Iniciar sesión automáticamente después de registrar
+            this.authService.login(this.form.value.email, this.form.value.password1).subscribe(
+              (response: any) => {
+                if (response.authenticated) {
+                  alert('Inicio de sesión exitoso. Bienvenido ' + response.user.email);
+                  this.router.navigate(['/']);
+                } else {
+                  alert('Ocurrió un error durante el inicio de sesión. Por favor, inténtalo de nuevo.');
+                }
+              },
+              error => {
+                console.error('Error de inicio de sesión:', error);
+                alert('Ocurrió un error durante el inicio de sesión. Por favor, inténtalo de nuevo.');
+              }
+            );
+          }
         })
-    }
-    else {
+      }
+      else {
       this.form.markAllAsTouched();
     }
   }
 
+  iniciarSesion() {
+    this.router.navigate(['/login-form']);
+    }
 
-}
+    onSubmit() {
+      if (this.form.valid) {
+        alert("Registro realizado exitosamente.")
+      } else {
+        alert("Por favor, completá todos los campos antes de registrarte.")
+      }
+    }
+  }

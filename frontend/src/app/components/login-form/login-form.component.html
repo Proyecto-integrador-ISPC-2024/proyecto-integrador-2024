@@ -19,13 +19,14 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form [formGroup]="form" (ngSubmit)="validarUsuario()">
             <div class="mb-3">
               <label for="inputEmail" class="form-label"
                 >Dirección de e-mail</label
               >
-              <input
+             <input
                 type="email"
+                formControlName="email"
                 name="loginEmail"
                 class="form-control"
                 id="inputEmail"
@@ -42,8 +43,9 @@
               <div
                 class="d-flex flex-row align-items-center justify-content-evenly"
               >
-                <input
+              <input
                   type="password"
+                  formControlName="password"
                   name="loginPassword"
                   class="form-control"
                   id="inputPassword"
