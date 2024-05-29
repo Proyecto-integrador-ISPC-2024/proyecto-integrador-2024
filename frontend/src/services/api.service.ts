@@ -13,8 +13,8 @@ export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
   // Get
-  get<T>(url: string, options: Options): Observable<T> {
-    return this.httpClient.get<T>(url, options) as Observable<T>;
+  get<T>(url: string): Observable<T> {
+    return this.httpClient.get<T>(url) as Observable<T>;
   }
 
   // Post
