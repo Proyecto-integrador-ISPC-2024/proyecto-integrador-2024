@@ -33,10 +33,12 @@
               </div>
             </div>
 
+            <div class="m-3">
             <label for="domicilio" class="form-label">Domicilio</label>
             <input type="text" id="domicilio" class="form-control" formControlName="address">
             <div *ngIf="form.controls['address'].hasError('required') && form.controls['address'].touched">
               <p class="text-danger">Por favor, ingresa tu domicilio.</p>
+            </div>
             </div>
 
 
