@@ -2,10 +2,9 @@ export interface User {
   id?: number;
   name: string;
   lastName: string;
-  address: string;
   userName: string;
   email: string;
+  address: string;
   password: string;
-  createdAt: string;
-  isAdmin: boolean;
+  role: string
 }
