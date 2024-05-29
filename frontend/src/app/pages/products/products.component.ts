@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgForOf } from '@angular/common';
 import { CardProductComponent } from '../../components/card-product/card-product.component';
 import { ApiService } from '../../../services/api.service';
@@ -11,7 +11,7 @@ import { Product } from '../../../interfaces/product';
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   private urlTemplate = 'https://664d5d12ede9a2b556534efe.mockapi.io/products';
@@ -39,4 +39,7 @@ export class ProductsComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.fetchProducts();
+  }
 }
