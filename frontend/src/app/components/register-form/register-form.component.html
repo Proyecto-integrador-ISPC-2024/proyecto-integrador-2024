@@ -1,159 +1,79 @@
 <section>
-  <!-- Modal to register -->
-  <div
-    class="modal fade"
-    id="registerModal"
-    tabindex="-1"
-    aria-labelledby="registerModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content" id="registerForm">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="registerModalLabel">Registrarse</h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="regForm">
-            <div class="mb-3">
-              <label for="inputRegisterFullName" class="form-label"
-                >Nombre</label
-              >
-              <input
-                type="text"
-                name="nombre"
-                class="form-control"
-                id="inputRegisterFullName"
-                aria-describedby="nameHelp"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputRegisterLastName" class="form-label"
-                >Apellido</label
-              >
-              <input
-                type="text"
-                name="apellido"
-                class="form-control"
-                id="inputRegisterLastName"
-                aria-describedby="apellidoHelp"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputRegisterDNI" class="form-label">DNI</label>
-              <input
-                type="text"
-                name="dni"
-                class="form-control"
-                id="inputRegisterDNI"
-                aria-describedby="dniHelp"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputRegisterDomicilio" class="form-label"
-                >Domicilio</label
-              >
-              <input
-                type="text"
-                name="domicilio"
-                class="form-control"
-                id="inputRegisterDomicilio"
-                aria-describedby="domicilioHelp"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="inputRegisterEmail" class="form-label"
-                >Correo electrónico</label
-              >
-              <input
-                type="email"
-                name="registerEmail"
-                class="form-control"
-                id="inputRegisterEmail"
-                aria-describedby="emailHelp"
-              />
-              <div id="emailHelp" class="form-text">
-                Nunca compartiremos tu correo electrónico con entidades
-                externas.
+          <form [formGroup]="form" class="form" (submit)="onEnviar($event)">
+
+            <div class="m-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" id="nombre" class="form-control" formControlName="name">
+              <div *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched">
+                <p class="text-danger">Por favor, ingresa tu nombre.</p>
               </div>
             </div>
-            <div>
-              <label for="inputRegisterPassword" class="form-label"
-                >Contraseña</label
-              >
-              <div
-                class="mb-3 d-flex flex-row align-items-center justify-content-evenly"
-              >
-                <input
-                  type="password"
-                  name="registerPassword"
-                  class="form-control"
-                  id="inputRegisterPassword"
-                  aria-describedby="passwordHelp"
-                  minlength="8"
-                  required
-                />
-                <span
-                  class="material-symbols-sharp ms-2 d-block"
-                  id="registerVisibilityOn"
-                  >visibility</span
-                >
-                <span
-                  class="material-symbols-sharp ms-2 d-none"
-                  id="registerVisibilityOff"
-                  >visibility_off</span
-                >
+
+            <div class="m-3">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input type="text" id="apellido" class="form-control" formControlName="lastName">
+              <div *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched">
+                <p class="text-danger">Por favor, ingresa tu apellido.</p>
               </div>
             </div>
-            <div class="mb-3">
-              <label for="inputRegisterConfirmPassword" class="form-label"
-                >Confirmar Contraseña</label
-              >
-              <input
-                type="password"
-                name="registerConfirmPassword"
-                class="form-control"
-                id="inputRegisterConfirmPassword"
-                aria-describedby="confirmPasswordHelp"
-                minlength="8"
-                required
-              />
+
+            <div class="m-3">
+              <label for="email" class="form-label">Correo Electrónico</label>
+              <input type="email" id="email" class="form-control" formControlName="email">
+              <div *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched">
+                <p class="text-danger">Por favor, ingresa un mail válido.</p>
+              </div>
             </div>
-            <div id="passwordHelp" class="form-text">
-              Tu contraseña debe tener al menos 8 caracteres y debe incluir
-              números, letras mayúsculas/minúsculas y símbolos.
+
+            <label for="domicilio" class="form-label">Domicilio</label>
+            <input type="text" id="domicilio" class="form-control" formControlName="address">
+            <div *ngIf="form.controls['address'].hasError('required') && form.controls['address'].touched">
+              <p class="text-danger">Por favor, ingresa tu domicilio.</p>
             </div>
-            <input type="submit" style="display: none" id="submitRegisterBtn" />
-            <div
-              id="successMessage"
-              style="display: none"
-              class="alert alert-success mt-3"
-            >
-              Usuario registrado con éxito.
+
+
+            <div class="m-3">
+              <label for="password1" class="form-label">Contraseña</label>
+              <input type="password" id="password1" class="form-control" formControlName="password1">
+              <div *ngIf="form.controls['password1'].hasError('required') && form.controls['password1'].touched">
+                <p class="text-danger">Por favor, ingresa tu contraseña, deberá contener al menos 8 caracteres,
+                  1 mayúscula, 1 minúscula, 1 número y 1 caracter especial.</p>
+              </div>
+            </div>
+
+            <div class="m-3">
+              <label for="password2" class="form-label">Confirmar Contraseña</label>
+              <input type="password" id="password2" class="form-control" formControlName="password2">
+              <div *ngIf="form.controls['password2'].hasError('required') && form.controls['password2'].touched">
+                <p class="text-danger">Por favor, confirma tu contraseña.</p>
+              </div>
+              <div *ngIf="form.errors?.['passwordsMismatch'] && form.controls['password2'].touched">
+                <p class="text-danger">Las contraseñas no coinciden.</p>
+              </div>
+            </div>
+
+            <div class="m-3">
+              <button class="btn btn-primary btn-success mt-3" id="registerBtn"
+                [disabled]="form.invalid">Registrarme</button>
             </div>
           </form>
         </div>
+
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-            data-bs-targer="#loginModal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-targer="#loginModal">
             Cancelar
           </button>
-          <button type="submit" class="btn btn-success" id="registerBtn">
+          <!-- <button type="submit" class="btn btn-success" id="registerBtn">
             Registrarse
-          </button>
+          </button> -->
           <input type="submit" style="display: none" id="submitRegisterBtn" />
         </div>
       </div>

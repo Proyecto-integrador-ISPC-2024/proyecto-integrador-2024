@@ -1,4 +1,4 @@
-export interface User {
+/* export interface User {
   id?: number;
   name: string;
   lastName: string;
@@ -7,4 +7,13 @@ export interface User {
   address: string;
   password: string;
   role: string
+}
+ */
+export class User {
+  name: string = "";
+  lastName: string = "";
+  address: string = "";
+  password: string = "";
+  email: string = "";
+  id: number = 0;
 }

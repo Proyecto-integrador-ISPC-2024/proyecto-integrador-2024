@@ -34,7 +34,7 @@
                 }
         </div>
         <button type="submit" class="btn btn-success my-3 mx-3 float-end" id="buttonContacto"
-            (click)="clickRegister()">Enviar</button>
+            (click)="clickRegister()" [disabled]="formGroup.invalid">Enviar</button>
         <!-- <div class="alert alert-success mt-3" id="confirmationMessage" style="display: none;">
             ¡Formulario enviado con éxito! Gracias por tu mensaje. Te responderemos a la brevedad.
         </div> -->
