@@ -135,7 +135,7 @@ export class RegisterFormComponent {
           console.log(this.form.value as User)
           if (data.id > 0) {
             alert("Registro exitoso. A continuación, por favor Inicie Sesión.");
-            this.router.navigate(['/products']) // falta agregar el modal de inicio de sesion
+            this.router.navigate(['loginModal']) // falta agregar el modal de inicio de sesion
           }
         })
     }

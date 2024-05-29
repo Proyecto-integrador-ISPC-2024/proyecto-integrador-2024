@@ -7,7 +7,7 @@ import { User } from '../../interfaces/user';
   providedIn: 'root',
 })
 export class AuthService {
-  token = '';
+  token = 'fewuibfgesjkghs'; // tiene que estar vacio para poder encontrar el false para la ruta protegida
   url = "https://66525119813d78e6d6d53814.mockapi.io/users";
   constructor(private http: HttpClient) { }
 
