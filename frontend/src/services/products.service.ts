@@ -11,8 +11,7 @@ export class ProductsService {
 
     // Get/Read
     getProducts = (
-        url: string,
-    ): Observable<Products> => {
+        url: string,): Observable<Products> => {
         return this.apiService.get(url, {
             responseType: 'json',
         });
