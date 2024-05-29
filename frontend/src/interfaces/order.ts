@@ -1,8 +1,10 @@
+import { Product } from "./product";
+
 export interface Order {
   id: number;
-  client: string;
-  createdAt: string;
-  totalPrice: string;
+  userId: number;
+  createdAt: Date;
+  totalPrice: number;
   status: string;
-  items: Set<string>;
+  items: Product[];
 }
