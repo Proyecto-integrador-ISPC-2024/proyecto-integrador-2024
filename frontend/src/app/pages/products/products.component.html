@@ -11,7 +11,7 @@
           class="btn modalProduct d-flex align-items-center justify-content-center"
           data-bs-toggle="modal"
           data-bs-target="#modalArgentina"
-
+          (click)="onCountrySelect('Argentina')"
         >
           <img
             src="../../../assets/images/products/Background_img/Argentina.webp"
@@ -45,10 +45,9 @@
               <div
                 class="modal-body d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
               >
-                @for (product of products; track product.id) {
-                <app-card-product [product]="product" />
-                }
-              </div>
+              <app-card-product *ngFor="let product of filteredProducts" [product]="product"></app-card-product>
+
+            </div>
               <div class="modal-footer">
                 <button
                   type="button"
@@ -77,6 +76,7 @@
           class="btn modalProduct d-flex align-items-center justify-content-center"
           data-bs-toggle="modal"
           data-bs-target="#modalBrasil"
+          (click)="onCountrySelect('Brasil')"
 
         >
           <img

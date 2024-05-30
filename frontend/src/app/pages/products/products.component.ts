@@ -9,16 +9,18 @@ import { Product } from '../../../interfaces/product';
   standalone: true,
   imports: [CommonModule, CardProductComponent, NgForOf],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.css',
+  styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   private urlTemplate = 'https://664d5d12ede9a2b556534efe.mockapi.io/products';
 
-  products: Product[] = [];
+  categories: string[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'];
+  selectedCategory: string = this.categories[0];
 
-  selectedProducts: Product[] = [];
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
 
   fetchProducts(): void {
     this.apiService.get<Product[]>(this.urlTemplate).subscribe({
@@ -26,6 +28,7 @@ export class ProductsComponent implements OnInit {
         console.log('Fetched data:', data);
         if (Array.isArray(data)) {
           this.products = data;
+          this.filterProducts();
         } else {
           console.error('Data structure is incorrect:', data);
         }
@@ -39,7 +42,16 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  filterProducts(): void {
+    this.filteredProducts = this.products.filter(product => product.category === this.selectedCategory);
+  }
+
+  onCategoryChange(category: string): void {
+    this.selectedCategory = category;
+    this.filterProducts();
+  }
+
   ngOnInit(): void {
     this.fetchProducts();
-  }
+  }
 }
