@@ -3,7 +3,7 @@ from .models import *
 
 
 # Register your models here.
-modelos = [Usuarios, Pedidos, FormasDepagoPedidos, Tarjetas, Productos, ProductosTalles, Talles, FormasDePago, DetallesPedido]
+modelos = [Pedidos, FormasDepagoPedidos, Tarjetas, Productos, ProductosTalles, Talles, FormasDePago, DetallesPedido]
 
 
 for modelo in modelos:
