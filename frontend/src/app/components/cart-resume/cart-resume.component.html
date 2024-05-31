@@ -8,16 +8,17 @@
           @for (product of cartResume; track product.id) {
           <span>{{ product.name }}</span>
           }
+          <!-- <span *ngFor="let product of cartResume">{{product.name}}</span> -->
         </div>
         <div class="d-flex flex-column my-3">
           @for (product of cartResume; track product.id) {
           <span>${{ product.price * product.amount }}</span>
           }
+          <!-- <span *ngFor="let product of cartResume">{{product.price * product.amount}}</span> -->
         </div>
       </div>
       <hr class="my-4" />
       <div class="d-flex flex-column mx-4 my-3" id="outputSubtotal">
-        <!-- subtotal aparece acá -->
         <small>Precio total:</small>
         <h5>${{ totalPrice }}</h5>
       </div>
@@ -38,45 +39,6 @@
   </div>
 </div>
 
-<div class="card">
-  <h5 class="card-header p-3">Resumen del carro</h5>
-  <div class="card-body">
-    <div class="row list-group list-group-flush">
-      <h6 class="text-decoration-underline link-offset-3">Productos:</h6>
-      <div class="d-flex flex-row flex-wrap justify-content-between">
-        <div class="d-flex flex-column my-3">
-          <span>Producto</span>
-          <span>Producto</span>
-          <span>Producto</span>
-        </div>
-        <div class="d-flex flex-column my-3">
-          <span>Precio 1</span>
-          <span>Precio 2</span>
-          <span>Precio 3</span>
-        </div>
-      </div>
-      <hr class="my-4" />
-      <div class="d-flex flex-column mx-4 my-3" id="outputSubtotal">
-        <!-- subtotal aparece acá -->
-        <small>Precio total:</small>
-        <h5>$5000</h5>
-      </div>
-    </div>
-    <div class="row">
-      <button
-        type="button"
-        class="btn btn-success col my-1 mx-3 cartBtn"
-        data-bs-toggle="modal"
-        data-bs-target="#modalForm"
-      >
-        Finalizar compra
-      </button>
-      <button type="button" class="btn btn-danger col my-1 mx-3 cartBtn">
-        Limpiar carro
-      </button>
-    </div>
-  </div>
-</div>
 <div
   class="modal fade modalContainer"
   id="modalForm"

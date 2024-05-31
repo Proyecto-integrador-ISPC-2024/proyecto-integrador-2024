@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CartItemComponent } from '../cart-item/cart-item.component';
 import { Product } from '../../../interfaces/product';
 import { NgForOf } from '@angular/common';
@@ -11,7 +11,11 @@ import { NgForOf } from '@angular/common';
   styleUrls: ['./cart-list.component.css'],
 })
 export class CartListComponent {
-  @Input() cartList: Product[] = []; // Here I am supposed to receive products added by client
+  @Input() cartList: Product[] = [];
+  @Output() cartUpdated: EventEmitter<Product[]> = new EventEmitter<Product[]>();
 
-
+  handleRemoveProduct(product: Product): void {
+    this.cartList = this.cartList.filter(item => item.id !== product.id);
+    this.cartUpdated.emit(this.cartList);
+  }
 }

@@ -5,6 +5,7 @@
   @for (item of cartList; track item.id) {
   <app-cart-item
     [product]="item"
+    (removeProduct)="handleRemoveProduct($event)"
   />
   }
 </div>

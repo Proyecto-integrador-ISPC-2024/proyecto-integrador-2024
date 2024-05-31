@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Product } from '../../../interfaces/product';
 import { NgFor } from '@angular/common';
@@ -10,9 +10,24 @@ import { NgFor } from '@angular/common';
   templateUrl: './cart-resume.component.html',
   styleUrl: './cart-resume.component.css',
 })
-export class CartResumeComponent {
+export class CartResumeComponent implements OnChanges {
   @Input() cartResume: Product[] = [];
   @Input() totalPrice: number = 0;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['cartResume']) {
+      this.calculateTotalPrice();
+    }
+  }
+
+  private calculateTotalPrice(): void {
+    this.totalPrice = this.cartResume.reduce(
+      (sum, product) => sum + product.price * product.amount,
+      0
+    );
+  }
+
+
 
   formBuilder = inject(FormBuilder);
   formGroup = this.formBuilder.nonNullable.group({
