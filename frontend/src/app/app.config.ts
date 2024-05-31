@@ -1,6 +1,5 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import {ng}
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 
