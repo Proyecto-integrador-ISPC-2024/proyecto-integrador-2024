@@ -12,11 +12,10 @@ import { CommonModule } from '@angular/common';
 export class CartItemComponent implements OnInit {
   @Input() product!: Product;
 
-  /* @Output() removeProduct: EventEmitter<Product> = new EventEmitter<Product>();
-  @Output() updateAmount: EventEmitter<Product> = new EventEmitter<Product>(); */
+  @Output() removeProduct: EventEmitter<Product> = new EventEmitter<Product>();
 
   increaseAmount(): void {
-    if (this.product.amount < this.product.stock) {
+    if (this.product.amount < this.product.stock[1]) {
       this.product.amount++;
     }
   }
@@ -28,7 +27,8 @@ export class CartItemComponent implements OnInit {
   }
 
   deleteProduct(): void {
-    console.log(this.product)
+    console.log(this.product);
+    this.removeProduct.emit(this.product);
   }
 
   ngOnInit(): void {}

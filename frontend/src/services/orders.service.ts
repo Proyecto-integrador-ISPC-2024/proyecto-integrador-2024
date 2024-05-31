@@ -11,9 +11,7 @@ export class OrdersService {
 
   // Get/Read
   getOrder = (url: string): Observable<Order> => {
-    return this.apiService.get(url, {
-      responseType: 'json',
-    });
+    return this.apiService.get(url);
   };
 
   // Create

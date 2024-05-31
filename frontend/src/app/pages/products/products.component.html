@@ -11,15 +11,13 @@
           class="btn modalProduct d-flex align-items-center justify-content-center"
           data-bs-toggle="modal"
           data-bs-target="#modalArgentina"
-
         >
           <img
             src="../../../assets/images/products/Background_img/Argentina.webp"
             alt="argentina"
-            style="width: 450px"
+            style="width: 360px"
           />
         </button>
-        <!-- Evento fetchProducts acá -->
       </div>
       <div>
         <div
@@ -45,10 +43,9 @@
               <div
                 class="modal-body d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
               >
-                @for (product of products; track product.id) {
-                <app-card-product [product]="product" />
-                }
-              </div>
+              <app-card-product *ngFor="let product of products" [product]="product"></app-card-product>
+
+            </div>
               <div class="modal-footer">
                 <button
                   type="button"
@@ -77,12 +74,11 @@
           class="btn modalProduct d-flex align-items-center justify-content-center"
           data-bs-toggle="modal"
           data-bs-target="#modalBrasil"
-
         >
           <img
             src="../../../assets/images/products/Background_img/Brasil.webp"
             alt="brasil"
-            style="width: 450px"
+            style="width: 360px"
           />
         </button>
       </div>
@@ -147,7 +143,7 @@
           <img
             src="../../../assets/images/products/Background_img/Alemania.webp"
             alt="alemania"
-            style="width: 450px"
+            style="width: 360px"
           />
         </button>
       </div>
@@ -212,7 +208,7 @@
           <img
             src="../../../assets/images/products/Background_img/España.webp"
             alt="espana"
-            style="width: 450px"
+            style="width: 360px"
           />
         </button>
       </div>
@@ -277,7 +273,7 @@
           <img
             src="../../../assets/images/products/Background_img/Italia.webp"
             alt="italia"
-            style="width: 450px"
+            style="width: 360px"
           />
         </button>
       </div>
@@ -342,7 +338,7 @@
           <img
             src="../../../assets/images/products/Background_img/Francia.webp"
             alt="francia"
-            style="width: 450px"
+            style="width: 360px"
           />
         </button>
       </div>
@@ -407,7 +403,7 @@
           <img
             src="../../../assets/images/products/Background_img/Inglaterra.webp"
             alt="inglaterra"
-            style="width: 450px"
+            style="width: 360px"
           />
         </button>
       </div>
@@ -472,7 +468,7 @@
           <img
             src="../../../assets/images/products/Background_img/Uruguay.webp"
             alt="uruguay"
-            style="width: 450px"
+            style="width: 360px"
           />
         </button>
       </div>
