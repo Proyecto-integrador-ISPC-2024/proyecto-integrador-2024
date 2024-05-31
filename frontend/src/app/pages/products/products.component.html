@@ -11,15 +11,13 @@
           class="btn modalProduct d-flex align-items-center justify-content-center"
           data-bs-toggle="modal"
           data-bs-target="#modalArgentina"
-          (click)="onCountrySelect('Argentina')"
         >
           <img
-            src="https://console.cloudinary.com/console/c-27e87957685c969d05bdf9622bd3a7/media_library/folders/c7e3e5c3f3090eea3cc2942243fa55baf5/asset/b0e476e98533bd4281b68997b8edd5d6/manage/download?view_mode=mosaic&context=manage"
+            src="../../../assets/images/products/Background_img/Argentina.webp"
             alt="argentina"
             style="width: 360px"
           />
         </button>
-        <!-- Evento fetchProducts acá -->
       </div>
       <div>
         <div
@@ -45,7 +43,7 @@
               <div
                 class="modal-body d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
               >
-              <app-card-product *ngFor="let product of filteredProducts" [product]="product"></app-card-product>
+              <app-card-product *ngFor="let product of products" [product]="product"></app-card-product>
 
             </div>
               <div class="modal-footer">
@@ -76,11 +74,9 @@
           class="btn modalProduct d-flex align-items-center justify-content-center"
           data-bs-toggle="modal"
           data-bs-target="#modalBrasil"
-          (click)="onCountrySelect('Brasil')"
-
         >
           <img
-            src="https://console.cloudinary.com/console/c-27e87957685c969d05bdf9622bd3a7/media_library/folders/c7e3e5c3f3090eea3cc2942243fa55baf5/asset/b70a8d74240d2722ed285712bfd7cab6/manage?view_mode=mosaic&context=manage"
+            src="../../../assets/images/products/Background_img/Brasil.webp"
             alt="brasil"
             style="width: 360px"
           />
