@@ -101,6 +101,7 @@ import { CommonModule, NgIf } from '@angular/common';
 export class RegisterFormComponent {
   form: FormGroup;
   usuario: User = new User();
+  isSubmitting = false;
   constructor(private formBuilder: FormBuilder,
     private authService: AuthService, private router: Router) {
     this.form = this.formBuilder.nonNullable.group(
@@ -129,13 +130,14 @@ export class RegisterFormComponent {
     event.preventDefault;
     if (this.form.valid) {
       console.log("Enviando formulario...");
+      //this.isSubmitting = true;
       this.authService.createUser(this.form.value as User).subscribe(
         (data: User) => {
           console.log(data.id);
           console.log(this.form.value as User)
           if (data.id > 0) {
             alert("Registro exitoso. A continuación, por favor Inicie Sesión.");
-            this.router.navigate(['loginModal']) // falta agregar el modal de inicio de sesion
+            this.disableFormFields();
           }
         })
     }
@@ -143,5 +145,8 @@ export class RegisterFormComponent {
       this.form.markAllAsTouched();
     }
   }
-
+  disableFormFields(): void {
+    this.form.disable();
+    this.isSubmitting = true;
+  }
 }
