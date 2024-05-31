@@ -1,20 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router , RouterLink} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 import { ContactComponent } from '../../pages/contact/contact.component';
+
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports:[ReactiveFormsModule, CommonModule, RouterLink,ContactComponent],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, ContactComponent],
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-
-
 export class LoginFormComponent {
+  @Output() loginSuccess: EventEmitter<any> = new EventEmitter();
   form: FormGroup;
   maxLoginAttempts = 3;
   loginAttempts = 0;
@@ -37,6 +36,7 @@ export class LoginFormComponent {
   get loginEmail() {
     return this.form.get('loginEmail');
   }
+
   validarUsuario() {
     console.log('Formulario válido:', this.form.valid);
     if (this.form && this.form.valid) {
@@ -55,6 +55,7 @@ export class LoginFormComponent {
               console.log('Respuesta de la API:', response);
               if (response.authenticated) {
                 alert('Bienvenido ' + response.user.email);
+                this.loginSuccess.emit(response.user);  // Emit event on success
                 this.router.navigate(['login-form']);
               } else {
                 this.loginAttempts++;

@@ -21,18 +21,14 @@
         <div class="modal-body">
           <form [formGroup]="form" (ngSubmit)="validarUsuario()">
             <div class="mb-3">
-              <label for="inputEmail" class="form-label"
-                >Dirección de e-mail</label
-              >
-             <input
+              <label for="inputEmail" class="form-label">Dirección de e-mail</label>
+              <input
                 type="email"
                 formControlName="loginEmail"
                 name="loginEmail"
                 class="form-control"
                 id="inputEmail"
                 aria-describedby="emailHelp"
-                required
-                autocomplete="email"
               />
               <div id="emailHelp" class="form-text">
                 Ingrese una direccion válida.
@@ -40,10 +36,8 @@
             </div>
             <div class="mb-3">
               <label for="inputPassword" class="form-label">Contraseña</label>
-              <div
-                class="d-flex flex-row align-items-center justify-content-evenly"
-              >
-              <input
+              <div class="d-flex flex-row align-items-center justify-content-evenly">
+                <input
                   type="password"
                   formControlName="loginPassword"
                   name="loginPassword"
@@ -52,27 +46,15 @@
                   aria-describedby="passwordHelp"
                   minlength="4"
                   maxlength="20"
-                  required
-                  autocomplete="current-password"
                 />
-                <span
-                  class="material-symbols-sharp ms-2 d-block"
-                  id="loginVisibilityOn"
-                  >visibility</span
-                >
-                <span
-                  class="material-symbols-sharp ms-2 d-none"
-                  id="loginVisibilityOff"
-                  >visibility_off</span
-                >
+                <span class="material-symbols-sharp ms-2 d-block" id="loginVisibilityOn">visibility</span>
+                <span class="material-symbols-sharp ms-2 d-none" id="loginVisibilityOff">visibility_off</span>
               </div>
             </div>
             <input type="submit" style="display: none" id="submitLoginBtn" />
           </form>
         </div>
-        <div
-          class="modal-footer d-flex flex-row align-items-center justify-content-between"
-        >
+        <div class="modal-footer d-flex flex-row align-items-center justify-content-between">
           <button
             type="button"
             class="btn btn-success"
