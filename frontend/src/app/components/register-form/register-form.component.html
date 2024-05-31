@@ -33,10 +33,12 @@
               </div>
             </div>
 
+            <div class="m-3">
             <label for="domicilio" class="form-label">Domicilio</label>
             <input type="text" id="domicilio" class="form-control" formControlName="address">
             <div *ngIf="form.controls['address'].hasError('required') && form.controls['address'].touched">
               <p class="text-danger">Por favor, ingresa tu domicilio.</p>
+            </div>
             </div>
 
 
@@ -62,14 +64,14 @@
 
             <div class="m-3">
               <button class="btn btn-primary btn-success mt-3" id="registerBtn"
-                [disabled]="form.invalid">Registrarme</button>
+                [disabled]="form.invalid" [disabled]="isSubmitting">Registrarme</button>
             </div>
           </form>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-targer="#loginModal">
-            Cancelar
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal" data-bs-targer="#loginModal">
+            Volver
           </button>
           <!-- <button type="submit" class="btn btn-success" id="registerBtn">
             Registrarse
