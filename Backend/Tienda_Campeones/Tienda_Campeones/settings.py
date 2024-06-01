@@ -37,11 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'web',
     'rest_framework',
     'corsheaders',
+    'web',
+    'users',
 ]
-CORS_ORIGIN_ALLOW_ALL = True
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -52,6 +53,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:4200",
+]
+CORS_ALLOW_CREDENTIALS = True
+
+
+AUTH_USER_MODEL = 'users.Usuarios'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
 
 ROOT_URLCONF = 'Tienda_Campeones.urls'
 
@@ -80,9 +94,9 @@ WSGI_APPLICATION = 'Tienda_Campeones.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.mysql',
-       'NAME': 'campeones_del_mundo',
+       'NAME': 'campeones',
        'USER': 'root',
-       'PASSWORD': 'key_98.Px$S/',
+       'PASSWORD': 'root',
        'HOST': 'localhost',
        'PORT': '3306',
        'OPTIONS': {

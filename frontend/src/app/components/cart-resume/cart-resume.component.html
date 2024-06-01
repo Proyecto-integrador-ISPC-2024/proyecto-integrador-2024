@@ -1,99 +1,109 @@
 <div class="card">
-    <h5 class="card-header p-3">Resumen del carro</h5>
-    <div class="card-body">
-      <div class="row list-group list-group-flush">
-        <h6 class="text-decoration-underline link-offset-3">Productos:</h6>
-        <div class="d-flex flex-row flex-wrap justify-content-between">
-          <div class="d-flex flex-column my-3">
-            <span>Producto</span>
-            <span>Producto</span>
-            <span>Producto</span>
-          </div>
-          <div class="d-flex flex-column my-3">
-            <span>Precio 1</span>
-            <span>Precio 2</span>
-            <span>Precio 3</span>
-          </div>
+  <h5 class="card-header p-3">Resumen del carro</h5>
+  <div class="card-body">
+    <div class="row list-group list-group-flush">
+      <h6 class="link-offset-3">Productos:</h6>
+      <div class="d-flex flex-row flex-wrap justify-content-between">
+        <div class="d-flex flex-column my-3">
+          @for (product of cartResume; track product.id) {
+          <span>{{ product.name }}</span>
+          }
+          <!-- <span *ngFor="let product of cartResume">{{product.name}}</span> -->
         </div>
-        <hr class="my-4" />
-        <div class="d-flex flex-column mx-4 my-3" id="outputSubtotal">
-          <!-- subtotal aparece acá -->
-          <small>Precio total:</small>
-          <h5>$5000</h5>
+        <div class="d-flex flex-column my-3">
+          @for (product of cartResume; track product.id) {
+          <span>${{ product.price * product.amount }}</span>
+          }
+          <!-- <span *ngFor="let product of cartResume">{{product.price * product.amount}}</span> -->
         </div>
       </div>
-      <div class="row">
-        <button
-          type="button"
-          class="btn btn-success col my-1 mx-3 cartBtn"
-          data-bs-toggle="modal"
-          data-bs-target="#modalForm"
-        >
-          Finalizar compra
-        </button>
-        <button type="button" class="btn btn-danger col my-1 mx-3 cartBtn">
-          Limpiar carro
-        </button>
+      <hr class="my-4" />
+      <div class="d-flex flex-column mx-4 my-3" id="outputSubtotal">
+        <small>Precio total:</small>
+        <h5>${{ totalPrice }}</h5>
       </div>
     </div>
+    <div class="row">
+      <button
+        type="button"
+        class="btn btn-success col my-1 mx-3 cartBtn"
+        data-bs-toggle="modal"
+        data-bs-target="#modalForm"
+      >
+        Finalizar compra
+      </button>
+      <button type="button" class="btn btn-danger col my-1 mx-3 cartBtn">
+        Limpiar carro
+      </button>
+    </div>
   </div>
-  <div
-    class="modal fade modalContainer"
-    id="modalForm"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="modalContainerLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <p class="modal-title fs-5 modalTitle" id="modalContainerLabel">
-            Información de pago
-          </p>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <form action="#" method="get" class="" [formGroup]="formGroup" (ngSubmit)="onEnviar($event)">
-            <div class="mb-3">
-              <label for="inputNombreCompleto" class="form-label"
-                >Nombre completo</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="inputNombreCompleto"
-                aria-describedby="inputNombreCompleto"
-                placeholder="Tu nombre completo"
-                formControlName="name"
-              />
-              @if (this.formGroup.controls.name.hasError('required')) {
-                <p class="text-danger">Por favor, ingresa tu nombre completo</p>
+</div>
+
+<div
+  class="modal fade modalContainer"
+  id="modalForm"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="modalContainerLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title fs-5 modalTitle" id="modalContainerLabel">
+          Información de pago
+        </p>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          action="#"
+          method="get"
+          class=""
+          [formGroup]="formGroup"
+          (ngSubmit)="onEnviar($event)"
+        >
+          <div class="mb-3">
+            <label for="inputNombreCompleto" class="form-label"
+              >Nombre completo</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="inputNombreCompleto"
+              aria-describedby="inputNombreCompleto"
+              placeholder="Tu nombre completo"
+              formControlName="name"
+            />
+            @if (this.formGroup.controls.name.hasError('required')) {
+            <p class="text-danger">Por favor, ingresa tu nombre completo</p>
             }
-            </div>
-            <div class="mb-3">
-              <label for="inputEmail" class="form-label"
-                >Correo electrónico</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="inputEmail"
-                aria-describedby="inputEmail"
-                placeholder="email@ejemplo.com"
-                formControlName="email"
-              />
-              @if (this.formGroup.controls.email.hasError('required')) {
-                <p class="text-danger">Por favor, ingresa un formato de mail valido</p>
+          </div>
+          <div class="mb-3">
+            <label for="inputEmail" class="form-label"
+              >Correo electrónico</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="inputEmail"
+              aria-describedby="inputEmail"
+              placeholder="email@ejemplo.com"
+              formControlName="email"
+            />
+            @if (this.formGroup.controls.email.hasError('required')) {
+            <p class="text-danger">
+              Por favor, ingresa un formato de mail valido
+            </p>
             }
-            </div>
-            <!-- <div class="mb-3">
+          </div>
+          <!-- <div class="mb-3">
               <label for="inputTelefono" class="form-label"
                 >Teléfono de contacto</label
               >
@@ -109,7 +119,7 @@
                 <p class="text-danger">Por favor, ingresa tu numero de telefono</p>
             }
             </div> -->
-            <!-- <div class="mb-3">
+          <!-- <div class="mb-3">
               <label for="inputAddress" class="form-label"
                 >Tu dirección</label
               >
@@ -125,55 +135,62 @@
                 <p class="text-danger">Por favor, ingresa tu dirección</p>
             }
             </div> -->
-            <select
-              class="my-4 form-select"
-              aria-label="Default select example"
-              id="payments"
-              formControlName="payment"
-            >
-              <option label="Selecciona un medio de pago"></option>
-              <option value="transferencia">Transferencia bancaria</option>
-              <option value="efectivo">Efectivo-contado</option>
-              <option value="credito">Crédito</option>
+          <select
+            class="my-4 form-select"
+            aria-label="Default select example"
+            id="payments"
+            formControlName="payment"
+          >
+            <option label="Selecciona un medio de pago"></option>
+            <option value="transferencia">Transferencia bancaria</option>
+            <option value="efectivo">Efectivo-contado</option>
+            <option value="credito">Crédito</option>
 
-              @if (this.formGroup.controls.payment.hasError('required')) {
-                <p class="text-danger">Por favor, selecciona un metodo de pago</p>
+            @if (this.formGroup.controls.payment.hasError('required')) {
+            <p class="text-danger">Por favor, selecciona un metodo de pago</p>
             }
-            </select>
-            
-            <div class="my-3 form-check">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                id="checkTerms"
-                formControlName="terms"
-              />
-              
-              <label class="form-check-label" for="checkTerms"
-                >Acepto los
-                <a href="#" class="text-decoration-underline link-offset-3"
-                  >términos y condiciones de compra</a
-                >.</label
-              >
-              @if (this.formGroup.controls.terms.hasError('required')) {
-                <p class="text-danger">Por favor, para realizar la comprar acepta los terminos y condiciones</p>
+          </select>
+
+          <div class="my-3 form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="checkTerms"
+              formControlName="terms"
+            />
+
+            <label class="form-check-label" for="checkTerms"
+              >Acepto los
+              <a href="#" class="text-decoration-underline link-offset-3"
+                >términos y condiciones de compra</a
+              >.</label
+            >
+            @if (this.formGroup.controls.terms.hasError('required')) {
+            <p class="text-danger">
+              Por favor, para realizar la comprar acepta los terminos y
+              condiciones
+            </p>
             }
-              
-            </div>
-            <div class="mt-5 d-flex flex-row justify-content-evenly">
-              <button
-                type="button"
-                class="btn btn-danger mx-1 w-50 cartBtn"
-                data-bs-dismiss="modal"
-              >
-                Cerrar
-              </button>
-              <button type="submit" class="btn btn-success mx-1 w-50 cartBtn" (click)="clickRegister()" [disabled]="formGroup.invalid">
-                Finalizar compra
-              </button>
-            </div>
-          </form>
-        </div>
+          </div>
+          <div class="mt-5 d-flex flex-row justify-content-evenly">
+            <button
+              type="button"
+              class="btn btn-danger mx-1 w-50 cartBtn"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-success mx-1 w-50 cartBtn"
+              (click)="clickRegister()"
+              [disabled]="formGroup.invalid"
+            >
+              Finalizar compra
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>

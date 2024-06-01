@@ -4,11 +4,12 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/ro
 import { CommonModule } from '@angular/common';
 import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 import { ModalService } from '../../services/modalstatus.service';
+import { LoginFormComponent } from '../../components/login-form/login-form.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ThemeButtonComponent,RegisterFormComponent, RouterLink, CommonModule, RouterLinkActive,],
+  imports: [ThemeButtonComponent,RegisterFormComponent, RouterLink, CommonModule, RouterLinkActive,LoginFormComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -30,7 +31,7 @@ export class HeaderComponent implements OnInit {
       this.modalFormVisible = visible;
     });
   }
-  
+
   modalFormVisible = false;
   modalRegisterForm() {
     this.modalService.showRegisterModal();

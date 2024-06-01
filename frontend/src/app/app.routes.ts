@@ -8,6 +8,9 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ClientDashboardComponent } from './pages/client-dashboard/client-dashboard.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -16,7 +19,7 @@ export const routes: Routes = [
 
   { path: 'dashboard', component: DashboardComponent },
 
-  { path: 'cart', component: CartComponent },
+  { path: 'cart', component: CartComponent, canActivate: [authGuard]},
 
   { path: 'products', component: ProductsComponent },
 
@@ -24,7 +27,16 @@ export const routes: Routes = [
 
   { path: 'admin-dashboard', component: AdminDashboardComponent },
 
-  { path: 'client-dashboard', component: ClientDashboardComponent },
+  { path: 'client-dashboard', component: ClientDashboardComponent, canActivate: [authGuard] },
 
   { path: '**', component: NotFoundComponent },
+
+  {path: 'login', component: LoginFormComponent},
+  
+  {path: 'registro', component: RegisterFormComponent},
 ];
+/*@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }*/

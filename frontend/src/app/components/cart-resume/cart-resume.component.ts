@@ -1,14 +1,34 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Product } from '../../../interfaces/product';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-cart-resume',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgFor],
   templateUrl: './cart-resume.component.html',
-  styleUrl: './cart-resume.component.css'
+  styleUrl: './cart-resume.component.css',
 })
-export class CartResumeComponent {
+export class CartResumeComponent implements OnChanges {
+  @Input() cartResume: Product[] = [];
+  @Input() totalPrice: number = 0;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['cartResume']) {
+      this.calculateTotalPrice();
+    }
+  }
+
+  private calculateTotalPrice(): void {
+    this.totalPrice = this.cartResume.reduce(
+      (sum, product) => sum + product.price * product.amount,
+      0
+    );
+  }
+
+
+
   formBuilder = inject(FormBuilder);
   formGroup = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
@@ -16,8 +36,8 @@ export class CartResumeComponent {
     //phone: ['', Validators.required],
     //address: ['', Validators.required],
     payment: ['', Validators.required],
-    terms: ['', Validators.requiredTrue]
-  })
+    terms: ['', Validators.requiredTrue],
+  });
 
   clickRegister(): void {
     const name = this.formGroup.controls.name.value;
@@ -35,16 +55,13 @@ export class CartResumeComponent {
   }
 
   onEnviar(event: Event) {
-    console.log(this.formGroup.value)
+    console.log(this.formGroup.value);
     event.preventDefault;
     if (this.formGroup.valid) {
-      alert("Enviando formulario al servidor...")
-    }
-    else {
+      alert('Enviando formulario al servidor...');
+    } else {
       this.formGroup.markAllAsTouched(),
-        alert("Por favor, complete todos los campos.");
+        alert('Por favor, complete todos los campos.');
     }
   }
-
-
 }
