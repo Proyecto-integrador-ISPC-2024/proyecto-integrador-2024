@@ -1,12 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout-modal',
-  standalone: true,
-  imports: [],
   templateUrl: './logout-modal.component.html',
-  styleUrl: './logout-modal.component.css'
+  styleUrls: ['./logout-modal.component.css']
 })
-export class LogoutModalComponent {
+export class LogoutModalComponent implements OnInit {
+
+  constructor(private authService: AuthService, private router: Router) { }
+
+ // En tu componente LogoutModalComponent
+ngOnInit(): void {
+  this.authService.logout();
+  
+  this.router.navigate(['/login']);
+}
+
 
 }
