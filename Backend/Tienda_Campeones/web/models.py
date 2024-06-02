@@ -85,17 +85,17 @@ class Productos(models.Model):
 
 class ProductosTalles(models.Model):
     id_producto_talle = models.AutoField(db_column='ID_producto_talle', primary_key=True)  
-    productos = models.ForeignKey(Productos, models.DO_NOTHING, db_column='ID_producto') 
-    talles = models.ForeignKey('Talles', models.DO_NOTHING, db_column='ID_talle')  
+    id_producto = models.ForeignKey(Productos, models.DO_NOTHING, db_column='ID_producto',  related_name='productos') 
+    id_talle = models.ForeignKey('Talles', models.DO_NOTHING, db_column='ID_talle')  
     stock = models.IntegerField(db_column='Stock', validators=[MinValueValidator(0)]) 
 
     class Meta:
         managed = True
         db_table = 'productos_talles'
         verbose_name_plural = 'Productos-Talles'
+    
     def __str__(self):
-        return f"ID: {self.id_producto_talle}, ID_PRODUCTO: {self.productos.id_producto},NOMBRE DEL PRODUCTO:{self.productos.nombre_producto} TALLE: {self.talles.talle}, STOCK: {self.stock}"
-
+        return f"ID: {self.id_producto_talle}, Producto: {self.id_producto.nombre_producto}, Talle: {self.id_talle.talle}, Stock: {self.stock}"
 
 class Talles(models.Model):
     id_talle = models.AutoField(db_column='ID_talle', primary_key=True)  
