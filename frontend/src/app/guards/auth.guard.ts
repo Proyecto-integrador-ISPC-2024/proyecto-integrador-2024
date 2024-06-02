@@ -14,3 +14,11 @@ export const authGuard: CanActivateFn = (route, state) => {
     return urltreeReturn;
   }
 };
+/*  CODIGO A USAR PARA VERIFICAR SI EL USUARIO ESTA AUTENTICADO O NO, Y REDIRIGIRLO.
+FIX HERE CUANDO TENGAMOS LA AUTENTICACIÓN CON TOKEN DESDE EL BACKEND.
+if (authService.isLoggedIn()) {  // Verifica si el usuario está autenticado.
+  return true;
+} else {
+  router.navigate(['/login']);  // Redirige al usuario a la página de login si no está autenticado, sino podemos rediirigirlo a la landing page. 
+  return false;
+} */

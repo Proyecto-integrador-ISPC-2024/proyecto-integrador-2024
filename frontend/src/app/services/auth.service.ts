@@ -27,4 +27,14 @@ export class AuthService {
   isAuth(){
     return this.token.length > 0; // retorna false por el momento
   }
+
+  // USAR getToken cuando tengamos la autenticación basada en jwt.
+  getToken(): string | null {
+    return localStorage.getItem('token'); // Obtiene el token del almacenamiento local.
+  }
+
+  // USAR isLoggedIn() en rutas protegidas.
+  isLoggedIn(): boolean {
+    return !!this.getToken(); // Verificamos si el usuario está autenticado comprobando la presencia del token.
+  }
 }
