@@ -5,9 +5,9 @@ from django.core.validators import MinValueValidator
 # Create your models here.
 class DetallesPedido(models.Model):
     id_detalle = models.AutoField(db_column='ID_detalle', primary_key=True) 
-    pedidos = models.ForeignKey('Pedidos', models.DO_NOTHING, db_column='ID_pedido')  
-    productos = models.ForeignKey('Productos', models.DO_NOTHING, db_column='ID_producto')  
-    talles = models.ForeignKey('Talles', models.DO_NOTHING, db_column='ID_talle')  
+    id_pedido = models.ForeignKey('Pedidos', models.DO_NOTHING, db_column='ID_pedido')  
+    id_producto = models.ForeignKey('Productos', models.DO_NOTHING, db_column='ID_producto')  
+    id_talle= models.ForeignKey('Talles', models.DO_NOTHING, db_column='ID_talle')  
     cantidad = models.IntegerField(db_column='Cantidad')  
     subtotal = models.FloatField(db_column='Subtotal') 
 
@@ -17,7 +17,7 @@ class DetallesPedido(models.Model):
         verbose_name_plural = 'Detalles de pedidos'
         
     def __str__(self):
-     return f"DETALLE DEL PEDIDO : ID: {self.id_detalle}, ID DEL PEDIDO: {self.pedidos.id_pedido}, ID DEL PRODUCTO: {self.productos.id_producto}, Cantidad comprada: {self.cantidad}, Subtotal: {self.subtotal}"
+     return f"DETALLE DEL PEDIDO : ID: {self.id_detalle}, ID DEL PEDIDO: {self.id_pedido.id_pedido}, ID DEL PRODUCTO: {self.id_producto.id_producto},TALLE: {self.id_talle.talle}, Cantidad comprada: {self.cantidad}, Subtotal: {self.subtotal}"
 
 
 class FormasDePago(models.Model):
@@ -35,16 +35,16 @@ class FormasDePago(models.Model):
 
 class FormasDepagoPedidos(models.Model):
     id_forma_depago_pedidos = models.AutoField(db_column='ID_Forma_depago_Pedidos', primary_key=True) 
-    pedidos = models.ForeignKey('Pedidos', models.DO_NOTHING, db_column='ID_pedido')  
-    formasdepago = models.ForeignKey(FormasDePago, models.DO_NOTHING, db_column='ID_forma_de_pago') 
-    tarjeta = models.ForeignKey('Tarjetas', models.DO_NOTHING, db_column='ID_tarjeta', blank=True, null=True)         
+    id_pedido = models.ForeignKey('Pedidos', models.DO_NOTHING, db_column='ID_pedido')  
+    id_forma_de_pago = models.ForeignKey(FormasDePago, models.DO_NOTHING, db_column='ID_forma_de_pago') 
+    id_tarjeta = models.ForeignKey('Tarjetas', models.DO_NOTHING, db_column='ID_tarjeta', blank=True, null=True)         
 
     class Meta:
         managed = True
         db_table = 'formas_depago_pedidos'
         verbose_name_plural = 'Formas de pago de pedidos'
     def __str__(self):
-        return f"ID: {self.id_forma_depago_pedidos}, ID_PEDIDO: {self.pedidos.id_pedido}, ID_FORMA DE PAGO: {self.formasdepago.id_forma_de_pago}, ID_TARJETA: {self.tarjeta.id_tarjeta}"
+        return f"ID: {self.id_forma_depago_pedidos}, ID_PEDIDO: {self.id_pedido.id_pedido}, ID_FORMA DE PAGO: {self.id_forma_de_pago.id_forma_de_pago}, ID_TARJETA: {self.id_tarjeta.id_tarjeta}"
         
 
 
@@ -56,7 +56,7 @@ class Pedidos(models.Model):
     ]
     id_pedido = models.AutoField(db_column='ID_pedido', primary_key=True) 
     fecha = models.DateField()
-    usuarios = models.ForeignKey('users.Usuarios', models.DO_NOTHING, db_column='ID_usuario') 
+    id_usuario = models.ForeignKey('users.Usuarios', models.DO_NOTHING, db_column='ID_usuario') 
     total = models.FloatField(db_column='Total')  
     estado = models.CharField(db_column='Estado', max_length=9 , choices=ESTADO_CHOICES)  
 
