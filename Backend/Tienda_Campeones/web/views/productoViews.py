@@ -19,7 +19,7 @@ class ProductosViewSet(viewsets.ModelViewSet):
             if pais:
                 return ProductosDetallesSerializer
             return ListproductsSerializer
-        elif self.action in ['update', 'partial_update']:
+        elif self.action in ['update', 'partial_update','retrieve']:
             return ProductosTallesUpdateSerializer
         return ProductosTallescreateSerializer
     
@@ -49,12 +49,10 @@ class ProductosViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     
-    
-    
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
-        print("hola")
+
         serializer.is_valid(raise_exception=True)
         serializer.save()
         

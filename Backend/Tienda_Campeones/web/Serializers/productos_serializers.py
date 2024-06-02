@@ -116,11 +116,12 @@ class ListproductsSerializer(serializers.ModelSerializer):
     
 class ProductosTallesUpdateSerializer(serializers.ModelSerializer):
     productos = ProductosSerializer(source='id_producto', partial=True)
-
+    talle=serializers.CharField(source='id_talle.talle',read_only=True)
+    
     class Meta:
         model = ProductosTalles
-        fields = ('id_producto_talle', 'productos', 'stock')
-        xtra_kwargs = {
+        fields = ('id_producto_talle', 'productos','talle','stock')
+        extra_kwargs = {
             'productos': {'required': False},
             'stock': {'required': False},
         }
@@ -133,11 +134,11 @@ class ProductosTallesUpdateSerializer(serializers.ModelSerializer):
         if 'stock' in validated_data:
             instance.stock = validated_data['stock']
 
+
         # Actualizar los datos del producto anidado, si existen
         if producto_data:
             producto_serializer = ProductosSerializer(instance.id_producto, data=producto_data, partial=True)
             producto_serializer.is_valid(raise_exception=True)
             producto_serializer.save()
-
         instance.save()
         return instance
