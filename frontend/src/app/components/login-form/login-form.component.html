@@ -1,35 +1,18 @@
 <section>
   <!-- Modal -->
-  <div
-    class="modal fade"
-    id="loginModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content" id="loginForm">
         <div class="modal-header">
           <h5 class="modal-title" id="loginModalLabel">Login</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form [formGroup]="form" (ngSubmit)="validarUsuario()">
             <div class="mb-3">
               <label for="inputEmail" class="form-label">Dirección de e-mail</label>
-              <input
-                type="email"
-                formControlName="loginEmail"
-                name="loginEmail"
-                class="form-control"
-                id="inputEmail"
-                aria-describedby="emailHelp"
-              />
+              <input type="email" formControlName="loginEmail" name="loginEmail" class="form-control" id="inputEmail"
+                aria-describedby="emailHelp" />
               <div id="emailHelp" class="form-text">
                 Ingrese una direccion válida.
               </div>
@@ -37,43 +20,29 @@
             <div class="mb-3">
               <label for="inputPassword" class="form-label">Contraseña</label>
               <div class="d-flex flex-row align-items-center justify-content-evenly">
-                <input
-                  type="password"
-                  formControlName="loginPassword"
-                  name="loginPassword"
-                  class="form-control"
-                  id="inputPassword"
-                  aria-describedby="passwordHelp"
-                  minlength="4"
-                  maxlength="20"
-                />
-                <span class="material-symbols-sharp ms-2 d-block" id="loginVisibilityOn">visibility</span>
-                <span class="material-symbols-sharp ms-2 d-none" id="loginVisibilityOff">visibility_off</span>
+                <input type="password" formControlName="loginPassword" name="loginPassword" class="form-control"
+                  id="inputPassword" aria-describedby="passwordHelp" minlength="8" maxlength="20" />
+                <span class="material-symbols-sharp ms-2 d-block" id="loginVisibilityOn"
+                  (click)="togglePasswordVisibility()">visibility</span>
               </div>
+
             </div>
             <input type="submit" style="display: none" id="submitLoginBtn" />
+            <button type="submit" class="btn btn-success" id="logBtn">Ingresar</button>
+
           </form>
         </div>
         <div class="modal-footer d-flex flex-row align-items-center justify-content-between">
-          <button
-            type="button"
-            class="btn btn-success"
-            data-bs-toggle="modal"
-            data-bs-target="#registerModal"
-          >
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registerModal">
             Registrarme
           </button>
           <div>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Cancelar
             </button>
-            <button type="submit" class="btn btn-success" id="logBtn">
-              Ingresar
-            </button>
+            <div>
+              <button (click)="registerForm()">Recuperar Contraseña</button>
+            </div>
           </div>
         </div>
       </div>
