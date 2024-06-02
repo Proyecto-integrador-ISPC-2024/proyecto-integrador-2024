@@ -18,7 +18,12 @@ export class AuthService {
     const loginData = { email, password };
     return this.http.post(`${this.url}/authenticate`, loginData);
   }
-
+  logout(): void {
+    // Eliminar el token del almacenamiento local
+    localStorage.removeItem('token');
+    // Limpiar la variable token en el servicio
+    this.token = '';
+  }
   isAuth(){
     return this.token.length > 0; // retorna false por el momento
   }
