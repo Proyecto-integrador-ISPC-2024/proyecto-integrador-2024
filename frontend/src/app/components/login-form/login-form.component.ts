@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
 import { RegisterFormComponent } from '../register-form/register-form.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-form',

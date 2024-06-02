@@ -12,6 +12,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { authGuard } from './guards/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
+import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -33,6 +34,8 @@ export const routes: Routes = [
   { path: '**', component: NotFoundComponent },
 
   {path: 'login-form', component: LoginFormComponent},
+
+  { path: 'logout', component: LogoutModalComponent },
 
   {path: 'registro', component: RegisterFormComponent},
 ];
