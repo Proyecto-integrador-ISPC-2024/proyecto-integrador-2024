@@ -6,20 +6,11 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
-from Backend.Tienda_Campeones.users.usuarioapi.usuario_serializers import CustomUsuarioSerializer,CustomTokenObtainPairSerializer
+from users.usuarioapi.usuario_serializers import *
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 
-class UsuarioViewSet(viewsets.ModelViewSet):
-    serializer_class = CustomUsuarioSerializer
-    permission_classes = (IsAuthenticated,)
-    queryset = Usuarios.objects.all()
-    def get_queryset(self, pk=None):
-        if pk is None:
-            return self.get_serializer().Meta.model.objects.filter(is_active=True)
-        return self.get_serializer().Meta.model.objects.filter(id_usuario=pk, is_active=True).first()
-
-class LoginViewSet(TokenObtainPairView):
+class Login(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
     def post(self,request,*args, **kwargs):
@@ -44,7 +35,6 @@ class LoginViewSet(TokenObtainPairView):
         
         return Response({'error': 'Mail o contraseña incorrectos'}, status=status.HTTP_400_BAD_REQUEST)
     
-
 class Logout(GenericAPIView):
     def post(self,request,*args,**kwargs):
         email = request.data.get('email', '')
