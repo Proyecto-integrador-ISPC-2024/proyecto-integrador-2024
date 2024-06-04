@@ -3,6 +3,8 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from web.models import Productos, Talles, ProductosTalles
 
+
+
 class ProductosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Productos
@@ -81,20 +83,21 @@ class ProductosTallescreateSerializer(serializers.ModelSerializer):
 class ProductosDetallesSerializer(serializers.ModelSerializer):
     productos=ProductosSerializer(source='id_producto')
     talles = serializers.SerializerMethodField()
-
+    print(talles)
     class Meta:
         model = ProductosTalles
         fields = ['id_producto_talle','productos', 'talles']
-
     def get_talles(self, obj):
+        # Filtramos ProductosTalles para obtener los talles y stocks relacionados con el producto
         productos_talles = ProductosTalles.objects.filter(id_producto=obj.id_producto)
-        talles = []
-        stocks = []
+        talles_data = []
         for pt in productos_talles:
-            talles.append(pt.id_talle.talle)
-            stocks.append(pt.stock)
-        detalles_talles = {'talles': talles, 'stock': stocks}
-        return detalles_talles
+            talles_data.append({
+                'id_talle': pt.id_talle.id_talle, 
+                'talle': pt.id_talle.talle,
+                'stock': pt.stock
+            })
+        return talles_data
    
 #este voy a usar cuando quiera listar todos los objetos     
 class ListproductsSerializer(serializers.ModelSerializer):
