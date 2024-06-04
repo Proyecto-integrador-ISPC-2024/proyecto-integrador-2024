@@ -1,6 +1,69 @@
 <section data-bs-theme="light">
   <h1 class="mx-5 mainTitle">Nuestros productos</h1>
   <div class="mx-5 d-flex flex-row flex-wrap justify-content-evenly my-5">
+<<<<<<< HEAD
+
+
+    <section
+  class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
+>
+  <div class="modalCountry">
+    <h2 class="modalProduct__title">Brasil</h2>
+    <button
+      type="button"
+      class="btn modalProduct d-flex align-items-center justify-content-center"
+      data-bs-toggle="modal"
+      data-bs-target="#modalBrasil"
+    >
+      <img
+        src="../../../assets/images/products/Background_img/Brasil.webp"
+        alt="brasil"
+        style="width: 360px"
+      />
+    </button>
+  </div>
+  <div>
+    <div
+      class="modal fade cardContainer"
+      id="modalBrasil"
+      tabindex="-1"
+      aria-labelledby="modalBrasilLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5" id="modalBrasilLabel">
+              Selección de Brasil
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div
+            class="modal-body d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+          >
+
+            <!-- Utilizamos filteredProducts en lugar de products -->
+            @for (product of filteredProducts; track product.id) {
+            <app-card-product [product]="product" />
+            }
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Volver
+            </button>
+            <a routerLink="/cart" class="btn btn-primary secondaryBtn"
+              >Ir al carro</a
+            >
+=======
     <section
       class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
     >
@@ -69,11 +132,16 @@
                 </button>
               </div>
             </div>
+>>>>>>> 5df5ccc8ffe8687457043aa8745aa0d65eda63f7
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
+<<<<<<< HEAD
+=======
     <section
       class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
     >
@@ -147,6 +215,7 @@
         </div>
       </div>
     </section>
+>>>>>>> 5df5ccc8ffe8687457043aa8745aa0d65eda63f7
 
     <section
       class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
@@ -558,6 +627,14 @@
                   aria-label="Close"
                 ></button>
               </div>
+<<<<<<< HEAD
+              <div
+                class="modal-body d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+              >
+
+              <app-card-product [product]="product" *ngFor="let product of products" ></app-card-product>
+
+=======
               <div class="modal-body">
                 <div
                   *ngIf="loading"
@@ -576,6 +653,7 @@
                     (addToCart)="handleAddToCart($event)"
                   ></app-card-product>
                 </div>
+>>>>>>> 5df5ccc8ffe8687457043aa8745aa0d65eda63f7
               </div>
               <div class="modal-footer">
                 <button
