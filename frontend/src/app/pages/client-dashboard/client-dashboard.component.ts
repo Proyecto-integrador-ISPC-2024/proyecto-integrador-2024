@@ -4,7 +4,7 @@ import { OrdersSummaryComponent } from '../../components/orders-summary/orders-s
 import { ProductsSuggestComponent } from '../../components/products-suggest/products-suggest.component';
 import { OrderManagementComponent } from '../../components/order-management/order-management.component';
 import { OrdersService } from '../../../services/orders.service';
-import { Pedido, EstadoPedido } from '../../../interfaces/order';
+import { Order, EstadoPedido } from '../../../interfaces/order';
 import { catchError, of, switchMap, Observable } from 'rxjs';
 
 @Component({
@@ -15,9 +15,9 @@ import { catchError, of, switchMap, Observable } from 'rxjs';
   styleUrls: ['./client-dashboard.component.css']
 })
 export class ClientDashboardComponent implements OnInit {
-  orders: Pedido[] = [];
-  filteredOrders: Pedido[] = [];
-  selectedOrder: Pedido | null = null;
+  orders: Order[] = [];
+  filteredOrders: Order[] = [];
+  selectedOrder: Order | null = null;
   userId: number;
 
   constructor(private ordersService: OrdersService) {
@@ -29,13 +29,13 @@ export class ClientDashboardComponent implements OnInit {
     this.loadOrders().subscribe();
   }
 
-  loadOrders(): Observable<Pedido[]> {
+  loadOrders(): Observable<Order[]> {
     return this.ordersService.getAllOrders().pipe(
       catchError(error => {
         console.error('Error loading orders:', error);
         return of([]);
       }),
-      switchMap((data: Pedido[]) => {
+      switchMap((data: Order[]) => {
         this.orders = data.filter(order => order.id_usuario === this.userId);
         this.filteredOrders = this.orders;
         return of(this.filteredOrders);
