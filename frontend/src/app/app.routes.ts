@@ -39,8 +39,4 @@ export const routes: Routes = [
 
   {path: 'registro', component: RegisterFormComponent},
 ];
-/*@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }*/
+

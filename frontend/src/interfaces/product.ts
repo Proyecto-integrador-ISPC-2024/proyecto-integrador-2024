@@ -1,10 +1,20 @@
+
 export interface Product {
-  id?: number;
-  name: string;
-  price: number;
-  size: string[];
-  stock: number[];
-  image: string;
-  variant: string;
-  amount: number
+  id_producto_talle?: number;
+
+  productos: {
+    id_producto: number;
+    imagen: string;
+    nombre_producto: string;
+    precio: number;
+  };
+
+  talles: {
+    talles: string[];
+    stock: number[];
+  };
+
+  cantidad: number;
+  talleSeleccionado: string;
+  stockSeleccionado: number;
 }
