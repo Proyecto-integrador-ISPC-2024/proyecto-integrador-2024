@@ -1,132 +1,74 @@
 <section>
   <h1 class="mx-5 mainTitle">Nuestros productos</h1>
   <div class="mx-5 d-flex flex-row flex-wrap justify-content-evenly my-5">
-    <section
-      class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
-    >
-      <div class="modalCountry">
-        <h2 class="modalProduct__title">Argentina</h2>
-        <button
-          type="button"
-          class="btn modalProduct d-flex align-items-center justify-content-center"
-          data-bs-toggle="modal"
-          data-bs-target="#modalArgentina"
-        >
-          <img
-            src="../../../assets/images/products/Background_img/Argentina.webp"
-            alt="argentina"
-            style="width: 360px"
-          />
-        </button>
-      </div>
-      <div>
-        <div
-          class="modal fade cardContainer"
-          id="modalArgentina"
-          tabindex="-1"
-          aria-labelledby="argentinaModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h2 class="modal-title fs-5" id="argentinaModalLabel">
-                  Selección Argentina
-                </h2>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div
-                class="modal-body d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
-              >
-              <app-card-product *ngFor="let product of products" [product]="product"></app-card-product>
 
-            </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Volver
-                </button>
-                <a routerLink="/cart" class="btn btn-primary secondaryBtn"
-                  >Ir al carro</a
-                >
-              </div>
-            </div>
+
+    <section
+  class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
+>
+  <div class="modalCountry">
+    <h2 class="modalProduct__title">Brasil</h2>
+    <button
+      type="button"
+      class="btn modalProduct d-flex align-items-center justify-content-center"
+      data-bs-toggle="modal"
+      data-bs-target="#modalBrasil"
+    >
+      <img
+        src="../../../assets/images/products/Background_img/Brasil.webp"
+        alt="brasil"
+        style="width: 360px"
+      />
+    </button>
+  </div>
+  <div>
+    <div
+      class="modal fade cardContainer"
+      id="modalBrasil"
+      tabindex="-1"
+      aria-labelledby="modalBrasilLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5" id="modalBrasilLabel">
+              Selección de Brasil
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div
+            class="modal-body d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+          >
+
+            <!-- Utilizamos filteredProducts en lugar de products -->
+            @for (product of filteredProducts; track product.id) {
+            <app-card-product [product]="product" />
+            }
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Volver
+            </button>
+            <a routerLink="/cart" class="btn btn-primary secondaryBtn"
+              >Ir al carro</a
+            >
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section
-      class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
-    >
-      <div class="modalCountry">
-        <h2 class="modalProduct__title">Brasil</h2>
-        <button
-          type="button"
-          class="btn modalProduct d-flex align-items-center justify-content-center"
-          data-bs-toggle="modal"
-          data-bs-target="#modalBrasil"
-        >
-          <img
-            src="../../../assets/images/products/Background_img/Brasil.webp"
-            alt="brasil"
-            style="width: 360px"
-          />
-        </button>
-      </div>
-      <div>
-        <div
-          class="modal fade cardContainer"
-          id="modalBrasil"
-          tabindex="-1"
-          aria-labelledby="modalBrasilLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h2 class="modal-title fs-5" id="modalBrasilLabel">
-                  Selección de Brasil
-                </h2>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div
-                class="modal-body d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
-              >
-                @for (product of products; track product.id) {
-                <app-card-product [product]="product" />
-                }
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Volver
-                </button>
-                <a routerLink="/cart" class="btn btn-primary secondaryBtn"
-                  >Ir al carro</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section
       class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
@@ -496,9 +438,9 @@
               <div
                 class="modal-body d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
               >
-                @for (product of products; track product.id) {
-                <app-card-product [product]="product" />
-                }
+
+              <app-card-product [product]="product" *ngFor="let product of products" ></app-card-product>
+
               </div>
               <div class="modal-footer">
                 <button
