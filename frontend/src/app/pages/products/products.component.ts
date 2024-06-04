@@ -1,57 +1,66 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { CardProductComponent } from '../../components/card-product/card-product.component';
 import { ApiService } from '../../../services/api.service';
 import { Product } from '../../../interfaces/product';
+import { CartService } from '../../../services/cart.service';
+import { RouterLink } from '@angular/router';
+import { LoadingSpinnerComponent } from '../../components/spinner/spinner.component';
 
 @Component({
   selector: 'app-products',
+  standalone: true,
+  imports: [
+    CommonModule,
+    CardProductComponent,
+    NgForOf,
+    NgIf,
+    RouterLink,
+    LoadingSpinnerComponent,
+  ],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private cartService: CartService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  private urlTemplate = 'https://664d5d12ede9a2b556534efe.mockapi.io/products';
-
-  countries: string[] = ['Argentina', 'Brasil', 'Italia']; // Lista de países disponibles
-  selectedCountry: string = this.countries[0];
-
+  private urlProductos = 'http://localhost:8000/productos/';
+  cartItems: Product[] = [];
   products: Product[] = [];
   filteredProducts: Product[] = [];
 
-  fetchProducts(): void {
-    this.apiService.get<Product[]>(this.urlTemplate).subscribe({
-      next: (data: Product[]) => {
-        console.log('Fetched data:', data);
-        if (Array.isArray(data)) {
-          this.products = data;
-          this.filterProductsByCountry();
-        } else {
-          console.error('Data structure is incorrect:', data);
-        }
-      },
-      error: (error) => {
-        console.error('Error fetching products:', error);
-      },
-      complete: () => {
-        // console.log('Products fetch completed');
-      },
-    });
+  loading = false;
+
+  fetchProducts(country: string): void {
+    this.loading = true;
+
+    // `${this.urlProductos}?pais=${country}`
+    this.apiService
+      .get<Product[]>(`${this.urlProductos}?pais=${country}`)
+      .subscribe({
+        next: (data: Product[]) => {
+          console.log(data)
+          if (Array.isArray(data)) {
+            this.products = data;
+            this.filteredProducts = data;
+          }
+          this.loading = false;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Error fetching products:', error);
+          this.loading = false;
+        },
+      });
   }
 
-  filterProductsByCountry(): void {
-    // Filtrar los productos cuyo nombre contiene el nombre del país seleccionado
-    this.filteredProducts = this.products.filter(product => product.name.toLowerCase().includes(this.selectedCountry.toLowerCase()));
+  handleAddToCart(product: Product): void {
+    this.cartService.addToCart(product);
   }
 
-
-  onCountryChange(country: string): void {
-    this.selectedCountry = country;
-    this.filterProductsByCountry();
-  }
-
-  ngOnInit(): void {
-    this.fetchProducts();
-  }
+  ngOnInit(): void {}
 }
