@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class OrdersService {
-  private baseUrl = 'localhost:8000/pedidos';
+  private baseUrl = 'https://6656d1989f970b3b36c6a331.mockapi.io/pedidos';
 
   constructor(private http: HttpClient) {}
 
