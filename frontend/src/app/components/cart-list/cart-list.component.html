@@ -2,6 +2,10 @@
   <div class="card-header py-4">
     <h5 class="mb-0">Artículos seleccionados</h5>
   </div>
-
-  <app-cart-item />
+  @for (item of cartList; track item.id) {
+  <app-cart-item
+    [product]="item"
+    (removeProduct)="handleRemoveProduct($event)"
+  />
+  }
 </div>

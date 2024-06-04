@@ -1,122 +1,66 @@
 <!-- Row 1 -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- <link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/> -->
 
-<div class="card-body" id="cardContainer">
-    <div class="row py-3 mb-3 productItem">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-4 productImg">
-            <div class="bg-image cardImg rounded d-flex align-items-center">
-                <img class="w-100 rounded" src="../../../assets/images/products/Alemania/Alemania-1974-primera.webp"
-                    alt="producto" loading="lazy">
-            </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-5 productDetails">
-            <h6 class="mt-2">Selección de Alemania 1954</h6>
-            <small>Camiseta titular</small>
-            <ul class="list-unstyled my-2">
-                <li>$4900</li>
-            </ul>
-            <ul class="col-12 col-sm-12 list-unstyled mt-5 mx-3 d-flex flex-row">
-                <li>
-                    <button class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnDeleteItem">delete</button>
-                </li>
-                <li>
-                    <button class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnReduceItem">remove</button>
-                </li>
-                <li>
-                    <button class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnAddItem">add</button>
-                </li>
-            </ul>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-3 px-4 mt-2 productDetails-A">
-            <label for="inputAmount-ItemA">Cantidad:</label>
-            <input type="text" class="form-control mb-2 mx-1 inputAmount" placeholder="¿Cuántos?" value="1"
-                id="inputAmount-ItemA">
-            <label for="inputPrice-ItemA">Valor total:</label>
-            <input type="text" class="form-control mt-2 mx-1 inputPrice" id="inputPrice-ItemA" value="$4900"
-                disabled>
-            <!-- Los id's se deben cambiar en el siguiente sprint para que correspondan con el producto que se liste dinámicamente -->
-        </div>
+<div class="card-body">
+  <div class="row py-3 mb-3">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="bg-image cardImg rounded d-flex align-items-center">
+        <img
+          class="w-100 rounded"
+          [src]="product.image"
+          alt="{{ product.name }}"
+        />
+      </div>
     </div>
-</div>
-
-<hr>
-
-<!-- Row 2 -->
-<div class="card-body" id="cardContainer">
-    <div class="row py-3 mb-3 productItem">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-4 productImg">
-            <div class="bg-image cardImg rounded d-flex align-items-center">
-                <img class="w-100 rounded" src="../../../assets/images/products/Argentina/Argentina-2021-Primera.webp"
-                    alt="producto" loading="lazy">
-            </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-5 productDetails">
-            <h6 class="mt-2">Selección de Argentina 2021</h6>
-            <small>Camiseta titular</small>
-            <ul class="list-unstyled my-2">
-                <li>$4900</li>
-            </ul>
-            <ul class="col-12 col-sm-12 list-unstyled mt-5 mx-3 d-flex flex-row">
-                <li>
-                    <button class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnDeleteItem">delete</button>
-                </li>
-                <li>
-                    <button class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnReduceItem">remove</button>
-                </li>
-                <li>
-                    <button class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnAddItem">add</button>
-                </li>
-            </ul>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-3 px-4 mt-2 productDetails-A">
-            <label for="inputAmount-ItemB">Cantidad:</label>
-            <input type="text" class="form-control mb-2 mx-1 inputAmount" placeholder="¿Cuántos?" value="1"
-                id="inputAmount-ItemB">
-            <label for="inputPrice-ItemB">Valor total:</label>
-            <input type="text" class="form-control mt-2 mx-1 inputPrice" id="inputPrice-ItemB" value="$4900"
-                disabled>
-            <!-- Los id's se deben cambiar en el siguiente sprint para que correspondan con el producto que se liste dinámicamente -->
-        </div>
+    <div class="col-12 col-sm-12 col-md-6 col-lg-5 productDetails">
+      <h5 class="mt-2">{{ product.name }}</h5>
+      <small>{{ product.variant }}</small>
+      <ul class="list-unstyled my-2">
+        <li>
+          <p class="fs-5">${{ product.price }}</p>
+        </li>
+      </ul>
+      <ul class="col-12 col-sm-12 list-unstyled mt-5 mx-3 d-flex flex-row">
+        <li>
+          <button
+            class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnDeleteItem"
+            (click)="deleteProduct()"
+          >
+            delete
+          </button>
+        </li>
+        <li>
+          <button
+            class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnReduceItem"
+            (click)="decreaseAmount()"
+          >
+            remove
+          </button>
+        </li>
+        <li>
+          <button
+            class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnAddItem"
+            (click)="increaseAmount()"
+          >
+            add
+          </button>
+        </li>
+      </ul>
     </div>
-</div>
-
-<hr>
-
-<!-- Row 3 -->
-<div class="card-body" id="cardContainer">
-    <div class="row py-3 mb-3 productItem">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-4 productImg">
-            <div class="bg-image cardImg rounded d-flex align-items-center">
-                <img class="w-100 rounded" src="../../../assets/images/products/Brasil/Brasil-1970-primera.webp"
-                    alt="producto" loading="lazy">
-            </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-5 productDetails">
-            <h6 class="mt-2">Selección de Brasil 1994</h6>
-            <small>Camiseta titular</small>
-            <ul class="list-unstyled my-2">
-                <li>$4900</li>
-            </ul>
-            <ul class="col-12 col-sm-12 list-unstyled mt-5 mx-3 d-flex flex-row">
-                <li>
-                    <button class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnDeleteItem">delete</button>
-                </li>
-                <li>
-                    <button class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnReduceItem">remove</button>
-                </li>
-                <li>
-                    <button class="mt-1 me-1 mb-1 p-2 material-symbols-sharp rounded btnAddItem">add</button>
-                </li>
-            </ul>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-3 px-4 mt-2 productDetails-A">
-            <label for="inputAmount-ItemC">Cantidad:</label>
-            <input type="text" class="form-control mb-2 mx-1 inputAmount" placeholder="¿Cuántos?" value="1"
-                id="inputAmount-ItemC">
-            <label for="inputPrice-ItemC">Valor total:</label>
-            <input type="text" class="form-control mt-2 mx-1 inputPrice" id="inputPrice-ItemC" value="$4900"
-                disabled>
-            <!-- Los id's se deben cambiar en el siguiente sprint para que correspondan con el producto que se liste dinámicamente -->
-        </div>
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 px-4 mt-2">
+      <ul class="p-0">
+        <li>
+          <h6>Cantidad:</h6>
+          <p class="fs-5">{{ product.amount }}</p>
+        </li>
+        <li>
+          <h6>Subtotal:</h6>
+          <p class="fs-5">{{ product.price * product.amount }}</p>
+        </li>
+      </ul>
     </div>
+  </div>
 </div>
