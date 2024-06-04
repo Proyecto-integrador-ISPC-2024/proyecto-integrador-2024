@@ -1,9 +1,9 @@
-import { Products } from './products';
+import { Product } from "./product";
 
 export interface Payments {
   id: number;
   userId: number;
-  products: Products[];
+  products: Product[];
   itemsAmount: number;
   totalPrice: number;
   paymentMethod: string;

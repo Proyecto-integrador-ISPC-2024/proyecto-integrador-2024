@@ -25,7 +25,7 @@ export class OrderManagementComponent {
   }
 
   get nonCancelledOrders(): Order[] {
-    return this.orders.filter(order => order.status === EstadoPedido.Pending || order.status === EstadoPedido.Accepted);
+    return this.orders.filter(order => order.status === EstadoPedido.pending || order.status === EstadoPedido.Accepted);
   }
 
   get cancelledOrders(): Order[] {
