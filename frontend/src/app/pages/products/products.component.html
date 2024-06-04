@@ -1,0 +1,595 @@
+<section data-bs-theme="light">
+  <h1 class="mx-5 mainTitle">Nuestros productos</h1>
+  <div class="mx-5 d-flex flex-row flex-wrap justify-content-evenly my-5">
+    <section
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
+    >
+      <div class="modalCountry">
+        <h2 class="modalProduct__title">Argentina</h2>
+        <button
+          type="button"
+          class="btn modalProduct d-flex align-items-center justify-content-center"
+          data-bs-toggle="modal"
+          data-bs-target="#modalArgentina"
+          (click)="fetchProducts('argentina')"
+          id="argentinaModal"
+        >
+          <img
+            src="../../../assets/images/products/Background_img/Argentina.webp"
+            alt="argentina"
+            style="width: 360px"
+          />
+        </button>
+      </div>
+      <div>
+        <div
+          class="modal fade cardContainer"
+          id="modalArgentina"
+          tabindex="-1"
+          aria-labelledby="argentinaModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="argentinaModalLabel">
+                  Selección Argentina
+                </h2>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  *ngIf="loading"
+                  class="loading-spinner d-flex flex-row align-items-center justify-content-center gap-3"
+                >
+                  <app-loading-spinner></app-loading-spinner>
+                  <p>Cargando productos...</p>
+                </div>
+                <div
+                  *ngIf="!loading"
+                  class="d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+                >
+                  <app-card-product
+                    *ngFor="let product of filteredProducts" [product]="product" (addToCart)="handleAddToCart($event)"
+                  ></app-card-product>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
+    >
+      <div class="modalCountry">
+        <h2 class="modalProduct__title">Brasil</h2>
+        <button
+          type="button"
+          class="btn modalProduct d-flex align-items-center justify-content-center"
+          data-bs-toggle="modal"
+          data-bs-target="#modalBrasil"
+          (click)="fetchProducts('brazil')"
+        >
+          <img
+            src="../../../assets/images/products/Background_img/Brasil.webp"
+            alt="brasil"
+            style="width: 360px"
+          />
+        </button>
+      </div>
+      <div>
+        <div
+          class="modal fade cardContainer"
+          id="modalBrasil"
+          tabindex="-1"
+          aria-labelledby="modalBrasilLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modalBrasilLabel">
+                  Selección de Brasil
+                </h2>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  *ngIf="loading"
+                  class="loading-spinner d-flex flex-row align-items-center justify-content-center gap-3"
+                >
+                  <app-loading-spinner></app-loading-spinner>
+                  <p>Cargando productos...</p>
+                </div>
+                <div
+                  *ngIf="!loading"
+                  class="d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+                >
+                  <app-card-product
+                    *ngFor="let product of filteredProducts"
+                    [product]="product"
+                    (addToCart)="handleAddToCart($event)"
+                  ></app-card-product>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
+    >
+      <div class="modalCountry">
+        <h2 class="modalProduct__title">Alemania</h2>
+        <button
+          type="button"
+          class="btn modalProduct d-flex align-items-center justify-content-center"
+          data-bs-toggle="modal"
+          data-bs-target="#alemaniaModal"
+          (click)="fetchProducts('alemania')"
+        >
+          <img
+            src="../../../assets/images/products/Background_img/Alemania.webp"
+            alt="alemania"
+            style="width: 360px"
+          />
+        </button>
+      </div>
+      <div>
+        <div
+          class="modal fade cardContainer"
+          id="alemaniaModal"
+          tabindex="-1"
+          aria-labelledby="alemaniaModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="alemaniaModalLabel">
+                  Selección de Alemania
+                </h2>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  *ngIf="loading"
+                  class="loading-spinner d-flex flex-row align-items-center justify-content-center gap-3"
+                >
+                  <app-loading-spinner></app-loading-spinner>
+                  <p>Cargando productos...</p>
+                </div>
+                <div
+                  *ngIf="!loading"
+                  class="d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+                >
+                  <app-card-product
+                    *ngFor="let product of filteredProducts"
+                    [product]="product"
+                    (addToCart)="handleAddToCart($event)"
+                  ></app-card-product>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
+    >
+      <div class="modalCountry">
+        <h2 class="modalProduct__title">España</h2>
+        <button
+          type="button"
+          class="btn modalProduct d-flex align-items-center justify-content-center"
+          data-bs-toggle="modal"
+          data-bs-target="#modalEspana"
+          (click)="fetchProducts('españa')"
+        >
+          <img
+            src="../../../assets/images/products/Background_img/España.webp"
+            alt="espana"
+            style="width: 360px"
+          />
+        </button>
+      </div>
+      <div>
+        <div
+          class="modal fade cardContainer"
+          id="modalEspana"
+          tabindex="-1"
+          aria-labelledby="modalEspanaLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modalEspanaLabel">
+                  Selección de España
+                </h2>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  *ngIf="loading"
+                  class="loading-spinner d-flex flex-row align-items-center justify-content-center gap-3"
+                >
+                  <app-loading-spinner></app-loading-spinner>
+                  <p>Cargando productos...</p>
+                </div>
+                <div
+                  *ngIf="!loading"
+                  class="d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+                >
+                  <app-card-product
+                    *ngFor="let product of filteredProducts"
+                    [product]="product"
+                    (addToCart)="handleAddToCart($event)"
+                  ></app-card-product>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
+    >
+      <div class="modalCountry">
+        <h2 class="modalProduct__title">Italia</h2>
+        <button
+          type="button"
+          class="btn modalProduct d-flex flex-column align-items-center justify-content-center"
+          data-bs-toggle="modal"
+          data-bs-target="#modalItalia"
+          (click)="fetchProducts('italia')"
+        >
+          <img
+            src="../../../assets/images/products/Background_img/Italia.webp"
+            alt="italia"
+            style="width: 360px"
+          />
+        </button>
+      </div>
+      <div>
+        <div
+          class="modal fade cardContainer"
+          id="modalItalia"
+          tabindex="-1"
+          aria-labelledby="modalItaliaLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modalItaliaLabel">
+                  Selección de Italia
+                </h2>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  *ngIf="loading"
+                  class="loading-spinner d-flex flex-row align-items-center justify-content-center gap-3"
+                >
+                  <app-loading-spinner></app-loading-spinner>
+                  <p>Cargando productos...</p>
+                </div>
+                <div
+                  *ngIf="!loading"
+                  class="d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+                >
+                  <app-card-product
+                    *ngFor="let product of filteredProducts"
+                    [product]="product"
+                    (addToCart)="handleAddToCart($event)"
+                  ></app-card-product>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
+    >
+      <div class="modalCountry">
+        <h2 class="modalProduct__title">Francia</h2>
+        <button
+          type="button"
+          class="btn modalProduct d-flex align-items-center justify-content-center"
+          data-bs-toggle="modal"
+          data-bs-target="#modalFrancia"
+          (click)="fetchProducts('francia')"
+        >
+          <img
+            src="../../../assets/images/products/Background_img/Francia.webp"
+            alt="francia"
+            style="width: 360px"
+          />
+        </button>
+      </div>
+      <div>
+        <div
+          class="modal fade cardContainer"
+          id="modalFrancia"
+          tabindex="-1"
+          aria-labelledby="modalFranciaLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modalFranciaLabel">
+                  Selección de Francia
+                </h2>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  *ngIf="loading"
+                  class="loading-spinner d-flex flex-row align-items-center justify-content-center gap-3"
+                >
+                  <app-loading-spinner></app-loading-spinner>
+                  <p>Cargando productos...</p>
+                </div>
+                <div
+                  *ngIf="!loading"
+                  class="d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+                >
+                  <app-card-product
+                    *ngFor="let product of filteredProducts"
+                    [product]="product"
+                    (addToCart)="handleAddToCart($event)"
+                  ></app-card-product>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
+    >
+      <div class="modalCountry">
+        <h2 class="modalProduct__title">Inglaterra</h2>
+        <button
+          type="button"
+          class="btn modalProduct d-flex align-items-center justify-content-center"
+          data-bs-toggle="modal"
+          data-bs-target="#modalInglaterra"
+          (click)="fetchProducts('inglaterra')"
+        >
+          <img
+            src="../../../assets/images/products/Background_img/Inglaterra.webp"
+            alt="inglaterra"
+            style="width: 360px"
+          />
+        </button>
+      </div>
+      <div>
+        <div
+          class="modal fade cardContainer"
+          id="modalInglaterra"
+          tabindex="-1"
+          aria-labelledby="modalInglaterraLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modalInglaterraLabel">
+                  Selección de Inglaterra
+                </h2>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  *ngIf="loading"
+                  class="loading-spinner d-flex flex-row align-items-center justify-content-center gap-3"
+                >
+                  <app-loading-spinner></app-loading-spinner>
+                  <p>Cargando productos...</p>
+                </div>
+                <div
+                  *ngIf="!loading"
+                  class="d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+                >
+                  <app-card-product
+                    *ngFor="let product of filteredProducts"
+                    [product]="product"
+                    (addToCart)="handleAddToCart($event)"
+                  ></app-card-product>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-4 p-0 mx-2 my-3 d-flex flex-row align-items-center justify-content-center modalTrigger"
+    >
+      <div class="modalCountry">
+        <h2 class="modalProduct__title">Uruguay</h2>
+        <button
+          type="button"
+          class="btn modalProduct d-flex align-items-center justify-content-center"
+          data-bs-toggle="modal"
+          data-bs-target="#modalUruguay"
+          (click)="fetchProducts('uruguay')"
+        >
+          <img
+            src="../../../assets/images/products/Background_img/Uruguay.webp"
+            alt="uruguay"
+            style="width: 360px"
+          />
+        </button>
+      </div>
+      <div>
+        <div
+          class="modal fade cardContainer"
+          id="modalUruguay"
+          tabindex="-1"
+          aria-labelledby="modalUruguayLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modalUruguayLabel">
+                  Selección de Uruguay
+                </h2>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  *ngIf="loading"
+                  class="loading-spinner d-flex flex-row align-items-center justify-content-center gap-3"
+                >
+                  <app-loading-spinner></app-loading-spinner>
+                  <p>Cargando productos...</p>
+                </div>
+                <div
+                  *ngIf="!loading"
+                  class="d-flex flex-wrap flex-row align-items-stretch justify-content-evenly"
+                >
+                  <app-card-product
+                    *ngFor="let product of filteredProducts"
+                    [product]="product"
+                    (addToCart)="handleAddToCart($event)"
+                  ></app-card-product>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

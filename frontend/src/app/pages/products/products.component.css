@@ -1,0 +1,12 @@
+/* products.component.css */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  /* Adjust as needed */
+  font-size: 1.5em;
+  /* Adjust as needed */
+  color: var(--greenCart);
+  /* Bootstrap primary color */
+}
