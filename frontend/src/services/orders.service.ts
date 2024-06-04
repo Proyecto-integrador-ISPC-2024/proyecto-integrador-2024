@@ -1,32 +1,37 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Order } from '../interfaces/order';
+import { Pedido, EstadoPedido } from '../interfaces/order';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class OrdersService {
-  constructor(private apiService: ApiService) {}
+  private baseUrl = 'https://6656d1989f970b3b36c6a331.mockapi.io/pedidos';
 
-  // Get/Read
-  getOrder = (url: string): Observable<Order> => {
-    return this.apiService.get(url);
-  };
+  constructor(private http: HttpClient) {}
 
-  // Create
-  addOrder = (url: string, body: Order): Observable<Order> => {
-    return this.apiService.post(url, body, {});
-  };
+  private transformOrder(order: any): Pedido {
+    return {
+      ...order,
+      status: order.status as EstadoPedido
+    };
+  }
 
-  // Update
-  editOrder = (url: string, body: Order): Observable<Order> => {
-    return this.apiService.put(url, body, {});
-  };
+  getAllOrders(): Observable<Pedido[]> {
+    return this.http.get<Pedido[]>(this.baseUrl).pipe(
+      map(orders => orders.map(order => this.transformOrder(order)))
+    );
+  }
 
-  // Delete
-  deleteOrder = (url: string): Observable<Order> => {
-    return this.apiService.delete(url, {});
-  };
+  getOrder(id: number): Observable<Pedido> {
+    return this.http.get<Pedido>(`${this.baseUrl}/${id}`).pipe(
+      map(order => this.transformOrder(order))
+    );
+  }
+
+  cancelOrder(id: number, order: Pedido): Observable<Pedido> {
+    return this.http.put<Pedido>(`${this.baseUrl}/${id}`, order);
+  }
 }
-

@@ -7,13 +7,14 @@
   address: string;
   password: string;
   role: string
-}
- */
+}*/
 export class User {
   name: string = "";
   lastName: string = "";
   address: string = "";
-  password: string = "";
   email: string = "";
+  password: string = "";
+  userName: string = "";
+  role: string = "cliente";
   id: number = 0;
 }

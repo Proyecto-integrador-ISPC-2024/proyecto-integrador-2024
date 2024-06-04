@@ -130,8 +130,18 @@ export class RegisterFormComponent {
     event.preventDefault;
     if (this.form.valid) {
       console.log("Enviando formulario...");
-      //this.isSubmitting = true;
-      this.authService.createUser(this.form.value as User).subscribe(
+      const newUser: User = {
+        name: this.form.get('name')?.value,
+        lastName: this.form.get('lastName')?.value,
+        email: this.form.get('email')?.value,
+        userName: this.form.get('email')?.value, 
+        address: this.form.get('address')?.value,
+        password: this.form.get('password1')?.value, 
+        role: 'cliente',
+        id: 0
+      };
+
+      this.authService.createUser(newUser).subscribe(
         (data: User) => {
           console.log(data.id);
           console.log(this.form.value as User)
