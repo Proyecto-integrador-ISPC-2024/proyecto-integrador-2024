@@ -7,8 +7,7 @@
   address: string;
   password: string;
   role: string
-}
- */
+}*/
 export class User {
   name: string = "";
   lastName: string = "";
