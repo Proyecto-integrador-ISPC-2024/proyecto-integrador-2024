@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Pedido, EstadoPedido } from '../../../interfaces/order';
+import { Order, EstadoPedido } from '../../../interfaces/order';
 
 @Component({
   selector: 'app-order-management',
@@ -10,7 +10,7 @@ import { Pedido, EstadoPedido } from '../../../interfaces/order';
   styleUrls: ['./order-management.component.css']
 })
 export class OrderManagementComponent {
-  @Input() orders: Pedido[] = [];
+  @Input() orders: Order[] = [];
   @Output() cancelOrder = new EventEmitter<number>();
   @Output() searchOrderById = new EventEmitter<number>();
 
@@ -20,15 +20,15 @@ export class OrderManagementComponent {
     { title: 'Historial de pedidos', isHistory: true, active: false }
   ];
 
-  get filteredOrders(): Pedido[] {
+  get filteredOrders(): Order[] {
     return this.showOrderHistory ? this.orders : this.nonCancelledOrders;
   }
 
-  get nonCancelledOrders(): Pedido[] {
-    return this.orders.filter(order => order.status === EstadoPedido.Pending || order.status === EstadoPedido.Accepted);
+  get nonCancelledOrders(): Order[] {
+    return this.orders.filter(order => order.status === EstadoPedido.pending || order.status === EstadoPedido.Accepted);
   }
 
-  get cancelledOrders(): Pedido[] {
+  get cancelledOrders(): Order[] {
     return this.orders.filter(order => order.status === EstadoPedido.Cancelled);
   }
 

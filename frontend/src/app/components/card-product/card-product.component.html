@@ -2,7 +2,7 @@
 
 <div *ngIf="product">
   <div class="card productCard my-3 border-top border-bottom" style="width: 18rem">
-    <img src="{{product.productos.imagen}}" class="card-img-top" [alt]="product.productos.nombre_producto" />
+    <img src="{{product.productos.imagen}}" class="card-img-top" [alt]="product.productos.nombre_producto" /> <!-- Acá hay que cambiar el link de alojamiento de las imágenes por cuestiones del CORS no se renderizan acordemente -->
     <div class="card-body d-flex flex-column justify-content-evenly">
       <h5 class="card-title">{{ product.productos.nombre_producto }}</h5>
       <ul>

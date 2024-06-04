@@ -1,5 +1,5 @@
 export enum EstadoPedido {
-  Pending = 'Pendiente',
+  pending = 'Pendiente',
   Accepted = 'Aceptado',
   Cancelled = 'Cancelado',
 }
