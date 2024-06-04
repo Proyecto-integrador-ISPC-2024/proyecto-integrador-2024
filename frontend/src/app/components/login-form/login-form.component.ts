@@ -96,7 +96,10 @@ export class LoginFormComponent {
 
 }
 
-/*@Component({
+
+
+/* modelo en progreso
+@Component({
   standalone: true,
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
