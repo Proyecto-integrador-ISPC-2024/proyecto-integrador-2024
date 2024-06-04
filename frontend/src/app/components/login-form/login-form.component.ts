@@ -6,7 +6,35 @@ import { HttpClient } from '@angular/common/http';
 import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
 import { RegisterFormComponent } from '../register-form/register-form.component';
 import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
+@Component({
+  standalone: true,
+  selector: 'app-login',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.css'],
+  imports: [CommonModule, FormsModule]
+})
+export class LoginFormComponent {
+  email: string = '';
+  password: string = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+ login() {
+    this.authService.login(this.email, this.password).subscribe({
+      next: () => {
+        alert('Autenticación exitosa');
+        this.router.navigate(['/protected']);
+      },
+      error: err => {
+        alert('Error de autenticación: ' + (err.error.message || 'Ocurrió un error'));
+      }
+    });
+  }
+}
+
+/*
 @Component({
   selector: 'app-login-form',
   standalone: true,
@@ -49,7 +77,7 @@ export class LoginFormComponent {
       // Verificar si el correo y la contraseña coinciden con los valores predefinidos para poder avanzar hasta conectar el backend
       if (email === 'q@prueba.com' && password === 'Prueba123*') {
         alert('Ingreso exitoso con usuario predeterminado.');
-        this.router.navigate(['#dashboard']);
+        this.router.navigate(['dashboard']);
         return;
       }
 
@@ -62,7 +90,7 @@ export class LoginFormComponent {
             if (response.email && response.password && response.email === email && response.password === password) {
               alert('Bienvenido ' + response.email);
               this.loginSuccess.emit(response); // Emitir evento en caso de éxito
-              this.router.navigate(['#dashboard']);
+              this.router.navigate(['dashboard']);
             } else {
               this.loginAttempts++;
               if (this.loginAttempts >= this.maxLoginAttempts) {
@@ -89,11 +117,8 @@ export class LoginFormComponent {
   }
 
   registerForm() {
-    this.router.navigate(['#register-form']);
+    this.router.navigate(['register-form']);
   }
 
 }
-
-/*
-
 */
