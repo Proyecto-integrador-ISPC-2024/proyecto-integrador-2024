@@ -1,50 +1,99 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Product } from '../../../interfaces/product';
+import { NgFor } from '@angular/common';
+import { EstadoPedido, Order } from '../../../interfaces/order';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-cart-resume',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgFor],
   templateUrl: './cart-resume.component.html',
-  styleUrl: './cart-resume.component.css'
+  styleUrl: './cart-resume.component.css',
 })
-export class CartResumeComponent {
+export class CartResumeComponent implements OnChanges {
+  private ordersUrl = 'https://6656d1989f970b3b36c6a331.mockapi.io/pedidos';
+  @Input() cartResume: Product[] = [];
+  @Input() totalPrice: number = 0;
+  @Input() paymentMethods: string[] = [];
+  @Output() clearCartEvent = new EventEmitter<void>();
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['cartResume']) {
+      this.calculateTotalPrice();
+    }
+  }
+
+  private calculateTotalPrice(): void {
+    this.totalPrice = this.cartResume.reduce(
+      (sum, product) => sum + product.productos.precio * product.cantidad,
+      0
+    );
+  }
+
   formBuilder = inject(FormBuilder);
+  apiService = inject(ApiService);
+
   formGroup = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email], []],
-    phone: ['', Validators.required],
-    address: ['', Validators.required],
     payment: ['', Validators.required],
-    terms: ['', Validators.requiredTrue]
-  })
+    terms: ['', Validators.requiredTrue],
+  });
 
   clickRegister(): void {
-    const name = this.formGroup.controls.name.value;
-    const email = this.formGroup.controls.email.value;
-    const phone = this.formGroup.controls.phone.value;
-    const address = this.formGroup.controls.address.value;
-    const payment = this.formGroup.controls.payment.value;
-    const terms = this.formGroup.controls.terms.value;
-    console.log(name);
-    console.log(email);
-    console.log(phone);
-    console.log(address)
-    console.log(payment);
-    console.log(terms);
+    const formValues = this.formGroup.value;
+    if (this.formGroup.valid) {
+      this.createOrder(formValues);
+    }
+  }
+
+  createOrder(formValues: any): void {
+    const userId = 1;
+    const createdAt = new Date().toLocaleString();
+    const order: Order = {
+      id: 0,
+      id_usuario: userId,
+      fecha_creacion: createdAt,
+      id_productos: this.cartResume.map(
+        (product) => product.id_producto_talle!
+      ),
+      status: EstadoPedido.pending,
+      amount: this.cartResume.map((product) => product.cantidad),
+      subtotal: this.cartResume.map(
+        (product) => product.productos.precio * product.cantidad
+      ),
+      precio_total: this.totalPrice,
+      metodo_pago: formValues.payment,
+    };
+
+    this.apiService.post<Order>(this.ordersUrl, order).subscribe({
+      next: (createdOrder) => {
+        console.log('Order created successfully:', createdOrder);
+        alert('Order created successfully!');
+        this.clearCart();
+      },
+      error: (error) => {
+        console.error('Error creating order:', error);
+        alert('Failed to create order.');
+      },
+    });
+  }
+
+  clearCart(): void {
+    this.cartResume = [];
+    this.clearCartEvent.emit();
   }
 
   onEnviar(event: Event) {
-    console.log(this.formGroup.value)
-    event.preventDefault;
+    event.preventDefault();
     if (this.formGroup.valid) {
-      alert("Enviando formulario al servidor...")
-    }
-    else {
-      this.formGroup.markAllAsTouched(),
-        alert("Por favor, complete todos los campos.");
+      this.clickRegister();
+    } else {
+      this.formGroup.markAllAsTouched();
+      alert('Por favor, complete todos los campos.');
     }
   }
-
-
 }
+

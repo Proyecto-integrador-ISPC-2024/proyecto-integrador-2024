@@ -1,0 +1,36 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+<div *ngIf="product">
+  <div class="card productCard my-3 border-top border-bottom" style="width: 18rem">
+    <img src="{{product.productos.imagen}}" class="card-img-top" [alt]="product.productos.nombre_producto" /> <!-- Acá hay que cambiar el link de alojamiento de las imágenes por cuestiones del CORS no se renderizan acordemente -->
+    <div class="card-body d-flex flex-column justify-content-evenly">
+      <h5 class="card-title">{{ product.productos.nombre_producto }}</h5>
+      <ul>
+        <li class="bold">Precio: ${{ product.productos.precio }}</li>
+        <li class="dropdown">
+          <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Talles disponibles
+          </button>
+          <ul class="dropdown-menu">
+            <li *ngFor="let size of product.talles.talles; let i = index">
+              <button class="dropdown-item" (click)="selectSize(size, i)">
+                {{ size }} (Stock: {{ product.talles.stock[i] }})
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <p *ngIf="isInCart()">El producto está en el carrito</p>
+      <p *ngIf="product.talleSeleccionado">Talle seleccionado: {{ product.talleSeleccionado }}</p>
+
+      <button type="submit" class="btn btn-success" (click)="addProductToCart()" [disabled]="isInCart()">
+        Agregar al carro
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="!product" class="w-100">
+  <h3>No hay productos disponibles de este país por el momento</h3>
+  <p>Podés seguir explorando nuestros otros productos</p>
+</div>

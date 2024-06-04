@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PaymentsComponent } from '../../components/payments/payments.component';
 import { CartResumeComponent } from '../../components/cart-resume/cart-resume.component';
 import { CartListComponent } from '../../components/cart-list/cart-list.component';
+import { Product } from '../../../interfaces/product';
+import { CartService } from '../../../services/cart.service';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,4 +13,59 @@ import { CartListComponent } from '../../components/cart-list/cart-list.componen
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
-export class CartComponent {}
+export class CartComponent implements OnInit {
+  cartItems: Product[] = [];
+  paymentMethods: string[] = [];
+
+  constructor(
+    private cartService: CartService,
+    private apiService: ApiService
+  ) {}
+
+  ngOnInit(): void {
+    this.cartService.cartItems$.subscribe((cartItems) => {
+      this.cartItems = cartItems;
+    });
+  }
+
+  getTotalPrice(): number {
+    return this.cartItems.reduce(
+      (total, item) => total + item.productos.precio * item.cantidad,
+      0
+    );
+  }
+
+  handleCartUpdate(updatedCartItems: Product[]): void {
+    this.cartService.setCartItems(updatedCartItems);
+  }
+
+  removeProduct(product: Product): void {
+    this.cartService.removeFromCart(product);
+  }
+
+  updateProductQuantity(product: Product, quantity: number): void {
+    const existingProduct = this.cartItems.find(
+      (item) => item.id_producto_talle === product.id_producto_talle
+    );
+
+    if (existingProduct) {
+      const difference = quantity - existingProduct.cantidad;
+      this.cartService.updateStock(existingProduct, -difference);
+      existingProduct.cantidad = quantity;
+      this.cartService.setCartItems([...this.cartItems]);
+    }
+  }
+
+  getPaymentMethods(): void {
+    this.apiService
+      .get<string[]>('payment-methods-endpoint')
+      .subscribe((methods) => {
+        this.paymentMethods = methods;
+      });
+  }
+
+  clearCart(): void {
+    this.cartItems = [];
+    this.cartService.setCartItems(this.cartItems);
+  }
+}

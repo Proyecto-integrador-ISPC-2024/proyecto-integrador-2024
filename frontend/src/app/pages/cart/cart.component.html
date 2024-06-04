@@ -1,10 +1,15 @@
 <h1 class="mx-5 mb-3 mainTitle">Tus camisetas:</h1>
-<section id="cart-container" class="container-fluid d-flex align-items-start justify-content-evenly flex-wrap flex-row">
+<section
+  id="cart-container"
+  class="container-fluid d-flex align-items-start justify-content-evenly flex-wrap flex-row"
+>
   <div class="col-xs-10 col-sm-10 col-md-7 mx-1 container container-fluid">
-    <app-cart-list />
+    <app-cart-list [cartList]="cartItems" (cartUpdated)="handleCartUpdate($event)"/>
   </div>
-  <div class="col-xs-10 col-sm-10 col-md-4 mx-1 container container-fluid d-flex flex-column justify-content-between">
-    <app-cart-resume />
+  <div
+    class="col-xs-10 col-sm-10 col-md-4 mx-1 container container-fluid d-flex flex-column justify-content-between"
+  >
+    <app-cart-resume [cartResume]="cartItems" [totalPrice]="getTotalPrice()" [paymentMethods]="paymentMethods" (clearCartEvent)="clearCart()"/>
     <app-payments />
   </div>
 </section>
