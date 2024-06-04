@@ -40,9 +40,12 @@ export class CartService {
     );
 
     if (productIndex !== -1) {
-      const stockIndex = product.talles.talles.indexOf(product.talleSeleccionado);
-      if (stockIndex !== -1) {
-        product.talles.stock[stockIndex] += quantity;
+      const sizeIndex = product.talles.findIndex(
+        (talle) => talle.talle === product.talleSeleccionado
+      );
+
+      if (sizeIndex !== -1) {
+        product.talles[sizeIndex].stock += quantity;
       }
     }
   }

@@ -70,7 +70,7 @@ export class CartResumeComponent implements OnChanges {
 
     this.apiService.post<Order>(this.ordersUrl, order).subscribe({
       next: (createdOrder) => {
-        console.log('Order created successfully:', createdOrder);
+        // console.log(createdOrder);
         alert('Order created successfully!');
         this.clearCart();
       },
