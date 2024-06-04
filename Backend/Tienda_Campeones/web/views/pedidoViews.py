@@ -68,15 +68,19 @@ class PedidosViewSet(viewsets.ModelViewSet):
     
    
     
-    
     @action(detail=False, methods=['get'])   
-    def listar_metodopago(self,request):  
-        queryset = FormasDePago.objects.all()
-        serializer = metodopagoListSerializer(queryset, many=True) 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def listar_metodopago(self, request):  
+   
+     formas_de_pago = FormasDePago.objects.all()
     
-    @action(detail=False, methods=['get'])
-    def listar_detalle(self,request):
-        queryset = DetallesPedido.objects.all()
-        serializer=DetallesPedidoSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # Obtener todas las tarjetas
+     tarjetas = Tarjetas.objects.all()
+     formas_de_pago_serializer = MetodoPagoListSerializer(formas_de_pago, many=True)
+     tarjetas_serializer = TarjetaSerializer(tarjetas, many=True)
+    
+    # Combinar los resultados en un diccionario
+     data = {
+        'formas_de_pago': formas_de_pago_serializer.data,
+        'tarjetas': tarjetas_serializer.data
+    }
+     return Response(data, status=status.HTTP_200_OK)

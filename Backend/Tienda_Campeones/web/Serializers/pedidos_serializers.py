@@ -7,6 +7,7 @@ from django.db import transaction
 
 
 class TarjetaSerializer(serializers.ModelSerializer):
+    
 
     class Meta:
         model = Tarjetas    
@@ -104,12 +105,11 @@ class PedidosSerializer(serializers.ModelSerializer):
             return pedido
 
     
-class metodopagoListSerializer(serializers.ModelSerializer):
-    tarjetas = TarjetaSerializer( read_only=True)
+class MetodoPagoListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FormasDePago
-        fields = '__all__'
+        fields = ('id_forma_de_pago', 'descripcion')
         
         
         
