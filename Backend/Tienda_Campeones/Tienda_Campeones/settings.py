@@ -96,9 +96,9 @@ DATABASES = {
        'ENGINE': 'django.db.backends.mysql',
        'NAME': 'campeones',
        'USER': 'root',
-       'PASSWORD': 'root',
-       'HOST': 'prueba1',
-       'PORT': '3308',
+       'PASSWORD': '****',
+       'HOST': 'localhost',
+       'PORT': '3306',
        'OPTIONS': {
           'sql_mode': 'traditional',
             }

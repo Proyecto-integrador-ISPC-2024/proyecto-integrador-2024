@@ -8,33 +8,7 @@ import { RegisterFormComponent } from '../register-form/register-form.component'
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 
-@Component({
-  standalone: true,
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.css'],
-  imports: [CommonModule, FormsModule]
-})
-export class LoginFormComponent {
-  email: string = '';
-  password: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
-
- login() {
-    this.authService.login(this.email, this.password).subscribe({
-      next: () => {
-        alert('Autenticación exitosa');
-        this.router.navigate(['/protected']);
-      },
-      error: err => {
-        alert('Error de autenticación: ' + (err.error.message || 'Ocurrió un error'));
-      }
-    });
-  }
-}
-
-/*
 @Component({
   selector: 'app-login-form',
   standalone: true,
@@ -121,4 +95,29 @@ export class LoginFormComponent {
   }
 
 }
-*/
+
+/*@Component({
+  standalone: true,
+  selector: 'app-login-form',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.css'],
+  imports: [CommonModule, FormsModule]
+})
+export class LoginFormComponent {
+  email: string = '';
+  password: string = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+ login() {
+    this.authService.login(this.email, this.password).subscribe({
+      next: () => {
+        alert('Autenticación exitosa');
+        this.router.navigate(['/protected']);
+      },
+      error: err => {
+        alert('Error de autenticación: ' + (err.error.message || 'Ocurrió un error'));
+      }
+    });
+  }
+}*/
