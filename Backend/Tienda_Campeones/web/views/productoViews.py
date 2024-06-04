@@ -6,41 +6,80 @@ from rest_framework import status
 from rest_framework.decorators import action
 from web.models import ProductosTalles,Productos,Talles
 from web.Serializers.productos_serializers import *
+from rest_framework.permissions import IsAdminUser
 
 
+# class ProductosViewSet(viewsets.ModelViewSet):
+   
+#     queryset = ProductosTalles.objects.all()
+#     permission_classes = [permissions.AllowAny]
+    
+#     def get_serializer_class(self):
+#         if self.action == 'list':
+#             pais = self.request.query_params.get('pais', None)
+#             if pais:
+#                 return ProductosDetallesSerializer
+#             return ListproductsSerializer
+#         elif self.action in ['update', 'partial_update','retrieve']:
+#             return ProductosTallesUpdateSerializer
+#         return ProductosTallescreateSerializer
+    
+    
+#     def get_queryset(self):
+#          queryset = self.queryset  # Asigna el queryset inicial
+#          pais = self.request.query_params.get('pais', None)
+#          if pais is None:
+#              return self.get_serializer().Meta.model.objects.all()
+#          else:
+#             queryset = queryset.filter(id_producto__nombre_producto__icontains=pais)
+#             unique_products = []
+#             seen_ids = set()
+    
+#             for product in queryset:
+#               if product.id_producto not in seen_ids:
+#                unique_products.append(product)
+#                seen_ids.add(product.id_producto)
+#             return unique_products
+#          return queryset
 class ProductosViewSet(viewsets.ModelViewSet):
    
     queryset = ProductosTalles.objects.all()
-    permission_classes = [permissions.AllowAny]
     
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'retrieve', 'destroy','create_talle']:
+            self.permission_classes = [IsAdminUser]
+        else:
+            self.permission_classes = [permissions.AllowAny]
+        return super().get_permissions()
+
     def get_serializer_class(self):
         if self.action == 'list':
             pais = self.request.query_params.get('pais', None)
             if pais:
                 return ProductosDetallesSerializer
             return ListproductsSerializer
-        elif self.action in ['update', 'partial_update','retrieve']:
+        elif self.action in ['update', 'partial_update', 'retrieve']:
             return ProductosTallesUpdateSerializer
         return ProductosTallescreateSerializer
-    
-    
+
     def get_queryset(self):
-         queryset = self.queryset  # Asigna el queryset inicial
-         pais = self.request.query_params.get('pais', None)
-         if pais is None:
-             return self.get_serializer().Meta.model.objects.all()
-         else:
-            queryset = queryset.filter(id_producto__nombre_producto__icontains=pais)
-            unique_products = []
-            seen_ids = set()
-    
-            for product in queryset:
-              if product.id_producto not in seen_ids:
-               unique_products.append(product)
-               seen_ids.add(product.id_producto)
-            return unique_products
-         return queryset
+        queryset = self.queryset
+        pais = self.request.query_params.get('pais', None)
         
+        if self.action == 'list':
+            if pais:
+                queryset = queryset.filter(id_producto__nombre_producto__icontains=pais)
+                unique_products = []
+                seen_ids = set()
+        
+                for product in queryset:
+                    if product.id_producto not in seen_ids:
+                        unique_products.append(product)
+                        seen_ids.add(product.id_producto)
+                return unique_products
+            else:
+                return self.get_serializer().Meta.model.objects.all()
+        return queryset   
         
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

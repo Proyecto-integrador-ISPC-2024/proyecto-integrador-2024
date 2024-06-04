@@ -1,11 +1,12 @@
 
 from django.contrib import admin
 from django.urls import path,include
+from web.routers import router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('productos/',include('web.routers')),
-    path('pedidos/',include('web.routers')),
+    path('', include(router.urls)),
+   
     
 ]
 
