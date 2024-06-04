@@ -12,9 +12,9 @@
             Talles disponibles
           </button>
           <ul class="dropdown-menu">
-            <li *ngFor="let size of product.talles.talles; let i = index">
-              <button class="dropdown-item" (click)="selectSize(size, i)">
-                {{ size }} (Stock: {{ product.talles.stock[i] }})
+            <li *ngFor="let talle of product.talles">
+              <button class="dropdown-item" (click)="selectSize(talle.talle, talle.stock)">
+                {{ talle.talle }} (Stock: {{ talle.stock }})
               </button>
             </li>
           </ul>
