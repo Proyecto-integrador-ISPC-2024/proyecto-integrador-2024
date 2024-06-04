@@ -21,10 +21,7 @@ export class CardProductComponent {
       nombre_producto: '',
       precio: 0,
     },
-    talles: {
-      talles: [],
-      stock: [],
-    },
+    talles: [],
     cantidad: 1,
     talleSeleccionado: '',
     stockSeleccionado: 0,
@@ -35,11 +32,11 @@ export class CardProductComponent {
   selectedSize: string = '';
   selectedStock: number = 0;
 
-  selectSize(size: string, index: number): void {
+  selectSize(size: string, stock: number): void {
     this.selectedSize = size;
-    this.selectedStock = this.product.talles.stock[index];
+    this.selectedStock = stock;
     this.product.talleSeleccionado = size;
-    this.product.stockSeleccionado = this.product.talles.stock[index];
+    this.product.stockSeleccionado = stock;
   }
 
   addProductToCart(): void {
@@ -55,7 +52,7 @@ export class CardProductComponent {
       cantidad: 1,
     };
 
-    console.log('Buying:', productToCart);
+    // console.log(productToCart);
     this.addToCart.emit(productToCart);
   }
 

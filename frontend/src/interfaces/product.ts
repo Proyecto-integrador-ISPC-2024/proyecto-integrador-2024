@@ -1,19 +1,17 @@
-
+// product.ts
 export interface Product {
-  id_producto_talle?: number;
-
+  id_producto_talle: number;
   productos: {
     id_producto: number;
-    imagen: string;
     nombre_producto: string;
     precio: number;
+    imagen: string;
   };
-
-  talles: {
-    talles: string[];
-    stock: number[];
-  };
-
+  talles: Array<{
+    id_talle: number;
+    talle: string;
+    stock: number;
+  }>;
   cantidad: number;
   talleSeleccionado: string;
   stockSeleccionado: number;
