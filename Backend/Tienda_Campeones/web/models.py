@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator
 # Create your models here.
 class DetallesPedido(models.Model):
     id_detalle = models.AutoField(db_column='ID_detalle', primary_key=True) 
-    id_pedido = models.ForeignKey('Pedidos', models.DO_NOTHING, db_column='ID_pedido')  
+    id_pedido = models.ForeignKey('Pedidos', related_name='detalles', on_delete=models.CASCADE, db_column='ID_pedido')  
     id_producto = models.ForeignKey('Productos', models.DO_NOTHING, db_column='ID_producto')  
     id_talle= models.ForeignKey('Talles', models.DO_NOTHING, db_column='ID_talle')  
     cantidad = models.IntegerField(db_column='Cantidad')  
@@ -17,7 +17,7 @@ class DetallesPedido(models.Model):
         verbose_name_plural = 'Detalles de pedidos'
         
     def __str__(self):
-     return f"DETALLE DEL PEDIDO : ID: {self.id_detalle}, ID DEL PEDIDO: {self.id_pedido.id_pedido}, ID DEL PRODUCTO: {self.id_producto.id_producto},TALLE: {self.id_talle.talle}, Cantidad comprada: {self.cantidad}, Subtotal: {self.subtotal}"
+     return f"DETALLE DEL PEDIDO : ID: {self.id_detalle}, ID DEL PEDIDO: {self.id_pedido.id_pedido}, ID DEL PRODUCTO: {self.id_producto.id_producto},TALLE: {self.id_talle.id_talle}, Cantidad comprada: {self.cantidad}, Subtotal: {self.subtotal}"
 
 
 class FormasDePago(models.Model):
@@ -35,7 +35,7 @@ class FormasDePago(models.Model):
 
 class FormasDepagoPedidos(models.Model):
     id_forma_depago_pedidos = models.AutoField(db_column='ID_Forma_depago_Pedidos', primary_key=True) 
-    id_pedido = models.ForeignKey('Pedidos', models.DO_NOTHING, db_column='ID_pedido')  
+    id_pedido = models.ForeignKey('Pedidos', related_name='forma_de_pago', on_delete=models.CASCADE, db_column='ID_pedido')  
     id_forma_de_pago = models.ForeignKey(FormasDePago, models.DO_NOTHING, db_column='ID_forma_de_pago') 
     id_tarjeta = models.ForeignKey('Tarjetas', models.DO_NOTHING, db_column='ID_tarjeta', blank=True, null=True)         
 
@@ -65,7 +65,7 @@ class Pedidos(models.Model):
         db_table = 'pedidos'
         verbose_name_plural = 'Pedidos'
     def __str__(self):
-        return f"PEDIDO ID:{self.id_pedido}, Fecha: {self.fecha}, ID_usuario: {self.usuarios.id_usuario}, Total: {self.total}, Estado:{self.estado})"
+        return f"PEDIDO ID:{self.id_pedido}, Fecha: {self.fecha}, ID_usuario: {self.id_usuario.id_usuario}, Total: {self.total}, Estado:{self.estado})"
     
 
 

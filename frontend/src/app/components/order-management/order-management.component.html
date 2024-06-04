@@ -1,105 +1,83 @@
-<section>
+<section class="container-fluid">
   <h2 class="my-3">Gestión de pedidos</h2>
-  <div class="mb-4">
-    <form>
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Buscar pedido..."
-          aria-label="Buscar orden"
-          aria-describedby="button-addon2"
-        />
-        <button class="btn btn-success" type="button" id="button-addon2">
-          Buscar
-        </button>
-      </div>
-    </form>
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <form class="d-flex" (submit)="onSearch(searchInput.value); $event.preventDefault()">
+        <input #searchInput type="text" class="form-control me-2" placeholder="Buscar pedido por N° de orden...">
+        <button class="btn btn-success" type="submit">Buscar</button>
+      </form>
+    </div>
   </div>
   <div class="card text-center products-summary-card">
-    <div class="card-header">
+    <div class="card-header d-flex justify-content-between">
       <ul class="nav nav-tabs card-header-tabs align-items-end">
-        <li class="nav-item m-0">
-          <a
-            class="nav-link py-2 px-3 text-center btn-block btn-custom"
-            href="#"
-            style="color: #ffffff; background-color: #21ad6c"
-            >Resumen de pedidos</a
-          >
-        </li>
-        <li class="nav-item m-0">
-          <a
-            class="nav-link py-2 px-3 text-center btn-block btn-custom"
-            href="#"
-            style="color: #ffffff; background-color: #166b43"
-            >Historial de pedidos</a
-          >
+        <li *ngFor="let tab of tabs" class="nav-item m-0">
+          <button class="nav-link py-2 px-3 text-center btn-block btn-custom"
+             [style.color]="tab.active ? '#ffffff' : '#ffffff'"
+             [style.backgroundColor]="tab.active ? (tab.isHistory ? '#21ad6c' : '#21ad6c') : '#166b43'"
+             (click)="toggleOrderHistory(tab.isHistory)">
+            {{ tab.title }}
+          </button>
         </li>
       </ul>
     </div>
-
-    <div class="card-body">
-      <div
-        class="card d-flex flex-column justify-content-between align-items-start p-3"
-      >
-        <div
-          class="w-100 d-flex flex-row align-items-center justify-content-start p-2"
-        >
-          <h4>Orden N°12345</h4>
-        </div>
-        <div
-          class="w-100 d-flex flex-column flex-md-row flex-wrap align-items-stretch justify-content-between"
-        >
-          <div class="border-bottom border-md-end w-100">
-            <ul class="list-group list-group-flush">
-              <li
-                class="list-group-item d-flex flex-row align-items-center justify-content-between py-1 my-1"
-              >
-                <span>Camiseta Argentina 2022</span>
-                <span>$12345</span>
-              </li>
-              <li
-                class="list-group-item d-flex flex-row align-items-center justify-content-between py-1 my-1"
-              >
-                <span>Camiseta Argentina 2018</span>
-                <span>$12345</span>
-              </li>
-              <li
-                class="list-group-item d-flex flex-row align-items-center justify-content-between py-1 my-1"
-              >
-                <span>Camiseta Argentina 2014</span>
-                <span>$12345</span>
-              </li>
-            </ul>
-          </div>
-          <div class="border-md-start w-100 my-3">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item m-0">
-                <h6 class="text-start my-1 fs-5">Datos de entrega:</h6>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item my-1">
-                    <h6>Fecha estimada de entrega:</h6>
-                    <p>A definir | 18/10/1998 | Entregado</p>
-                  </li>
-                  <li class="list-group-item my-1">
-                    <h6>Estado:</h6>
-                    <p>Pendiente/Enviando/Entregado</p>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+    <div class="card-body" *ngIf="!showOrderHistory">
+      <div class="order-card card p-4 mb-4" *ngFor="let order of filteredOrders">
+        <h4 class="order-title">Orden N°{{ order.id }}</h4>
+        <div class="order-details">
+          <p><strong>Cliente:</strong> {{ order.id_usuario }}</p>
+          <p><strong>Total:</strong> {{ order.precio_total | currency }}</p>
+          <p><strong>Fecha de creación:</strong> {{ order.fecha_creacion | date: 'short' }}</p>
+          <p><strong>Estado:</strong> {{ order.status }}</p>
+          <p><strong>Método de Pago:</strong> {{ order.metodo_pago }}</p>
+          <div *ngFor="let producto of order.id_productos; let i = index" class="product-detail mb-3 p-3 border rounded">
+            <h5 class="product-title">Producto {{ i + 1 }}</h5>
+            <div class="product-info">
+              <p class="product-description"><strong>Nombre:</strong> Producto {{ producto }}</p>
+              <p class="product-description"><strong>Cantidad:</strong> {{ order.amount[i] }}</p>
+              <p class="product-description"><strong>Subtotal:</strong> {{ order.subtotal[i] | currency }}</p>
+            </div>
           </div>
         </div>
-        <div class="w-100">
-          <div
-            class="d-flex flex-row align-items-center justify-content-end p-2"
-          >
-            <button type="button" class="btn btn-danger me-2">
-              Eliminar Orden
-            </button>
-            <!-- <button type="button" class="btn btn-primary btn-custom-green">
-              Editar Orden
-            </button> -->
+        <div class="d-flex justify-content-end mt-3 w-100">
+          <button class="btn btn-danger" (click)="onCancelOrder(order.id)">Cancelar Orden</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body" *ngIf="showOrderHistory">
+      <div class="order-card card p-4 mb-4" *ngFor="let order of nonCancelledOrders">
+        <h4 class="order-title">Orden N°{{ order.id }}</h4>
+        <div class="order-details">
+          <p><strong>Cliente:</strong> {{ order.id_usuario }}</p>
+          <p><strong>Total:</strong> {{ order.precio_total | currency }}</p>
+          <p><strong>Fecha de creación:</strong> {{ order.fecha_creacion | date: 'short' }}</p>
+          <p><strong>Estado:</strong> {{ order.status }}</p>
+          <p><strong>Método de Pago:</strong> {{ order.metodo_pago }}</p>
+          <div *ngFor="let producto of order.id_productos; let i = index" class="product-detail mb-3 p-3 border rounded">
+            <h5 class="product-title">Producto {{ i + 1 }}</h5>
+            <div class="product-info">
+              <p class="product-description"><strong>Nombre:</strong> Producto {{ producto }}</p>
+              <p class="product-description"><strong>Cantidad:</strong> {{ order.amount[i] }}</p>
+              <p class="product-description"><strong>Subtotal:</strong> {{ order.subtotal[i] | currency }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="order-card card p-4 mb-4" *ngFor="let order of cancelledOrders">
+        <h4 class="order-title">Orden Cancelada N°{{ order.id }}</h4>
+        <div class="order-details">
+          <p><strong>Cliente:</strong> {{ order.id_usuario }}</p>
+          <p><strong>Total:</strong> {{ order.precio_total | currency }}</p>
+          <p><strong>Fecha de creación:</strong> {{ order.fecha_creacion | date: 'short' }}</p>
+          <p><strong>Estado:</strong> {{ order.status }}</p>
+          <p><strong>Método de Pago:</strong> {{ order.metodo_pago }}</p>
+          <div *ngFor="let producto of order.id_productos; let i = index" class="product-detail mb-3 p-3 border rounded">
+            <h5 class="product-title">Producto {{ i + 1 }}</h5>
+            <div class="product-info">
+              <p class="product-description"><strong>Nombre:</strong> Producto {{ producto }}</p>
+              <p class="product-description"><strong>Cantidad:</strong> {{ order.amount[i] }}</p>
+              <p class="product-description"><strong>Subtotal:</strong> {{ order.subtotal[i] | currency }}</p>
+            </div>
           </div>
         </div>
       </div>
