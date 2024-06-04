@@ -92,8 +92,8 @@ export class ClientDashboardComponent implements OnInit {
   }
 
   toggleOrderHistory(isHistory: boolean) {
-    this.filteredOrders = isHistory 
-      ? this.orders 
-      : this.orders.filter(order => order.status === EstadoPedido.Pending || order.status === EstadoPedido.Accepted);
+    this.filteredOrders = isHistory
+      ? this.orders
+      : this.orders.filter(order => order.status === EstadoPedido.pending || order.status === EstadoPedido.Accepted);
   }
 }
