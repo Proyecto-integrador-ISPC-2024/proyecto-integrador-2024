@@ -32,11 +32,7 @@ export const routes: Routes = [
   { path: '**', component: NotFoundComponent },
 
   {path: 'login', component: LoginFormComponent},
-  
+
   {path: 'registro', component: RegisterFormComponent},
 ];
-/*@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }*/
+

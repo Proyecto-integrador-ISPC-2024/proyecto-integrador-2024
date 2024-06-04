@@ -13,21 +13,32 @@ export class CartItemComponent implements OnInit {
   @Input() product!: Product;
 
   @Output() removeProduct: EventEmitter<Product> = new EventEmitter<Product>();
+  @Output() updateQuantity: EventEmitter<{
+    product: Product;
+    quantity: number;
+  }> = new EventEmitter<{ product: Product; quantity: number }>();
 
   increaseAmount(): void {
-    if (this.product.amount < this.product.stock[1]) {
-      this.product.amount++;
+    if (this.product.cantidad < this.product.stockSeleccionado) {
+      this.product.cantidad++;
+      this.updateQuantity.emit({
+        product: this.product,
+        quantity: this.product.cantidad,
+      });
     }
   }
 
   decreaseAmount(): void {
-    if (this.product.amount > 1) {
-      this.product.amount--;
+    if (this.product.cantidad > 1) {
+      this.product.cantidad--;
+      this.updateQuantity.emit({
+        product: this.product,
+        quantity: this.product.cantidad,
+      });
     }
   }
 
   deleteProduct(): void {
-    console.log(this.product);
     this.removeProduct.emit(this.product);
   }
 
