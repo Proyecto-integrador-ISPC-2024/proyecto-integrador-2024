@@ -116,7 +116,7 @@ CREATE TABLE `detalles_pedido` (
   CONSTRAINT `detalles_pedido_ID_pedido_1c370254_fk_pedidos_ID_pedido` FOREIGN KEY (`ID_pedido`) REFERENCES `pedidos` (`ID_pedido`),
   CONSTRAINT `detalles_pedido_ID_producto_1036b86b_fk_productos_ID_Producto` FOREIGN KEY (`ID_producto`) REFERENCES `productos` (`ID_Producto`),
   CONSTRAINT `detalles_pedido_ID_talle_f1d2ddf4_fk_talles_ID_talle` FOREIGN KEY (`ID_talle`) REFERENCES `talles` (`ID_talle`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,7 +125,7 @@ CREATE TABLE `detalles_pedido` (
 
 LOCK TABLES `detalles_pedido` WRITE;
 /*!40000 ALTER TABLE `detalles_pedido` DISABLE KEYS */;
-INSERT INTO `detalles_pedido` VALUES (1,1,25000,1,1,4),(2,2,50000,2,1,5);
+INSERT INTO `detalles_pedido` VALUES (1,1,25000,1,1,4),(2,2,50000,2,1,5),(3,1,25000,8,1,4),(4,1,25000,9,1,4),(5,2,50000,10,1,5);
 /*!40000 ALTER TABLE `detalles_pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,7 +285,7 @@ CREATE TABLE `formas_depago_pedidos` (
   CONSTRAINT `formas_depago_pedido_ID_forma_de_pago_85580cd3_fk_formas_de` FOREIGN KEY (`ID_forma_de_pago`) REFERENCES `formas_de_pago` (`ID_Forma_de_pago`),
   CONSTRAINT `formas_depago_pedidos_ID_pedido_ffd03ccc_fk_pedidos_ID_pedido` FOREIGN KEY (`ID_pedido`) REFERENCES `pedidos` (`ID_pedido`),
   CONSTRAINT `formas_depago_pedidos_ID_tarjeta_fb9963d1_fk_tarjetas_ID_Tarjeta` FOREIGN KEY (`ID_tarjeta`) REFERENCES `tarjetas` (`ID_Tarjeta`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -294,7 +294,7 @@ CREATE TABLE `formas_depago_pedidos` (
 
 LOCK TABLES `formas_depago_pedidos` WRITE;
 /*!40000 ALTER TABLE `formas_depago_pedidos` DISABLE KEYS */;
-INSERT INTO `formas_depago_pedidos` VALUES (1,1,1,NULL),(2,3,2,3);
+INSERT INTO `formas_depago_pedidos` VALUES (1,1,1,NULL),(2,3,2,3),(3,1,8,NULL),(4,1,9,NULL),(5,1,10,NULL);
 /*!40000 ALTER TABLE `formas_depago_pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,7 +314,7 @@ CREATE TABLE `pedidos` (
   PRIMARY KEY (`ID_pedido`),
   KEY `pedidos_ID_usuario_57dafa54_fk_usuarios_id_usuario` (`ID_usuario`),
   CONSTRAINT `pedidos_ID_usuario_57dafa54_fk_usuarios_id_usuario` FOREIGN KEY (`ID_usuario`) REFERENCES `usuarios` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,7 +323,7 @@ CREATE TABLE `pedidos` (
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` VALUES (1,'2024-05-28',25000,'CANCELADO',1),(2,'2024-05-28',50000,'ACEPTADO',1);
+INSERT INTO `pedidos` VALUES (1,'2024-05-28',25000,'CANCELADO',1),(2,'2024-05-28',50000,'ACEPTADO',1),(8,'2024-06-05',25000,'ACEPTADO',1),(9,'2024-06-05',25000,'ACEPTADO',1),(10,'2024-06-05',50000,'ACEPTADO',1);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -380,7 +380,7 @@ CREATE TABLE `productos_talles` (
 
 LOCK TABLES `productos_talles` WRITE;
 /*!40000 ALTER TABLE `productos_talles` DISABLE KEYS */;
-INSERT INTO `productos_talles` VALUES (4,40,1,4),(5,100,1,5),(8,60,2,3),(9,70,2,4),(10,100,2,5),(13,57,3,3),(14,50,3,4),(15,60,3,5),(18,50,4,3),(19,50,4,4),(20,60,4,5),(23,60,5,3),(24,58,5,4),(25,50,5,5),(28,80,6,3),(29,80,6,4),(30,45,6,5),(33,40,7,3),(34,90,7,4),(35,60,7,5),(38,55,8,3),(39,55,8,4),(40,60,8,5),(43,68,9,3),(44,72,9,4),(45,60,9,5),(48,80,10,3),(49,69,10,4),(50,60,10,5),(53,70,11,3),(54,60,11,4),(55,80,11,5),(58,90,12,3),(59,45,12,4),(60,50,12,5),(63,90,13,3),(64,90,13,4),(65,100,13,5),(68,90,14,3),(69,75,14,4),(70,90,14,5),(73,80,15,3),(74,80,15,4),(75,80,15,5),(78,80,16,3),(79,90,16,4),(80,90,16,5),(83,60,17,3),(84,80,17,4),(85,80,17,5),(88,66,18,3),(89,50,18,4),(90,70,18,5),(93,60,19,3),(94,60,19,4),(95,70,19,5),(98,50,20,3),(99,60,20,4),(100,60,20,5),(113,80,23,3),(114,60,23,4),(115,70,23,5),(118,70,24,3),(119,90,24,4),(120,70,24,5),(123,50,25,3),(124,60,25,4),(125,60,25,5),(128,60,26,3),(129,70,26,4),(130,60,26,5),(133,60,27,3),(134,50,27,4),(135,90,27,5),(138,50,28,3),(139,60,28,4),(140,78,28,5),(143,68,29,3),(144,60,29,4),(145,70,29,5),(148,50,30,3),(149,60,30,4),(150,90,30,5),(153,60,31,3),(154,60,31,4),(155,73,31,5),(158,50,32,3),(159,80,32,4),(160,70,32,5),(163,60,33,3),(164,60,33,4),(165,80,33,5),(168,60,34,3),(169,100,34,4),(170,60,34,5),(183,60,37,3),(184,60,37,4),(185,70,37,5);
+INSERT INTO `productos_talles` VALUES (4,38,1,4),(5,98,1,5),(8,60,2,3),(9,70,2,4),(10,100,2,5),(13,57,3,3),(14,50,3,4),(15,60,3,5),(18,50,4,3),(19,50,4,4),(20,60,4,5),(23,60,5,3),(24,58,5,4),(25,50,5,5),(28,80,6,3),(29,80,6,4),(30,45,6,5),(33,40,7,3),(34,90,7,4),(35,60,7,5),(38,55,8,3),(39,55,8,4),(40,60,8,5),(43,68,9,3),(44,72,9,4),(45,60,9,5),(48,80,10,3),(49,69,10,4),(50,60,10,5),(53,70,11,3),(54,60,11,4),(55,80,11,5),(58,90,12,3),(59,45,12,4),(60,50,12,5),(63,90,13,3),(64,90,13,4),(65,100,13,5),(68,90,14,3),(69,75,14,4),(70,90,14,5),(73,80,15,3),(74,80,15,4),(75,80,15,5),(78,80,16,3),(79,90,16,4),(80,90,16,5),(83,60,17,3),(84,80,17,4),(85,80,17,5),(88,66,18,3),(89,50,18,4),(90,70,18,5),(93,60,19,3),(94,60,19,4),(95,70,19,5),(98,50,20,3),(99,60,20,4),(100,60,20,5),(113,80,23,3),(114,60,23,4),(115,70,23,5),(118,70,24,3),(119,90,24,4),(120,70,24,5),(123,50,25,3),(124,60,25,4),(125,60,25,5),(128,60,26,3),(129,70,26,4),(130,60,26,5),(133,60,27,3),(134,50,27,4),(135,90,27,5),(138,50,28,3),(139,60,28,4),(140,78,28,5),(143,68,29,3),(144,60,29,4),(145,70,29,5),(148,50,30,3),(149,60,30,4),(150,90,30,5),(153,60,31,3),(154,60,31,4),(155,73,31,5),(158,50,32,3),(159,80,32,4),(160,70,32,5),(163,60,33,3),(164,60,33,4),(165,80,33,5),(168,60,34,3),(169,100,34,4),(170,60,34,5),(183,60,37,3),(184,60,37,4),(185,70,37,5);
 /*!40000 ALTER TABLE `productos_talles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -533,4 +533,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-04 23:24:32
+-- Dump completed on 2024-06-05  5:33:50

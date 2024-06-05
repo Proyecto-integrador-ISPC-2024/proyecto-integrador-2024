@@ -144,5 +144,3 @@ class ProductosTallesUpdateSerializer(serializers.ModelSerializer):
             producto_serializer.save()
         instance.save()
         return instance
-
-    
