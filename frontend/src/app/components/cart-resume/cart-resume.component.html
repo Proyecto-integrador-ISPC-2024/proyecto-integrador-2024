@@ -5,14 +5,14 @@
       <h6 class="link-offset-3">Productos:</h6>
       <div class="d-flex flex-row flex-wrap justify-content-between">
         <div class="d-flex flex-column my-3">
-          @for (product of cartResume; track product.id) {
-          <span>{{ product.name }}</span>
+          @for (product of cartResume; track product.id_producto_talle) {
+          <span>{{ product.productos.nombre_producto }}</span>
           }
           <!-- <span *ngFor="let product of cartResume">{{product.name}}</span> -->
         </div>
         <div class="d-flex flex-column my-3">
-          @for (product of cartResume; track product.id) {
-          <span>${{ product.price * product.amount }}</span>
+          @for (product of cartResume; track product.id_producto_talle) {
+          <span>${{ product.productos.precio * product.cantidad }}</span>
           }
           <!-- <span *ngFor="let product of cartResume">{{product.price * product.amount}}</span> -->
         </div>
@@ -32,7 +32,11 @@
       >
         Finalizar compra
       </button>
-      <button type="button" class="btn btn-danger col my-1 mx-3 cartBtn">
+      <button
+        type="button"
+        class="btn btn-danger col my-1 mx-3 cartBtn"
+        (click)="clearCart()"
+      >
         Limpiar carro
       </button>
     </div>
@@ -103,38 +107,6 @@
             </p>
             }
           </div>
-          <!-- <div class="mb-3">
-              <label for="inputTelefono" class="form-label"
-                >Teléfono de contacto</label
-              >
-              <input
-                type="email"
-                class="form-control"
-                id="inputTelefono"
-                aria-describedby="inputTelefono"
-                placeholder="(Código de área) + Número"
-                formControlName="phone"
-              />
-              @if (this.formGroup.controls.phone.hasError('required')) {
-                <p class="text-danger">Por favor, ingresa tu numero de telefono</p>
-            }
-            </div> -->
-          <!-- <div class="mb-3">
-              <label for="inputAddress" class="form-label"
-                >Tu dirección</label
-              >
-              <input
-                type="input"
-                class="form-control"
-                id="inputAddress"
-                aria-describedby="inputAddress"
-                placeholder="Tu dirección"
-                formControlName="address"
-              />
-              @if (this.formGroup.controls.address.hasError('required')) {
-                <p class="text-danger">Por favor, ingresa tu dirección</p>
-            }
-            </div> -->
           <select
             class="my-4 form-select"
             aria-label="Default select example"
@@ -183,7 +155,6 @@
             <button
               type="submit"
               class="btn btn-success mx-1 w-50 cartBtn"
-              (click)="clickRegister()"
               [disabled]="formGroup.invalid"
             >
               Finalizar compra

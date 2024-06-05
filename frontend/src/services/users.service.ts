@@ -12,23 +12,21 @@ export class ProductsService {
 
   // Get/Read
   getUsers = (url: string): Observable<Users> => {
-    return this.apiService.get(url, {
-      responseType: 'json',
-    });
+    return this.apiService.get(url);
   };
 
   // Create
   addProduct = (url: string, body: User): Observable<User> => {
-    return this.apiService.post(url, body, {});
+    return this.apiService.post(url, body);
   };
 
   // Update
   editProduct = (url: string, body: User): Observable<User> => {
-    return this.apiService.put(url, body, {});
+    return this.apiService.put(url, body);
   };
 
   // Delete
   deleteProduct = (url: string): Observable<User> => {
-    return this.apiService.delete(url, {});
+    return this.apiService.delete(url);
   };
 }
