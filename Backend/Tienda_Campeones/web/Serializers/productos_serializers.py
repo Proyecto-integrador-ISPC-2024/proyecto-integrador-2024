@@ -83,7 +83,6 @@ class ProductosTallescreateSerializer(serializers.ModelSerializer):
 class ProductosDetallesSerializer(serializers.ModelSerializer):
     productos=ProductosSerializer(source='id_producto')
     talles = serializers.SerializerMethodField()
-    print(talles)
     class Meta:
         model = ProductosTalles
         fields = ['id_producto_talle','productos', 'talles']
@@ -145,3 +144,5 @@ class ProductosTallesUpdateSerializer(serializers.ModelSerializer):
             producto_serializer.save()
         instance.save()
         return instance
+
+    

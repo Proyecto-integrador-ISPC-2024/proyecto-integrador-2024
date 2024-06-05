@@ -3,6 +3,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from web.models import *
 from users.models import *
+from web.Serializers.productos_serializers import ProductosSerializer
 from django.db import transaction
 
 
@@ -31,7 +32,23 @@ class PedidosPaymentsSerializer(serializers.ModelSerializer):
         model = FormasDepagoPedidos
         fields = [ 'id_forma_de_pago', 'id_tarjeta']
  
-
+class DescripcionpagoSerializer(serializers.ModelSerializer):
+    forma_de_pago_descripcion = serializers.CharField(source='id_forma_de_pago.descripcion', read_only=True)
+    # tarjeta_nombre = serializers.SerializerMethodField()
+    class Meta:
+        model = FormasDepagoPedidos
+        fields = ['forma_de_pago_descripcion']
+        
+    # def get_tarjeta_nombre(self, obj):
+    #     tarjeta = obj.id_tarjeta
+    #     if tarjeta:
+    #         return tarjeta.nombre_tarjeta
+    #     return None
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     if data['tarjeta_nombre'] is None:
+    #         del data['tarjeta_nombre']
+    #     return data 
         
 class PedidosSerializer(serializers.ModelSerializer):
     detalles=DetallesPedidoSerializer (many=True)
@@ -43,7 +60,6 @@ class PedidosSerializer(serializers.ModelSerializer):
         
     def create(self, validated_data):
         detalles_data = validated_data.pop('detalles')
-        #talle= validated_data.pop('talle')
         formaspago=validated_data.pop('forma_de_pago')
         
         validated_data['fecha'] = timezone.now().date()
@@ -52,7 +68,7 @@ class PedidosSerializer(serializers.ModelSerializer):
          
         with transaction.atomic():
             pedido= Pedidos.objects.create(**validated_data)
-        
+            
             
             for detalle_data in detalles_data:
                 talle= detalle_data['id_talle']
@@ -62,9 +78,8 @@ class PedidosSerializer(serializers.ModelSerializer):
                  # Obtengo el stock del producto y el talle correspondiente para verificar la disponibilidad
                 producto_talle = ProductosTalles.objects.filter(id_producto=producto_id, id_talle_id=talle.id_talle).first()
                 if not producto_talle or producto_talle.stock < cantidad:
-                    raise serializers.ValidationError(f"No hay suficiente stock para el producto con ID {producto_id}")
+                    raise serializers.ValidationError(f"Lo sentimos,No hay suficiente stock para este producto con el talle '{talle.talle}'.")
                 
-                print("el pedido es.............: ",pedido)
                 DetallesPedido.objects.create(
                     id_pedido=pedido,
                     id_producto=producto_id,
@@ -106,10 +121,11 @@ class PedidosSerializer(serializers.ModelSerializer):
 
     
 class MetodoPagoListSerializer(serializers.ModelSerializer):
+    Tarjetas = TarjetaSerializer(read_only=True, many=True)
 
     class Meta:
         model = FormasDePago
-        fields = ('id_forma_de_pago', 'descripcion')
+        fields = ('id_forma_de_pago', 'descripcion', 'Tarjetas')
         
         
         
@@ -126,26 +142,21 @@ class CancelarPedidoSerializer(serializers.ModelSerializer):
     
     
     
-
-
-class DetallePedidoSerializer(serializers.ModelSerializer):
-    class Meta:
+    
+class ProductodetailSerializer(serializers.ModelSerializer):
+     producto = serializers.SerializerMethodField()
+     class Meta:
         model = DetallesPedido
-        fields = '__all__'
+        fields = ('id_talle','cantidad','subtotal','producto')
+     def get_producto(self, obj):
+             producto= obj.id_producto
+             return ProductosSerializer(producto).data
 
-class PedidoListSerializer(serializers.ModelSerializer):
-    detalles = DetallePedidoSerializer(many=True, read_only=True)
-    productos = serializers.SerializerMethodField()
 
+class PedidosListSerializer(serializers.ModelSerializer):
+    formadepago=DescripcionpagoSerializer(many=True, read_only=True, source='forma_de_pago')
+    detalle = ProductodetailSerializer(many=True, read_only=True, source='detalles')
     class Meta:
         model = Pedidos
-        fields = ['id_pedido','fecha', 'total', 'id_usuario','estado', 'detalles', 'productos' ]
-
-    def get_productos(self, obj):
-        # Obtener los detalles de los pedidos
-        detalles = obj.detalles.all()
-
-        detalles_str = [str(detalle) for detalle in detalles]
-
-        return detalles_str
+        fields = ( 'id_pedido', 'fecha', 'total', 'id_usuario','estado', 'detalle','formadepago' )
 
