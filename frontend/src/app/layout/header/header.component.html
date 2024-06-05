@@ -34,9 +34,8 @@
             </button>
           </li>
           <!-- Botón de logout -->
-          <!-- Botón de logout -->
-          <li class="p-0 my-0 mx-1 navItem nav-item" id="logoutBtn">
-            <a class="material-icons button" data-bs-toggle="modal" data-bs-target="#logoutModal">
+          <li class="p-0 my-0 mx-1 navItem nav-item" id="logoutBtn" *ngIf="loggedIn">
+            <a class="material-icons button" data-bs-toggle="modal" data-bs-target="#logout-modal">
               logout
             </a>
           </li>
@@ -77,6 +76,8 @@
 <section>
   <app-login-form></app-login-form>
 </section>
+
+
 
 <section *ngIf="modalFormVisible">
   <app-register-form></app-register-form>

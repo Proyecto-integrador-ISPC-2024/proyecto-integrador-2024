@@ -63,7 +63,7 @@ export class LoginFormComponent {
             localStorage.setItem('currentUser', JSON.stringify(response));
             if (response.email && response.password && response.email === email && response.password === password) {
               alert('Bienvenido ' + response.email);
-              this.loginSuccess.emit(response); // Emitir evento en caso de éxito
+              this.loginSuccess.emit(response); 
               this.router.navigate(['dashboard']);
             } else {
               this.loginAttempts++;
