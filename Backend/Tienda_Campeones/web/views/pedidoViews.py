@@ -17,7 +17,15 @@ class PedidosViewSet(viewsets.ModelViewSet):
           return PedidosListSerializer
         return self.serializer_class
     
-    
+    # def get_queryset(self):
+    #      user = self.request.user
+    #      if user.is_authenticated:
+    #       if user.rol == 'ADMIN':
+    #         return Pedidos.objects.filter(estado='ACEPTADO')
+    #       elif user.rol == 'CLIENTE':
+    #         return Pedidos.objects.filter(id_usuario=user.id)
+    # # Si el usuario no esta autenticado devuelvo un queryset vacio
+    #       return Pedidos.objects.none()
     
     
     def create(self, request, *args, **kwargs):
@@ -34,20 +42,37 @@ class PedidosViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance is None:
-            return Response({'message': 'El pedido no existe.'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'Mensaje': 'Lo sentimos, no se encontro un pedido con esa informacion.'}, status=status.HTTP_404_NOT_FOUND)
         
         # Pasar la instancia al serializer
         serializer = CancelarPedidoSerializer(instance)
+        result=serializer.delete(instance)
         
+        if result is None:
+            return Response({'Mensaje': 'El pedido ya se encontraba cancelado.'}, status=status.HTTP_404_NOT_FOUND)
         
-        # Llamar al método delete del serializer
-        serializer.delete(instance)
+        return Response({'Mensaje': 'Pedido cancelado correctamente.'}, status=status.HTTP_200_OK)
+    
+    
+    # Metodo para marcar el pedido como enviado
+    @action(detail=True, methods=['get'])
+    def enviar(self, request, pk=None):
+        instance = self.get_object()
+        user =self.request.user
+        if user.rol == 'ADMIN':
+            print(user.rol)
+        if instance.estado == 'ENVIADO':
+            return Response({'mensaje': 'Este pedido ya ha sido enviado.'}, status=status.HTTP_400_BAD_REQUEST)
+        elif instance.estado == 'CANCELADO':
+             return Response({'mensaje': 'El pedido esta cancelado,no puede enviarse.'}, status=status.HTTP_400_BAD_REQUEST)
+        instance.estado = 'ENVIADO'
+        instance.save()
         
-        return Response({'message': 'Pedido cancelado correctamente.'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Pedido marcado como enviado.'}, status=status.HTTP_200_OK)
+
     
     @action(detail=False, methods=['get'])   
     def listar_metodopago(self, request):  
-   
      formas_de_pago = FormasDePago.objects.all()
     
     # Obtener todas las tarjetas
@@ -55,7 +80,7 @@ class PedidosViewSet(viewsets.ModelViewSet):
      formas_de_pago_serializer = MetodoPagoListSerializer(formas_de_pago, many=True)
      tarjetas_serializer = TarjetaSerializer(tarjetas, many=True)
     
-    # Combinar los resultados en un diccionario
+    # Combino los resultados en un diccionario
      data = {
         'formas_de_pago': formas_de_pago_serializer.data,
         'tarjetas': tarjetas_serializer.data
