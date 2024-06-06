@@ -93,15 +93,14 @@ class PedidosSerializer(serializers.ModelSerializer):
                 producto_talle.save()
                 
             for forma_pago_data in formaspago:
-             descripcion_buscada = forma_pago_data['id_forma_de_pago'].descripcion  # Obtén la descripción de la forma de pago
+             descripcion_buscada = forma_pago_data['id_forma_de_pago'].descripcion  
         
             forma_pago = FormasDePago.objects.filter(descripcion=descripcion_buscada).first()
-            print("la forma de pago es: ", forma_pago)
-            print("la descripcion buscada es: ", descripcion_buscada)
+            
             if not forma_pago:
                 raise serializers.ValidationError(f"No se encontró la forma de pago '{descripcion_buscada}'")
             
-            # Si la forma de pago es 'Credito', buscar el ID de la tarjeta
+            # Si la forma de pago es Credito, busco el ID de la tarjeta
             id_tarjeta = None
             if descripcion_buscada == "Credito":
                 nombre_tarjeta = detalle_data.get('nombre_tarjeta')
@@ -110,7 +109,7 @@ class PedidosSerializer(serializers.ModelSerializer):
                     if tarjeta:
                         id_tarjeta = tarjeta.id_tarjeta
             
-            # Crear la relación de forma de pago y pedido
+            # Crear la relacion de forma de pago y pedido
             FormasDepagoPedidos.objects.create(
                 id_pedido=pedido,
                 id_forma_de_pago=forma_pago,
@@ -136,8 +135,31 @@ class CancelarPedidoSerializer(serializers.ModelSerializer):
         fields = ['id_pedido', 'estado']
         
     def delete(self, instance):
+        
+        if instance.estado == 'CANCELADO':
+            return None
         instance.estado = 'CANCELADO'
         instance.save()
+        
+    
+        detalles = DetallesPedido.objects.filter(id_pedido=instance.id_pedido)
+        
+        # defino una lista vacia para almacenar los detalles de pedidos y le voy a agregando los detalles del pedido
+        detalles_lista = []
+        
+        for detalle in detalles:
+            detalles_lista.append({
+                'id_producto': detalle.id_producto,
+                'id_talle': detalle.id_talle,
+                'cantidad': detalle.cantidad
+            })
+        
+        # una vez que tengo los detalles de pedidos y la cantidad de cada producto comprado, actualizo el stock.
+        for detalle in detalles_lista:
+            producto_talle = ProductosTalles.objects.get(id_producto=detalle['id_producto'], id_talle=detalle['id_talle'])
+            producto_talle.stock += detalle['cantidad']
+            producto_talle.save()
+        
         return instance
     
     
@@ -154,9 +176,9 @@ class ProductodetailSerializer(serializers.ModelSerializer):
 
 
 class PedidosListSerializer(serializers.ModelSerializer):
-    formadepago=DescripcionpagoSerializer(many=True, read_only=True, source='forma_de_pago')
-    detalle = ProductodetailSerializer(many=True, read_only=True, source='detalles')
+    forma_de_pago=DescripcionpagoSerializer(many=True, read_only=True)
+    detalles = ProductodetailSerializer(many=True, read_only=True)
     class Meta:
         model = Pedidos
-        fields = ( 'id_pedido', 'fecha', 'total', 'id_usuario','estado', 'detalle','formadepago' )
+        fields = ( 'id_pedido', 'fecha', 'total', 'id_usuario','estado', 'detalles','forma_de_pago' )
 
