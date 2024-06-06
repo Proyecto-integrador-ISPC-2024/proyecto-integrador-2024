@@ -72,7 +72,7 @@
           class=""
           [formGroup]="formGroup"
           (ngSubmit)="onEnviar($event)"
-        >
+        > <!-- This form should render different field options for the corresponding payment method chosen, just make basic fields based on payments systems implemented at Argentina -->
           <div class="mb-3">
             <label for="inputNombreCompleto" class="form-label"
               >Nombre completo</label
@@ -112,11 +112,11 @@
             aria-label="Default select example"
             id="payments"
             formControlName="payment"
-          >
+          > <!-- Here I render payment options gotten from backend -->
             <option label="Selecciona un medio de pago"></option>
-            <option value="transferencia">Transferencia bancaria</option>
-            <option value="efectivo">Efectivo-contado</option>
-            <option value="credito">Crédito</option>
+            <option value="transferencia">Débito</option>
+            <option value="efectivo">Transferencia</option>
+            <option value="credito">Tarjeta de crédito</option>
 
             @if (this.formGroup.controls.payment.hasError('required')) {
             <p class="text-danger">Por favor, selecciona un metodo de pago</p>

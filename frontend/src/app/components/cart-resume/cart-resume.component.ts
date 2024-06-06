@@ -1,22 +1,35 @@
-import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Product } from '../../../interfaces/product';
-import { NgFor } from '@angular/common';
-import { EstadoPedido, Order } from '../../../interfaces/order';
+import { NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { ApiService } from '../../../services/api.service';
+import { Product } from '../../../interfaces/product';
+import { CartOrder } from '../../../interfaces/cartOrder';
+import { PaymentMethodData } from '../../../interfaces/paymentMethodData';
 
 @Component({
   selector: 'app-cart-resume',
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor],
+  imports: [ReactiveFormsModule, NgFor, NgSwitch, NgSwitchCase, NgIf],
   templateUrl: './cart-resume.component.html',
   styleUrl: './cart-resume.component.css',
 })
 export class CartResumeComponent implements OnChanges {
-  private ordersUrl = 'https://6656d1989f970b3b36c6a331.mockapi.io/pedidos';
+  private ordersUrl = 'http://localhost:8000/pedidos/';
+  // private ordersUrl = 'https://664d5d12ede9a2b556534efe.mockapi.io/products';
   @Input() cartResume: Product[] = [];
   @Input() totalPrice: number = 0;
-  @Input() paymentMethods: string[] = [];
+  @Input() paymentMethods: PaymentMethodData = {
+    formas_de_pago: [],
+    tarjetas: [],
+  };
   @Output() clearCartEvent = new EventEmitter<void>();
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -37,10 +50,60 @@ export class CartResumeComponent implements OnChanges {
 
   formGroup = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email], []],
+    email: ['', [Validators.required, Validators.email]],
     payment: ['', Validators.required],
-    terms: ['', Validators.requiredTrue],
+    terms: [false, Validators.requiredTrue],
+
+    // Additional fields for different payment methods
+    /* bankName: [''],
+    paymentLocation: [''],
+    cardNumber: [''],
+    cardExpiry: [''],
+    cardCVV: [''], */
   });
+
+  selectedPaymentMethod: string | null = null;
+
+  onPaymentChange(event: Event): void {
+    const selectedPayment = (event.target as HTMLSelectElement).value;
+    this.selectedPaymentMethod = selectedPayment;
+    console.log(this.selectedPaymentMethod);
+    // this.updateFormValidators();
+  }
+
+  /* private updateFormValidators(): void {
+    this.formGroup.get('bankName')?.clearValidators();
+    this.formGroup.get('paymentLocation')?.clearValidators();
+    this.formGroup.get('cardNumber')?.clearValidators();
+    this.formGroup.get('cardExpiry')?.clearValidators();
+    this.formGroup.get('cardCVV')?.clearValidators();
+
+    if (this.selectedPaymentMethod === 'transferencia') {
+      this.formGroup.get('bankName')?.setValidators([Validators.required]);
+    } else if (this.selectedPaymentMethod === 'efectivo') {
+      this.formGroup
+        .get('paymentLocation')
+        ?.setValidators([Validators.required]);
+    } else if (this.selectedPaymentMethod === 'credito') {
+      this.formGroup
+        .get('cardNumber')
+        ?.setValidators([Validators.required, Validators.pattern(/^\d{16}$/)]);
+      this.formGroup
+        .get('cardExpiry')
+        ?.setValidators([
+          Validators.required,
+          Validators.pattern(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/),
+        ]);
+      this.formGroup
+        .get('cardCVV')
+        ?.setValidators([Validators.required, Validators.pattern(/^\d{3,4}$/)]);
+    }
+    this.formGroup.get('bankName')?.updateValueAndValidity();
+    this.formGroup.get('paymentLocation')?.updateValueAndValidity();
+    this.formGroup.get('cardNumber')?.updateValueAndValidity();
+    this.formGroup.get('cardExpiry')?.updateValueAndValidity();
+    this.formGroup.get('cardCVV')?.updateValueAndValidity();
+  } */
 
   clickRegister(): void {
     const formValues = this.formGroup.value;
@@ -50,32 +113,44 @@ export class CartResumeComponent implements OnChanges {
   }
 
   createOrder(formValues: any): void {
-    const userId = 1;
-    const createdAt = new Date().toLocaleString();
-    const order: Order = {
-      id: 0,
+    const userId = 1; // This should be dynamically set based on logged in user
+    const order: CartOrder = {
       id_usuario: userId,
-      fecha_creacion: createdAt,
-      id_productos: this.cartResume.map(
-        (product) => product.id_producto_talle!
-      ),
-      status: EstadoPedido.pending,
-      amount: this.cartResume.map((product) => product.cantidad),
-      subtotal: this.cartResume.map(
-        (product) => product.productos.precio * product.cantidad
-      ),
-      precio_total: this.totalPrice,
-      metodo_pago: formValues.payment,
+      total: this.totalPrice,
+      detalles: this.cartResume.map((product) => ({
+        id_talle: product.id_producto_talle,
+        id_producto: product.productos.id_producto, /* Fix here */
+        cantidad: product.cantidad,
+        subtotal: product.productos.precio * product.cantidad,
+      })),
+      forma_de_pago: [ /* fix here */
+        {
+          id_forma_de_pago: parseInt(formValues.payment, 10),
+          descripcion:
+            this.paymentMethods.formas_de_pago.find(
+              (pm) => pm.id_forma_de_pago === parseInt(formValues.payment, 10)
+            )?.descripcion || '',
+          tarjetas:
+            this.selectedPaymentMethod === 'credito'
+              ? this.paymentMethods.tarjetas?.map((card) => ({
+                  id_tarjeta: card.id_tarjeta,
+                  nombre_tarjeta: card.nombre_tarjeta,
+                }))
+              : [],
+        },
+      ],
     };
 
-    this.apiService.post<Order>(this.ordersUrl, order).subscribe({
+    this.apiService.post<CartOrder>(this.ordersUrl, order).subscribe({
       next: (createdOrder) => {
-        // console.log(createdOrder);
         alert('Order created successfully!');
+        console.log(createdOrder);
+        console.log(order);
         this.clearCart();
       },
       error: (error) => {
         console.error('Error creating order:', error);
+        console.log(order);
         alert('Failed to create order.');
       },
     });
@@ -96,4 +171,3 @@ export class CartResumeComponent implements OnChanges {
     }
   }
 }
-

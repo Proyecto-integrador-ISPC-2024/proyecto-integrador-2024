@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Product } from '../interfaces/product';
 import { User } from '../interfaces/user';
 import { Order } from '../interfaces/order';
+import { CartOrder } from '../interfaces/cartOrder';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class ApiService {
   // Post
   post<T>(
     url: string,
-    body: Product | User | Order,
+    body: Product | User | CartOrder
   ): Observable<T> {
     return this.httpClient.post<T>(url, body) as Observable<T>;
   }
@@ -27,7 +28,7 @@ export class ApiService {
   // Put
   put<T>(
     url: string,
-    body: Product | User | Order
+    body: Product | User | CartOrder
   ): Observable<T> {
     return this.httpClient.put<T>(url, body) as Observable<T>;
   }
