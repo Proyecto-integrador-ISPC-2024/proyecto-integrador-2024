@@ -7,8 +7,9 @@ import { User } from '../../interfaces/user';
   providedIn: 'root',
 })
 export class AuthService {
-  token = 'fewuibfgesjkghs'; // tiene que estar vacio para poder encontrar el false para la ruta protegida
-  url = "https://66525119813d78e6d6d53814.mockapi.io/users";
+  // token = 'fewuibfgesjkghs'; // tiene que estar vacio para poder encontrar el false para la ruta protegida
+  // url = "https://66525119813d78e6d6d53814.mockapi.io/users";
+  url = "http://127.0.0.1:8000/usuarios/";
   constructor(private http: HttpClient) { }
 
   createUser(user: User): Observable<any> {
@@ -22,11 +23,11 @@ export class AuthService {
     // Eliminar el token del almacenamiento local
     localStorage.removeItem('token');
     // Limpiar la variable token en el servicio
-    this.token = '';
+    // this.token = '';
   }
-  isAuth(){
+  /* isAuth(){
     return this.token.length > 0; // retorna false por el momento
-  }
+  } */
 
   // USAR getToken cuando tengamos la autenticación basada en jwt.
   getToken(): string | null {

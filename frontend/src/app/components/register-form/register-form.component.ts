@@ -106,10 +106,10 @@ export class RegisterFormComponent {
     private authService: AuthService, private router: Router) {
     this.form = this.formBuilder.nonNullable.group(
       {
-        name: ['', [Validators.required]],
-        lastName: ['', [Validators.required]],
+        nombre: ['', [Validators.required]],
+        apellido: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
-        address: ['', [Validators.required]],
+        domicilio: ['', [Validators.required]],
         password1: ['', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-])[A-Za-z\d$@$!%*?&].{8,}')]],
         password2: ['', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-])[A-Za-z\d$@$!%*?&].{8,}')]],
       }, { validators: this.passwordsMatchValidator });
@@ -131,21 +131,21 @@ export class RegisterFormComponent {
     if (this.form.valid) {
       console.log("Enviando formulario...");
       const newUser: User = {
-        name: this.form.get('name')?.value,
-        lastName: this.form.get('lastName')?.value,
+        nombre: this.form.get('nombre')?.value,
+        apellido: this.form.get('apellido')?.value,
         email: this.form.get('email')?.value,
-        userName: this.form.get('email')?.value, 
-        address: this.form.get('address')?.value,
+        // userName: this.form.get('email')?.value, 
+        domicilio: this.form.get('domicilio')?.value,
         password: this.form.get('password1')?.value, 
         role: 'cliente',
-        id: 0
+        id_usuario: 0
       };
 
       this.authService.createUser(newUser).subscribe(
         (data: User) => {
-          console.log(data.id);
+          console.log(data.id_usuario);
           console.log(this.form.value as User)
-          if (data.id > 0) {
+          if (data.id_usuario > 0) {
             alert("Registro exitoso. A continuación, por favor Inicie Sesión.");
             this.disableFormFields();
           }
