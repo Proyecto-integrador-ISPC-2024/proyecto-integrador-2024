@@ -12,7 +12,8 @@ export interface Product {
     talle: string;
     stock: number;
   }>;
+  talleSeleccionado: string
+  id_talleSeleccionado: number;
   cantidad: number;
-  talleSeleccionado: string;
   stockSeleccionado: number;
 }
