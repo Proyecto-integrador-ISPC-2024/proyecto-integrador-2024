@@ -62,12 +62,12 @@ export class CartResumeComponent implements OnChanges {
     cardCVV: [''], */
   });
 
-  selectedPaymentMethod: string | null = null;
+  selectedPaymentMethod: number | null = null;
 
   onPaymentChange(event: Event): void {
     const selectedPayment = (event.target as HTMLSelectElement).value;
-    this.selectedPaymentMethod = selectedPayment;
-    console.log(this.selectedPaymentMethod);
+    this.selectedPaymentMethod = parseInt(selectedPayment, 10);
+    console.log('Selected Payment Method:', this.selectedPaymentMethod);
     // this.updateFormValidators();
   }
 
@@ -114,29 +114,35 @@ export class CartResumeComponent implements OnChanges {
 
   createOrder(formValues: any): void {
     const userId = 1; // This should be dynamically set based on logged in user
+    const paymentMethod = this.paymentMethods.formas_de_pago.find(
+      (pm) => pm.id_forma_de_pago === this.selectedPaymentMethod
+    );
+
+    if (!paymentMethod) {
+      console.error('Selected payment method is invalid');
+      return;
+    }
+
     const order: CartOrder = {
       id_usuario: userId,
       total: this.totalPrice,
       detalles: this.cartResume.map((product) => ({
-        id_talle: product.id_producto_talle,
-        id_producto: product.productos.id_producto, /* Fix here */
+        id_talle: product.id_talleSeleccionado,
+        id_producto: product.productos.id_producto,
         cantidad: product.cantidad,
         subtotal: product.productos.precio * product.cantidad,
       })),
-      forma_de_pago: [ /* fix here */
+      forma_de_pago: [
         {
-          id_forma_de_pago: parseInt(formValues.payment, 10),
-          descripcion:
+          id_forma_de_pago: paymentMethod.id_forma_de_pago,
+          id_tarjeta:
+            this.selectedPaymentMethod ===
             this.paymentMethods.formas_de_pago.find(
-              (pm) => pm.id_forma_de_pago === parseInt(formValues.payment, 10)
-            )?.descripcion || '',
-          tarjetas:
-            this.selectedPaymentMethod === 'credito'
-              ? this.paymentMethods.tarjetas?.map((card) => ({
-                  id_tarjeta: card.id_tarjeta,
-                  nombre_tarjeta: card.nombre_tarjeta,
-                }))
-              : [],
+              (pm) => pm.descripcion === 'Tarjeta de crédito'
+            )?.id_forma_de_pago
+              ? this.paymentMethods.tarjetas?.find((card) => card.id_tarjeta)
+                  ?.id_tarjeta
+              : null,
         },
       ],
     };
@@ -144,13 +150,10 @@ export class CartResumeComponent implements OnChanges {
     this.apiService.post<CartOrder>(this.ordersUrl, order).subscribe({
       next: (createdOrder) => {
         alert('Order created successfully!');
-        console.log(createdOrder);
-        console.log(order);
         this.clearCart();
       },
       error: (error) => {
         console.error('Error creating order:', error);
-        console.log(order);
         alert('Failed to create order.');
       },
     });
