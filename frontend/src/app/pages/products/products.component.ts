@@ -29,7 +29,6 @@ export class ProductsComponent implements OnInit {
   ) {}
 
   private urlProductos = 'http://localhost:8000/productos/';
-  cartItems: Product[] = [];
   products: Product[] = [];
   filteredProducts: Product[] = [];
 
@@ -43,7 +42,7 @@ export class ProductsComponent implements OnInit {
       .get<Product[]>(`${this.urlProductos}?pais=${country}`)
       .subscribe({
         next: (data: Product[]) => {
-          console.log(data)
+          // console.log(data)
           if (Array.isArray(data)) {
             this.products = data;
             this.filteredProducts = data;

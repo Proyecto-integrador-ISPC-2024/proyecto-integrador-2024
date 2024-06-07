@@ -41,7 +41,7 @@ export class CartService {
 
     if (productIndex !== -1) {
       const sizeIndex = product.talles.findIndex(
-        (talle) => talle.talle === product.talleSeleccionado
+        (talle) => talle.id_talle === product.id_talleSeleccionado
       );
 
       if (sizeIndex !== -1) {
@@ -50,9 +50,9 @@ export class CartService {
     }
   }
 
-  isProductInCart(productId: number, size: string): boolean {
+  isProductInCart(productId: number, size_id: number): boolean {
     return this.cartItems.some(
-      (item) => item.productos.id_producto === productId && item.talleSeleccionado === size
+      (item) => item.productos.id_producto === productId && item.id_talleSeleccionado === size_id
     );
   }
 

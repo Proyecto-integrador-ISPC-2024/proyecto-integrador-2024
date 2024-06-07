@@ -5,6 +5,7 @@ import { CartListComponent } from '../../components/cart-list/cart-list.componen
 import { Product } from '../../../interfaces/product';
 import { CartService } from '../../../services/cart.service';
 import { ApiService } from '../../../services/api.service';
+import { PaymentMethodData } from '../../../interfaces/paymentMethodData';
 
 @Component({
   selector: 'app-cart',
@@ -15,7 +16,12 @@ import { ApiService } from '../../../services/api.service';
 })
 export class CartComponent implements OnInit {
   cartItems: Product[] = [];
-  paymentMethods: string[] = [];
+  paymentMethods: PaymentMethodData = {
+    formas_de_pago: [],
+    tarjetas: [],
+  };
+  private urlPaymentMethods: string =
+    'http://localhost:8000/pedidos/listar_metodopago/';
 
   constructor(
     private cartService: CartService,
@@ -26,6 +32,7 @@ export class CartComponent implements OnInit {
     this.cartService.cartItems$.subscribe((cartItems) => {
       this.cartItems = cartItems;
     });
+    this.getPaymentMethods();
   }
 
   getTotalPrice(): number {
@@ -58,9 +65,10 @@ export class CartComponent implements OnInit {
 
   getPaymentMethods(): void {
     this.apiService
-      .get<string[]>('payment-methods-endpoint')
+      .get<PaymentMethodData>(this.urlPaymentMethods)
       .subscribe((methods) => {
         this.paymentMethods = methods;
+        // console.log(this.paymentMethods);
       });
   }
 
