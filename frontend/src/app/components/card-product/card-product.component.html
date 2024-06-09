@@ -13,7 +13,7 @@
           </button>
           <ul class="dropdown-menu">
             <li *ngFor="let talle of product.talles">
-              <button class="dropdown-item" (click)="selectSize(talle.talle, talle.stock)">
+              <button class="dropdown-item" (click)="selectSize(talle.id_talle, talle.stock, talle.talle)">
                 {{ talle.talle }} (Stock: {{ talle.stock }})
               </button>
             </li>
@@ -22,7 +22,7 @@
       </ul>
 
       <p *ngIf="isInCart()">El producto está en el carrito</p>
-      <p *ngIf="product.talleSeleccionado">Talle seleccionado: {{ product.talleSeleccionado }}</p>
+      <p *ngIf="product.id_talleSeleccionado">Talle seleccionado: {{ product.talleSeleccionado }}</p> <!--! Fix rendering here -->
 
       <button type="submit" class="btn btn-success" (click)="addProductToCart()" [disabled]="isInCart()">
         Agregar al carro

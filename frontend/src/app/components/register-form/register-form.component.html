@@ -11,16 +11,16 @@
 
             <div class="m-3">
               <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" id="nombre" class="form-control" formControlName="name">
-              <div *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched">
+              <input type="text" id="nombre" class="form-control" formControlName="nombre">
+              <div *ngIf="form.controls['nombre'].hasError('required') && form.controls['nombre'].touched">
                 <p class="text-danger">Por favor, ingresa tu nombre.</p>
               </div>
             </div>
 
             <div class="m-3">
               <label for="apellido" class="form-label">Apellido</label>
-              <input type="text" id="apellido" class="form-control" formControlName="lastName">
-              <div *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched">
+              <input type="text" id="apellido" class="form-control" formControlName="apellido">
+              <div *ngIf="form.controls['apellido'].hasError('required') && form.controls['apellido'].touched">
                 <p class="text-danger">Por favor, ingresa tu apellido.</p>
               </div>
             </div>
@@ -35,8 +35,8 @@
 
             <div class="m-3">
             <label for="domicilio" class="form-label">Domicilio</label>
-            <input type="text" id="domicilio" class="form-control" formControlName="address">
-            <div *ngIf="form.controls['address'].hasError('required') && form.controls['address'].touched">
+            <input type="text" id="domicilio" class="form-control" formControlName="domicilio">
+            <div *ngIf="form.controls['domicilio'].hasError('required') && form.controls['domicilio'].touched">
               <p class="text-danger">Por favor, ingresa tu domicilio.</p>
             </div>
             </div>
