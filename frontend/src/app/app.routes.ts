@@ -35,7 +35,8 @@ export const routes: Routes = [
 
   {path: 'login-form', component: LoginFormComponent},
 
-  { path: 'logout', component: LogoutModalComponent },
+  { path: 'logout-modal', component: LogoutModalComponent },
+
 
   {path: 'registro', component: RegisterFormComponent},
 ];

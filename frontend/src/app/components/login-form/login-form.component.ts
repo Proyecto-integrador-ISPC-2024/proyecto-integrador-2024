@@ -25,13 +25,14 @@ export class LoginFormComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login( this.email, this.password).subscribe({
+    this.authService.login({ email: this.email, password: this.password }).subscribe({
       next: (response) => {
+        console.log('Respuesta del servidor:', response);
         if (response && response.token) {
           // La autenticación fue exitosa
           localStorage.setItem('token', response.token);
           alert('Autenticación exitosa');
-          this.router.navigate(['authenticate']);
+          this.router.navigate(['dashboard']);
         } else {
           // La respuesta del servidor no contiene un token
           alert('Error de autenticación: Respuesta del servidor incompleta');
@@ -39,11 +40,11 @@ export class LoginFormComponent {
       },
       error: err => {
         // Ocurrió un error en la solicitud HTTP
+        console.error('Error de autenticación:', err);
         alert('Error de autenticación: ' + (err.error.message || 'Ocurrió un error'));
       }
     });
   }
-
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
     const passwordInput = document.getElementById('inputPassword') as HTMLInputElement;

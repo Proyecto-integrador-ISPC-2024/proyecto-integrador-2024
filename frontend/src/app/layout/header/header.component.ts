@@ -8,10 +8,11 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
 import { AuthService } from '../../services/auth.service';
 import { LogoutModalComponent } from '../../components/logout-modal/logout-modal.component';
 
+
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ThemeButtonComponent,RegisterFormComponent, RouterLink, CommonModule, RouterLinkActive,LoginFormComponent],
+  imports: [ThemeButtonComponent,RegisterFormComponent, RouterLink, CommonModule, RouterLinkActive,LoginFormComponent,LogoutModalComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
