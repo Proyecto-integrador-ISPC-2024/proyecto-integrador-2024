@@ -1,6 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Component } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
@@ -10,6 +10,49 @@ import { FormsModule } from '@angular/forms';
 
 
 @Component({
+  selector: 'app-login-form',
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, RegisterFormComponent, DashboardComponent, FormsModule],
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.css']
+})
+
+export class LoginFormComponent {
+  email: string = '';
+  password: string = '';
+  passwordVisible: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  login() {
+    this.authService.login( this.email, this.password).subscribe({
+      next: (response) => {
+        if (response && response.token) {
+          // La autenticación fue exitosa
+          localStorage.setItem('token', response.token);
+          alert('Autenticación exitosa');
+          this.router.navigate(['authenticate']);
+        } else {
+          // La respuesta del servidor no contiene un token
+          alert('Error de autenticación: Respuesta del servidor incompleta');
+        }
+      },
+      error: err => {
+        // Ocurrió un error en la solicitud HTTP
+        alert('Error de autenticación: ' + (err.error.message || 'Ocurrió un error'));
+      }
+    });
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+    const passwordInput = document.getElementById('inputPassword') as HTMLInputElement;
+    if (passwordInput) {
+      passwordInput.type = this.passwordVisible ? 'text' : 'password';
+    }
+  }
+}
+/*@Component({
   selector: 'app-login-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, RouterLink, RegisterFormComponent, DashboardComponent],
@@ -63,7 +106,7 @@ export class LoginFormComponent {
             localStorage.setItem('currentUser', JSON.stringify(response));
             if (response.email && response.password && response.email === email && response.password === password) {
               alert('Bienvenido ' + response.email);
-              this.loginSuccess.emit(response); 
+              this.loginSuccess.emit(response); // Emitir evento en caso de éxito
               this.router.navigate(['dashboard']);
             } else {
               this.loginAttempts++;
@@ -97,30 +140,4 @@ export class LoginFormComponent {
 }
 
 
-
-/* modelo en progreso
-@Component({
-  standalone: true,
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.css'],
-  imports: [CommonModule, FormsModule]
-})
-export class LoginFormComponent {
-  email: string = '';
-  password: string = '';
-
-  constructor(private authService: AuthService, private router: Router) {}
-
- login() {
-    this.authService.login(this.email, this.password).subscribe({
-      next: () => {
-        alert('Autenticación exitosa');
-        this.router.navigate(['/protected']);
-      },
-      error: err => {
-        alert('Error de autenticación: ' + (err.error.message || 'Ocurrió un error'));
-      }
-    });
-  }
-}*/
+ */
