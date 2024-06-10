@@ -99,9 +99,9 @@ WSGI_APPLICATION = 'Tienda_Campeones.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.mysql',
-       'NAME': 'base_campeones',
+       'NAME': 'campeones',
        'USER': 'root',
-       'PASSWORD': 'root',
+       'PASSWORD': '***',
        'HOST': 'localhost',
        'PORT': '3306',
        'OPTIONS': {
