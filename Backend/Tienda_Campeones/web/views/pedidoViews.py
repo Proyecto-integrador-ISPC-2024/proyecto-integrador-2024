@@ -11,21 +11,22 @@ from rest_framework.decorators import action
 class PedidosViewSet(viewsets.ModelViewSet):
     queryset = Pedidos.objects.all()
     serializer_class = PedidosSerializer
+    permission_classes = [permissions.IsAuthenticated]
     
     def get_serializer_class(self):
         if self.action in ['list','retrieve']:
           return PedidosListSerializer
         return self.serializer_class
     
-    # def get_queryset(self):
-    #      user = self.request.user
-    #      if user.is_authenticated:
-    #       if user.rol == 'ADMIN':
-    #         return Pedidos.objects.filter(estado='ACEPTADO')
-    #       elif user.rol == 'CLIENTE':
-    #         return Pedidos.objects.filter(id_usuario=user.id)
-    # # Si el usuario no esta autenticado devuelvo un queryset vacio
-    #       return Pedidos.objects.none()
+    def get_queryset(self):
+         user = self.request.user
+         if user.is_authenticated:
+          if user.rol == 'ADMIN':
+            return Pedidos.objects.filter(estado='ACEPTADO')
+          elif user.rol == 'CLIENTE':
+            return Pedidos.objects.filter(id_usuario=user.id)
+    # Si el usuario no esta autenticado devuelvo un queryset vacio
+         return Pedidos.objects.none()
     
     
     def create(self, request, *args, **kwargs):
@@ -60,15 +61,17 @@ class PedidosViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         user =self.request.user
         if user.rol == 'ADMIN':
-            print(user.rol)
-        if instance.estado == 'ENVIADO':
+         if instance.estado == 'ENVIADO':
             return Response({'mensaje': 'Este pedido ya ha sido enviado.'}, status=status.HTTP_400_BAD_REQUEST)
-        elif instance.estado == 'CANCELADO':
+         elif instance.estado == 'CANCELADO':
              return Response({'mensaje': 'El pedido esta cancelado,no puede enviarse.'}, status=status.HTTP_400_BAD_REQUEST)
-        instance.estado = 'ENVIADO'
-        instance.save()
+         instance.estado = 'ENVIADO'
+         instance.save()
+         return Response({'message': 'Pedido marcado como enviado.'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'mensaje': 'No tienes permisos para enviar pedidos.'}, status=status.HTTP_403_FORBIDDEN)
         
-        return Response({'message': 'Pedido marcado como enviado.'}, status=status.HTTP_200_OK)
+       
 
     
     @action(detail=False, methods=['get'])   
