@@ -6,7 +6,6 @@ from rest_framework import status
 from rest_framework.decorators import action
 from web.models import ProductosTalles,Productos,Talles
 from web.Serializers.productos_serializers import *
-from rest_framework.permissions import IsAdminUser
 
 
 
@@ -16,7 +15,7 @@ class ProductosViewSet(viewsets.ModelViewSet):
     
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'retrieve', 'destroy','create_talle']:
-            self.permission_classes = [IsAdminUser]
+            self.permission_classes = [permissions.IsAdminUser]
         else:
             self.permission_classes = [permissions.AllowAny]
         return super().get_permissions()
