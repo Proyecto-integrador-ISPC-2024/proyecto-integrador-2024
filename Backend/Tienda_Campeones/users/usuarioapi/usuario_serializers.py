@@ -5,10 +5,6 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     pass
 
-class CustomUsuarioSerializer(serializers.ModelSerializer):
-    class Meta:
-            model = Usuarios
-            fields = ['email','password']
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,4 +35,20 @@ class PasswordSerializer(serializers.Serializer):
 class UsuarioListSerializer(serializers.ModelSerializer):    
     class Meta:
         model = Usuarios
-        fields = ['nombre', 'apellido', 'email', 'domicilio','rol']
+        fields = ['nombre', 'apellido', 'email', 'domicilio','rol', 'is_active', 'is_staff']
+        
+        
+class adminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuarios
+        fields = ['id_usuario', 'nombre', 'apellido', 'email', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True} 
+        }
+
+    def create(self, validated_data):
+        usuario = Usuarios(**validated_data)
+        usuario.set_password(validated_data['password'])
+        usuario.rol = 'ADMIN'  
+        usuario.save()
+        return usuario
