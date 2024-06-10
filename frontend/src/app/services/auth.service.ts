@@ -8,18 +8,23 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  url = "http://127.0.0.1:8000"; // URL base de tu backend Django
+  private url = "http://127.0.0.1:8000"; // URL base de tu backend Django
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   createUser(user: User): Observable<any> {
-    return this.http.post(this.url, user);
+    return this.http.post(`${this.url}/usuarios/`, user);
   }
 
   login(credentials: { email: string, password: string }): Observable<any> {
-    return this.http.post<any>(`${this.url}/api/token/`, credentials);
+    return this.http.post<any>(`${this.url}/api/token/`, credentials).pipe(
+      tap(response => {
+        if (response && response.access) {
+          localStorage.setItem('token', response.access);
+        }
+      })
+    );
   }
-
 
   logout() {
     localStorage.removeItem('token'); // Elimina el token del almacenamiento local.
