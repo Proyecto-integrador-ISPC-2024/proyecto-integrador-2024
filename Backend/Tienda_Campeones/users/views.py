@@ -23,7 +23,7 @@ class Login(TokenObtainPairView):
         if usuario:
             login_serializer = self.serializer_class(data=request.data)
             if login_serializer.is_valid():
-                usuario_serializer = UsuarioSerializer(usuario)
+                usuario_serializer = UserSerializer(usuario)
                 return Response({
                     'token': login_serializer.validated_data.get('access'),
                     'refresh_token': login_serializer.validated_data.get('refresh'),
