@@ -1,11 +1,13 @@
+from datetime import datetime
 from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
+from django.db.models import Sum
 from web.Serializers.pedidos_serializers import *
 from web.models import *
-from rest_framework.decorators import action
+
 
 
 class PedidosViewSet(viewsets.ModelViewSet):
@@ -89,3 +91,26 @@ class PedidosViewSet(viewsets.ModelViewSet):
         'tarjetas': tarjetas_serializer.data
     }
      return Response(data, status=status.HTTP_200_OK)
+ 
+ 
+    @action(detail=False, methods=['get'], permission_classes=[permissions.IsAdminUser])
+    def calcular_ventas(self, request):
+        if not request.user.is_superuser:
+         return Response({'mensaje': 'No tienes permisos suficientes para realizar esta operacion.'}, status=status.HTTP_403_FORBIDDEN)
+
+        fecha_inicio = request.query_params.get('fecha_inicio')
+        fecha_fin = request.query_params.get('fecha_fin')
+
+        if not fecha_inicio or not fecha_fin:
+            return Response({'mensaje': 'Por favor, proporcione las fechas de inicio y finalización.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%d').date()
+            fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%d').date()
+        except ValueError:
+            return Response({'mensaje': 'Formato de fecha no válido. Use AAAA-MM-DD.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        pedidos = Pedidos.objects.filter(estado='ENVIADO', fecha__range=[fecha_inicio, fecha_fin])
+        total_ventas = pedidos.aggregate(total=Sum('total'))['total']
+
+        return Response({'total_ventas': total_ventas}, status=status.HTTP_200_OK)

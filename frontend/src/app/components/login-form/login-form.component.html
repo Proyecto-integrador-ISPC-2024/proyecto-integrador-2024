@@ -1,5 +1,4 @@
-
-  <section>
+<section>
   <!-- Modal-->
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -9,11 +8,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="form" (ngSubmit)="validarUsuario()">
+          <form (ngSubmit)="login()">
             <div class="mb-3">
-              <label for="inputEmail" class="form-label">Dirección de e-mail</label>
-              <input type="email" formControlName="loginEmail" name="loginEmail" class="form-control" id="inputEmail"
-                aria-describedby="emailHelp" />
+              <label for="emailField" class="form-label">Dirección de e-mail</label>
+              <input type="email" name="loginEmail" [(ngModel)]="email"  class="form-control" id="emailField" required autocomplete="email" />
+
               <div id="emailHelp" class="form-text">
                 Ingrese una direccion válida.
               </div>
@@ -21,8 +20,10 @@
             <div class="mb-3">
               <label for="inputPassword" class="form-label">Contraseña</label>
               <div class="d-flex flex-row align-items-center justify-content-evenly">
-                <input type="password" formControlName="loginPassword" name="loginPassword" class="form-control"
-                  id="inputPassword" aria-describedby="passwordHelp" minlength="8" maxlength="20" />
+                <input type="password" [(ngModel)]="password" name="password" required class="form-control" id="inputPassword" aria-describedby="passwordHelp" minlength="8" maxlength="20" autocomplete="current-password" />
+
+
+
                 <span class="material-symbols-sharp ms-2 d-block" id="loginVisibilityOn"
                   (click)="togglePasswordVisibility()">visibility</span>
               </div>
@@ -41,7 +42,7 @@
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Cancelar
             </button>
-          <!--<div>
+            <!--<div>
               <button (click)="registerForm()">Recuperar Contraseña</button>
             </div>-->
 
@@ -50,20 +51,4 @@
       </div>
     </div>
   </div>
-
 </section>
-<!--<div>
-  <h2>Login</h2>
-  <form (ngSubmit)="login()">
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" [(ngModel)]="email" name="email" required>
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required>
-    </div>
-    <button type="submit">Login</button>
-  </form>
-</div> -->
-
