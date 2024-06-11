@@ -4,8 +4,9 @@ import { OrdersSummaryComponent } from '../../components/orders-summary/orders-s
 import { ProductsSuggestComponent } from '../../components/products-suggest/products-suggest.component';
 import { OrderManagementComponent } from '../../components/order-management/order-management.component';
 import { OrdersService } from '../../../services/orders.service';
-import { Order, EstadoPedido } from '../../../interfaces/order';
+import { DashboardOrder } from '../../../interfaces/order';
 import { catchError, of, switchMap, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-dashboard',
@@ -14,61 +15,53 @@ import { catchError, of, switchMap, Observable } from 'rxjs';
   templateUrl: './client-dashboard.component.html',
   styleUrls: ['./client-dashboard.component.css']
 })
+
+
 export class ClientDashboardComponent implements OnInit {
-  orders: Order[] = [];
-  filteredOrders: Order[] = [];
-  selectedOrder: Order | null = null;
-  userId: number;
+  orders: DashboardOrder[] = [];
+  filteredOrders: DashboardOrder[] = [];
+  selectedOrder: DashboardOrder | null = null;
+  id_usuario: number;
 
   constructor(private ordersService: OrdersService) {
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    this.userId = parseInt(currentUser.id, 10);
+    if (currentUser && currentUser.id) {
+      this.id_usuario = parseInt(currentUser.id, 10);
+    } else {
+      this.id_usuario = NaN;
+    }
   }
-
+  
   ngOnInit() {
-    this.loadOrders().subscribe();
+    this.loadOrders().subscribe({
+      next: () => {
+      },
+      error: (error) => console.error('Error loading orders:', error)
+    });
   }
-
-  loadOrders(): Observable<Order[]> {
+  
+  loadOrders(): Observable<DashboardOrder[]> {
     return this.ordersService.getAllOrders().pipe(
       catchError(error => {
         console.error('Error loading orders:', error);
         return of([]);
       }),
-      switchMap((data: Order[]) => {
-        this.orders = data.filter(order => order.id_usuario === this.userId);
-        this.filteredOrders = this.orders;
-        return of(this.filteredOrders);
+      tap((orders: DashboardOrder[]) => {
+        this.orders = orders.filter(order => order.id_usuario === this.id_usuario);
+        this.filteredOrders = [...this.orders];
       })
     );
-  }
-
-  cancelOrder(id: number) {
-    const orderToCancel = this.orders.find(order => order.id === id);
-    if (orderToCancel) {
-      this.ordersService.cancelOrder(id, { ...orderToCancel, status: EstadoPedido.Cancelled }).subscribe({
-        next: () => {
-          console.log(`Order ${id} cancelled`);
-          this.loadOrders().subscribe();
-        },
-        error: (error) => {
-          console.error(`Error cancelling order ${id}:`, error);
-        }
-      });
-    } else {
-      console.warn(`Order with ID ${id} not found`);
-    }
-  }
-
+  }  
+  
   searchOrderById(id: number) {
     if (id) {
-      const order = this.orders.find(order => order.id === id);
+      const order = this.orders.find(order => order.id_pedido === id);
       if (order) {
         this.filteredOrders = [order];
       } else {
         this.ordersService.getOrder(id).subscribe({
           next: (order) => {
-            if (order && order.id_usuario === this.userId) {
+            if (order && order.id_usuario === this.id_usuario) {
               this.filteredOrders = [order];
             }
           },
@@ -78,22 +71,36 @@ export class ClientDashboardComponent implements OnInit {
         });
       }
     } else {
-      this.filteredOrders = this.orders.filter(order => order.id_usuario === this.userId);
+      this.filteredOrders = [...this.orders];
     }
   }
-
+  
   selectOrder(id: number) {
-    const order = this.orders.find(order => order.id === id);
+    const order = this.orders.find(order => order.id_pedido === id);
     if (order) {
       this.selectedOrder = order;
-      this.filteredOrders = [order, ...this.orders.filter(o => o.id !== order.id && o.id_usuario === this.userId)];
-      this.toggleOrderHistory(false);
+      this.filteredOrders = [order, ...this.orders.filter(o => o.id_pedido !== order.id_pedido && o.id_usuario === this.id_usuario)];
     }
   }
-
+  
   toggleOrderHistory(isHistory: boolean) {
     this.filteredOrders = isHistory
       ? this.orders
-      : this.orders.filter(order => order.status === EstadoPedido.pending || order.status === EstadoPedido.Accepted);
+      : this.orders.filter(order => order.estado !== 'CANCELADO');
+  }
+  
+  onCancelOrder(id_pedido: number): void {
+    this.ordersService.cancelOrder(id_pedido).subscribe({
+      next: () => {
+        this.loadOrders().subscribe({
+          next: (orders) => {
+          },
+          error: (error) => {
+          }
+        });
+      },
+      error: (error) => {
+      }
+    });
   }
 }

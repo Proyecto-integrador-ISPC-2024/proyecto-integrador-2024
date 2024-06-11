@@ -1,30 +1,21 @@
-export enum EstadoPedido {
-  pending = 'Pendiente',
-  Accepted = 'Aceptado',
-  Cancelled = 'Cancelado',
-}
-
-export interface Order {
-  id: number;
+export interface DashboardOrder {
+  id_pedido: number;
+  fecha: string;
+  total: number;
   id_usuario: number;
-  fecha_creacion: string;
-  id_productos: number[];
-  status: EstadoPedido
-  amount: number[];
-  subtotal: number[];
-  precio_total: number;
-  metodo_pago: string;
+  estado: string;
+  detalles: Array<{
+    id_talle: number;
+    cantidad: number;
+    subtotal: number;
+    producto: {
+      id_producto: number;
+      nombre_producto: string;
+      precio: number;
+      imagen: string;
+    };
+  }>;
+  forma_de_pago: Array<{
+    forma_de_pago_descripcion: string;
+  }>;
 }
-
-
-/*
-Enviar en un pedido
-id_producto = datos de producto (IDs) en array
-Talle
-Cantidad
-Subtotal
-
-id_usuario
-total
-método de pago seleccionado (si es tarjeta, agregar nombre de tarjeta/id de tarjeta)
-*/
