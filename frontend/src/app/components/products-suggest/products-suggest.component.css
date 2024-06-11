@@ -1,11 +1,13 @@
 #productCarousel {
     width: 100%;
-    max-width: 800px; 
-    margin: 0 auto; 
-    height: auto; 
+    max-width: 800px;
+    margin: 0 auto;
+    height: auto;
     background-color: #f0f0f0;
-    padding-bottom: 2rem; 
-    border-radius: 10px;
+    padding-bottom: 2rem;
+    border-radius: 10px; 
+    border: 1px solid #e0e0e0; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .carousel-control-prev,
@@ -32,9 +34,36 @@
     right: 5px;
 }
 
+.card.products-suggest-card {
+    border-radius: 0.75rem; 
+    border: 1px solid #e0e0e0; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem; 
+}
+
+.card.products-suggest-card .card-header {
+    background-color: #EAEAEA; 
+    color: #000000;
+    border-bottom: 1px solid #e0e0e0; 
+    border-top-left-radius: 0.75rem; 
+    border-top-right-radius: 0.75rem;
+    padding: 1rem; 
+}
+
 .card.products-suggest-card .card-body {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: 1.5rem; 
+}
+
+.card.products-suggest-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.4rem; 
+    border: 1px solid #e0e0e0; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+    box-sizing: border-box; 
+    display: block; 
 }
