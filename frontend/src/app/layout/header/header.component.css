@@ -7,11 +7,6 @@
     vertical-align: middle;
 }
 
-.navbarItemsContainer{
-    display: flex;
-    justify-content: end;
-}
-
 .button{
     border: none;
     padding: 8px;

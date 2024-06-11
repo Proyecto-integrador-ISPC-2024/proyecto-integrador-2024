@@ -46,4 +46,8 @@ export class HeaderComponent implements OnInit {
   //modalRegisterForm() {
   //  this.modalFormVisible = true;
  // }
+
+  toggleTheme(event: Event){
+    console.log(event)
+  }
 }
