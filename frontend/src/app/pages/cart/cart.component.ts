@@ -21,7 +21,7 @@ export class CartComponent implements OnInit {
     tarjetas: [],
   };
   private urlPaymentMethods: string =
-    'http://localhost:8000/pedidos/listar_metodopago/';
+    'http://localhost:8000/pedidos/listar_metodopago/'; /* When making a GET request to this URL, the error triggers */
 
   constructor(
     private cartService: CartService,
@@ -65,10 +65,19 @@ export class CartComponent implements OnInit {
 
   getPaymentMethods(): void {
     this.apiService
-      .get<PaymentMethodData>(this.urlPaymentMethods)
-      .subscribe((methods) => {
-        this.paymentMethods = methods;
-        // console.log(this.paymentMethods);
+      .getWithAuth<PaymentMethodData>(this.urlPaymentMethods)
+      .subscribe({
+        next: (methods) => {
+          this.paymentMethods = methods;
+          console.log(this.paymentMethods);
+        },
+        error: (error) => {
+          console.error('Error fetching payment methods:', error);
+          alert(
+            'Error al obtener los métodos de pago: ' +
+              (error.error.message || 'Ocurrió un error')
+          );
+        },
       });
   }
 
