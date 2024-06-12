@@ -147,7 +147,7 @@ export class CartResumeComponent implements OnChanges {
       ],
     };
 
-    this.apiService.post<CartOrder>(this.ordersUrl, order).subscribe({
+    this.apiService.postWithAuth<CartOrder>(this.ordersUrl, order).subscribe({
       next: (createdOrder) => {
         alert('Order created successfully!');
         this.clearCart();

@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.css']
+  styleUrls: ['./login-form.component.css'],
 })
 export class LoginFormComponent {
   email: string = '';
@@ -19,27 +19,32 @@ export class LoginFormComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login({ email: this.email, password: this.password }).subscribe({
-      next: (response) => {
-        console.log('Respuesta del servidor:', response);
-        if (response && response.access) {
-          localStorage.setItem('token', response.access);
-          alert('Autenticación exitosa');
-          this.router.navigateByUrl('dashboard');
-        } /* else {
-          alert('Error de autenticación: Respuesta del servidor incompleta');
-        } */
-      },
-      error: err => {
-        console.error('Error de autenticación:', err);
-        alert('Error de autenticación: ' + (err.error.message || 'Ocurrió un error'));
-      }
-    });
+    this.authService
+      .login({ email: this.email, password: this.password })
+      .subscribe({
+        next: (response) => {
+          if (response && response.token) {
+            alert('Autenticación exitosa');
+            this.router.navigateByUrl('dashboard');
+          } else {
+            alert('Error de autenticación: Respuesta del servidor incompleta');
+          }
+        },
+        error: (err) => {
+          console.error('Error de autenticación:', err);
+          alert(
+            'Error de autenticación: ' +
+              (err.error.message || 'Ocurrió un error')
+          );
+        },
+      });
   }
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
-    const passwordInput = document.getElementById('inputPassword') as HTMLInputElement;
+    const passwordInput = document.getElementById(
+      'inputPassword'
+    ) as HTMLInputElement;
     if (passwordInput) {
       passwordInput.type = this.passwordVisible ? 'text' : 'password';
     }
