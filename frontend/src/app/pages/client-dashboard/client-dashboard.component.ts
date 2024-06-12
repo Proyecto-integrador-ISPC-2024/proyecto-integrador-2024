@@ -16,7 +16,6 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./client-dashboard.component.css']
 })
 
-
 export class ClientDashboardComponent implements OnInit {
   orders: DashboardOrder[] = [];
   filteredOrders: DashboardOrder[] = [];
@@ -25,8 +24,8 @@ export class ClientDashboardComponent implements OnInit {
 
   constructor(private ordersService: OrdersService) {
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    if (currentUser && currentUser.id) {
-      this.id_usuario = parseInt(currentUser.id, 10);
+    if (currentUser && currentUser.id_usuario) {
+      this.id_usuario = currentUser.id_usuario;
     } else {
       this.id_usuario = NaN;
     }
@@ -34,7 +33,8 @@ export class ClientDashboardComponent implements OnInit {
   
   ngOnInit() {
     this.loadOrders().subscribe({
-      next: () => {
+      next: (orders) => {
+        console.log('Orders loaded:', orders);
       },
       error: (error) => console.error('Error loading orders:', error)
     });
@@ -47,11 +47,16 @@ export class ClientDashboardComponent implements OnInit {
         return of([]);
       }),
       tap((orders: DashboardOrder[]) => {
-        this.orders = orders.filter(order => order.id_usuario === this.id_usuario);
-        this.filteredOrders = [...this.orders];
+        if (Array.isArray(orders)) {
+          this.orders = orders;
+          this.filteredOrders = orders.filter(order => order.id_usuario === this.id_usuario);
+        } else {
+          console.error('Orders response is not an array:', orders);
+        }
       })
     );
-  }  
+  }
+  
   
   searchOrderById(id: number) {
     if (id) {
@@ -93,14 +98,11 @@ export class ClientDashboardComponent implements OnInit {
     this.ordersService.cancelOrder(id_pedido).subscribe({
       next: () => {
         this.loadOrders().subscribe({
-          next: (orders) => {
-          },
-          error: (error) => {
-          }
+          next: (orders) => {},
+          error: (error) => {}
         });
       },
-      error: (error) => {
-      }
+      error: (error) => {}
     });
   }
 }
