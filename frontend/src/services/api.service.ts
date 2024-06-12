@@ -51,7 +51,11 @@ export class ApiService {
 
   // Delete
   delete<T>(url: string): Observable<T> {
-    return this.httpClient.delete<T>(url) as Observable<T>;
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    })
+    return this.httpClient.delete<T>(url, { headers }) as Observable<T>;
   }
 }
 
