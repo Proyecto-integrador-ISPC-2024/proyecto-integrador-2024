@@ -26,9 +26,9 @@ export class LoginFormComponent {
           localStorage.setItem('token', response.access);
           alert('Autenticación exitosa');
           this.router.navigateByUrl('dashboard');
-        } else {
+        } /* else {
           alert('Error de autenticación: Respuesta del servidor incompleta');
-        }
+        } */
       },
       error: err => {
         console.error('Error de autenticación:', err);
