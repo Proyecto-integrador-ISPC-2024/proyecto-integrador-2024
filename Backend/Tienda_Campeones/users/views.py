@@ -5,11 +5,13 @@ from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import permissions as permission
 from users.models import Usuarios
 from users.usuarioapi.usuario_serializers import *
 
 class Login(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+    permission_classes = [permission.AllowAny]
 
     def post(self,request,*args, **kwargs):
         email = request.data.get('email', '')
@@ -34,10 +36,11 @@ class Login(TokenObtainPairView):
         return Response({'error': 'Mail o contraseña incorrectos'}, status=status.HTTP_400_BAD_REQUEST)
     
 class Logout(GenericAPIView):
-    def post(self,request,*args,**kwargs):
+    
+     def post(self,request,*args,**kwargs):
         email = request.data.get('email', '')
         usuario = Usuarios.objects.filter(email=email).first()
-        if usuario.exists():
+        if usuario is not None:
             RefreshToken.for_user(usuario)
             return Response({'message':'Sesion cerrada correctamente'},status=status.HTTP_200_OK)
         return Response({'error': 'No existe este mail'},status=status.HTTP_400_BAD_REQUEST)
