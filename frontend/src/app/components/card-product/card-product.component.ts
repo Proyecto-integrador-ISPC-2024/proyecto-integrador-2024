@@ -38,6 +38,7 @@ export class CardProductComponent {
     this.selectedSize_id = size_id;
     this.product.id_talleSeleccionado = size_id;
     this.selectedSize = size;
+    this.product.talleSeleccionado = size;
     this.selectedStock = stock;
     this.product.stockSeleccionado = stock;
   }

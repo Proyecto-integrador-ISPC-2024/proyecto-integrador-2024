@@ -8,13 +8,11 @@
           @for (product of cartResume; track product.id_producto_talle) {
           <span>{{ product.productos.nombre_producto }}</span>
           }
-          <!-- <span *ngFor="let product of cartResume">{{product.name}}</span> -->
         </div>
         <div class="d-flex flex-column my-3">
           @for (product of cartResume; track product.id_producto_talle) {
           <span>${{ product.productos.precio * product.cantidad }}</span>
           }
-          <!-- <span *ngFor="let product of cartResume">{{product.price * product.amount}}</span> -->
         </div>
       </div>
       <hr class="my-4" />
@@ -68,25 +66,6 @@
       <div class="modal-body">
         <form [formGroup]="formGroup" (ngSubmit)="onEnviar($event)">
           <div class="mb-3">
-            <label for="inputNombreCompleto" class="form-label"
-              >Nombre completo</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="inputNombreCompleto"
-              aria-describedby="inputNombreCompleto"
-              placeholder="Tu nombre completo"
-              formControlName="name"
-            />
-            <p
-              class="text-danger"
-              *ngIf="formGroup.controls.name.hasError('required')"
-            >
-              Por favor, ingresa tu nombre completo
-            </p>
-          </div>
-          <div class="mb-3">
             <label for="inputEmail" class="form-label"
               >Correo electrónico</label
             >
@@ -105,29 +84,62 @@
               Por favor, ingresa un formato de mail valido
             </p>
           </div>
-          <select
-            class="my-4 form-select"
-            aria-label="Default select example"
-            id="payments"
-            formControlName="payment"
-            (change)="onPaymentChange($event)"
-          >
-            <option value="" disabled selected>
-              Selecciona un medio de pago
-            </option>
-            <option
-              *ngFor="let method of paymentMethods.formas_de_pago"
-              [value]="method.id_forma_de_pago"
+
+          <div class="mb-3">
+            <label for="payments" class="form-label">Métodos de pago: </label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="payments"
+              formControlName="payment"
+              (change)="onPaymentChange($event)"
             >
-              {{ method.descripcion }}
-            </option>
-          </select>
-          <p
-            class="text-danger"
-            *ngIf="formGroup.controls.payment.hasError('required')"
-          >
-            Por favor, selecciona un metodo de pago
-          </p>
+              <option value="" disabled selected>
+                Selecciona un medio de pago
+              </option>
+              <option
+                *ngFor="let method of paymentMethods.formas_de_pago"
+                [value]="method.id_forma_de_pago"
+              >
+                {{ method.descripcion }}
+              </option>
+            </select>
+            <p
+              class="text-danger"
+              *ngIf="formGroup.controls.payment.hasError('required')"
+            >
+              Por favor, selecciona un metodo de pago
+            </p>
+          </div>
+
+          <div class="mb-3" *ngIf="selectedPaymentMethod === 3">
+            <label for="creditCards" class="form-label">
+              Tarjetas de crédito:
+            </label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="creditCards"
+              formControlName="creditCards"
+              (change)="onCardSelectChange($event)"
+            >
+              <option value="" disabled selected>
+                Seleccioná una tarjeta de crédito
+              </option>
+              <option
+                *ngFor="let card of paymentMethods.tarjetas"
+                [value]="card.id_tarjeta"
+              >
+                {{ card.nombre_tarjeta }}
+              </option>
+            </select>
+            <p
+              class="text-danger"
+              *ngIf="formGroup.controls.creditCards.hasError('required')"
+            >
+              Por favor, seleccioná una tarjeta de crédito
+            </p>
+          </div>
 
           <div class="my-3 form-check">
             <input
