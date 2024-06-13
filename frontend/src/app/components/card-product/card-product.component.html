@@ -22,7 +22,7 @@
       </ul>
 
       <p *ngIf="isInCart()">El producto está en el carrito</p>
-      <p *ngIf="product.id_talleSeleccionado">Talle seleccionado: {{ product.talleSeleccionado }}</p> <!--! Fix rendering here -->
+      <p *ngIf="product.talleSeleccionado">Talle seleccionado: {{ product.talleSeleccionado }}</p>
 
       <button type="submit" class="btn btn-success" (click)="addProductToCart()" [disabled]="isInCart()">
         Agregar al carro

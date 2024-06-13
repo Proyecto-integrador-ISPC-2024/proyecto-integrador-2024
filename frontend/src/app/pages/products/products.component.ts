@@ -42,7 +42,6 @@ export class ProductsComponent implements OnInit {
       .get<Product[]>(`${this.urlProductos}?pais=${country}`)
       .subscribe({
         next: (data: Product[]) => {
-          // console.log(data)
           if (Array.isArray(data)) {
             this.products = data;
             this.filteredProducts = data;
