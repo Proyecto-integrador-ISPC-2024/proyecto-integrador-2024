@@ -10,6 +10,7 @@ export class CartService {
   private cartItemsSubject = new BehaviorSubject<Product[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();
 
+  /* Fix here */
   addToCart(product: Product): void {
     const existingProduct = this.cartItems.find(
       (item) => item.id_producto_talle === product.id_producto_talle
@@ -41,7 +42,7 @@ export class CartService {
 
     if (productIndex !== -1) {
       const sizeIndex = product.talles.findIndex(
-        (talle) => talle.talle === product.talleSeleccionado
+        (talle) => talle.id_talle === product.id_talleSeleccionado /* Arreglar bug acá, se repite la selección de talle una vez que el talle está elegido y por ende la cantidad de productos a comprar de ESE talle elegido se aumenta en vez de aumentarse la cantidad del talle A ELEGIR después de elegir un primer talle */
       );
 
       if (sizeIndex !== -1) {
@@ -50,9 +51,9 @@ export class CartService {
     }
   }
 
-  isProductInCart(productId: number, size: string): boolean {
+  isProductInCart(productId: number, size_id: number): boolean {
     return this.cartItems.some(
-      (item) => item.productos.id_producto === productId && item.talleSeleccionado === size
+      (item) => item.productos.id_producto === productId && item.id_talleSeleccionado === size_id
     );
   }
 

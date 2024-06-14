@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Order, EstadoPedido } from '../../../interfaces/order';
+import { DashboardOrder } from '../../../interfaces/order';
 
 @Component({
   selector: 'app-orders-summary',
@@ -10,14 +10,14 @@ import { Order, EstadoPedido } from '../../../interfaces/order';
   styleUrls: ['./orders-summary.component.css']
 })
 export class OrdersSummaryComponent {
-  @Input() orders: Order[] = [];
-  @Output() orderSelected = new EventEmitter<number>();
+  @Input() orders: DashboardOrder[] = [];
+  @Output() selectedOrder = new EventEmitter<number>();
 
-  get nonCancelledOrders(): Order[] {
-    return this.orders.filter(order => order.status !== EstadoPedido.Cancelled);
+  get nonCancelledOrders(): DashboardOrder[] {
+    return this.orders.filter(order => order.estado === 'ACEPTADO' || order.estado === 'ENVIADO');
   }
 
   selectOrder(id: number) {
-    this.orderSelected.emit(id);
-  }
+    this.selectedOrder.emit(id);
+  }  
 }

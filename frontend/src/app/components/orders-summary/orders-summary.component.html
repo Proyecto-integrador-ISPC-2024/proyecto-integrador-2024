@@ -1,12 +1,16 @@
-<section>
-  <div class="card orders-summary-card" style="background: #ffffff; color: #000000">
-    <h5 class="card-header p-3">Estado de envíos</h5>
-    <ul class="list-group list-group-flush p-2">
-      <li class="list-group-item my-1" *ngFor="let order of nonCancelledOrders">
-        <a href="#" (click)="selectOrder(order.id); $event.preventDefault()">Orden N° - {{ order.id }}</a>
-        <hr />
-        <p>Estado: {{ order.status }}</p>
-      </li>
-    </ul>
+<section class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <div class="card orders-summary-card" style="background: #ffffff; color: #000000">
+        <h5 class="card-header p-3">Estado de envíos</h5>
+        <ul class="list-group list-group-flush p-2">
+          <li class="list-group-item my-1" *ngFor="let order of nonCancelledOrders">
+            <a href="#" (click)="selectOrder(order.id_pedido); $event.preventDefault()">Orden N° - {{ order.id_pedido }}</a>
+            <hr />
+            <p>Estado: {{ order.estado }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>

@@ -1,20 +1,18 @@
-/* export interface User {
-  id?: number;
-  name: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  address: string;
-  password: string;
-  role: string
-}*/
 export class User {
-  name: string = "";
-  lastName: string = "";
-  address: string = "";
+  nombre: string = "";
+  apellido: string = "";
+  domicilio: string = "";
   email: string = "";
   password: string = "";
-  userName: string = "";
   role: string = "cliente";
-  id: number = 0;
+  id_usuario: number = 0;
+}
+
+export interface UserLocalStoraged {
+  apellido: string;
+  domicilio: string;
+  email: string;
+  id_usuario: number;
+  nombre: string;
+  rol: string
 }

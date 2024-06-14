@@ -1,38 +1,46 @@
+import { AuthService } from './../app/services/auth.service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Order, EstadoPedido } from '../interfaces/order';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { ApiService } from './api.service';
+import { DashboardOrder } from '../interfaces/order';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrdersService {
-  // private baseUrl = 'localhost:8000/pedidos';
-  private baseUrl = 'https://6656d1989f970b3b36c6a331.mockapi.io/pedidos'; /* provisorio hasta correción de interfaz Order.ts */
+  private ordersUrl = 'http://127.0.0.1:8000/pedidos/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private apiService: ApiService, private authService: AuthService, private HttpClient: HttpClient) {} 
 
-  private transformOrder(order: any): Order {
-    return {
-      ...order,
-      status: order.status as EstadoPedido,
-    };
+  getAllOrders<T>(): Observable<DashboardOrder[]> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.HttpClient.get<T>(this.ordersUrl, { headers }) as Observable<DashboardOrder[]>;
   }
 
-  getAllOrders(): Observable<Order[]> {
-    return this.http
-      .get<Order[]>(this.baseUrl)
-      .pipe(map((orders) => orders.map((order) => this.transformOrder(order))));
+  getOrder(id_pedido: number): Observable<DashboardOrder> {
+    const url = `${this.ordersUrl}${id_pedido}/`;
+    return this.apiService.getWithAuth<DashboardOrder>(url)
+      .pipe(
+        catchError(this.handleError<DashboardOrder>('getOrder'))
+      );
   }
 
-  getOrder(id: number): Observable<Order> {
-    return this.http
-      .get<Order>(`${this.baseUrl}/${id}`)
-      .pipe(map((order) => this.transformOrder(order)));
+  cancelOrder(id_pedido: number): Observable<DashboardOrder> {
+    const url = `${this.ordersUrl}${id_pedido}/`;
+    return this.apiService.delete<DashboardOrder>(url).pipe(
+      catchError(this.handleError<DashboardOrder>('cancelOrder'))
+    );
   }
-
-  cancelOrder(id: number, order: Order): Observable<Order> {
-    return this.http.put<Order>(`${this.baseUrl}/${id}`, order);
+  
+  private handleError<T>(operation = 'operation', result?: T) {
+      return (error: any): Observable<T> => {
+        return of(result as T);
+      };
   }
 }

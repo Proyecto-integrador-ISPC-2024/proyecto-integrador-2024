@@ -1,5 +1,26 @@
+.orders-summary-card {
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
 .orders-summary-card .card-header {
     background-color: #EAEAEA;
     color: #000000;
+    padding: 1.5rem;
+    border-radius: 0.5rem 0.5rem 0 0;
 }
 
+.orders-summary-card .list-group-item {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 576px) {
+    .orders-summary-card {
+        width: 100%;
+        margin: 0 auto;
+    }
+}

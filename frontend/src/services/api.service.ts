@@ -1,40 +1,61 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../interfaces/product';
 import { User } from '../interfaces/user';
-import { Order } from '../interfaces/order';
+import { CartOrder } from '../interfaces/cartOrder';
+import { AuthService } from '../app/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService
+  ) {}
 
   // Get
   get<T>(url: string): Observable<T> {
     return this.httpClient.get<T>(url) as Observable<T>;
   }
 
+  getWithAuth<T>(url: string): Observable<T> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get<T>(url, { headers }) as Observable<T>;
+  }
+
   // Post
-  post<T>(
+  postWithAuth<T>(
     url: string,
-    body: Product | User | Order,
+    body: Product | User | CartOrder
   ): Observable<T> {
-    return this.httpClient.post<T>(url, body) as Observable<T>;
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.post<T>(url, body, { headers }) as Observable<T>;
   }
 
   // Put
-  put<T>(
-    url: string,
-    body: Product | User | Order
-  ): Observable<T> {
-    return this.httpClient.put<T>(url, body) as Observable<T>;
+  putWithAuth<T>(url: string, body: Product | User | CartOrder): Observable<T> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.put<T>(url, body, { headers }) as Observable<T>;
   }
 
   // Delete
   delete<T>(url: string): Observable<T> {
-    return this.httpClient.delete<T>(url) as Observable<T>;
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    })
+    return this.httpClient.delete<T>(url, { headers }) as Observable<T>;
   }
 }
 

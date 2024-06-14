@@ -13,7 +13,7 @@
           </button>
           <ul class="dropdown-menu">
             <li *ngFor="let talle of product.talles">
-              <button class="dropdown-item" (click)="selectSize(talle.talle, talle.stock)">
+              <button class="dropdown-item" (click)="selectSize(talle.id_talle, talle.stock, talle.talle)">
                 {{ talle.talle }} (Stock: {{ talle.stock }})
               </button>
             </li>

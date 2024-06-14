@@ -8,13 +8,11 @@
           @for (product of cartResume; track product.id_producto_talle) {
           <span>{{ product.productos.nombre_producto }}</span>
           }
-          <!-- <span *ngFor="let product of cartResume">{{product.name}}</span> -->
         </div>
         <div class="d-flex flex-column my-3">
           @for (product of cartResume; track product.id_producto_talle) {
           <span>${{ product.productos.precio * product.cantidad }}</span>
           }
-          <!-- <span *ngFor="let product of cartResume">{{product.price * product.amount}}</span> -->
         </div>
       </div>
       <hr class="my-4" />
@@ -51,6 +49,7 @@
   tabindex="-1"
   aria-labelledby="modalContainerLabel"
   aria-hidden="true"
+  #modalForm
 >
   <div class="modal-dialog">
     <div class="modal-content">
@@ -66,29 +65,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form
-          action="#"
-          method="get"
-          class=""
-          [formGroup]="formGroup"
-          (ngSubmit)="onEnviar($event)"
-        >
-          <div class="mb-3">
-            <label for="inputNombreCompleto" class="form-label"
-              >Nombre completo</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="inputNombreCompleto"
-              aria-describedby="inputNombreCompleto"
-              placeholder="Tu nombre completo"
-              formControlName="name"
-            />
-            @if (this.formGroup.controls.name.hasError('required')) {
-            <p class="text-danger">Por favor, ingresa tu nombre completo</p>
-            }
-          </div>
+        <form [formGroup]="formGroup" (ngSubmit)="onEnviar($event)">
           <div class="mb-3">
             <label for="inputEmail" class="form-label"
               >Correo electrónico</label
@@ -101,27 +78,69 @@
               placeholder="email@ejemplo.com"
               formControlName="email"
             />
-            @if (this.formGroup.controls.email.hasError('required')) {
-            <p class="text-danger">
+            <p
+              class="text-danger"
+              *ngIf="formGroup.controls.email.hasError('required')"
+            >
               Por favor, ingresa un formato de mail valido
             </p>
-            }
           </div>
-          <select
-            class="my-4 form-select"
-            aria-label="Default select example"
-            id="payments"
-            formControlName="payment"
-          >
-            <option label="Selecciona un medio de pago"></option>
-            <option value="transferencia">Transferencia bancaria</option>
-            <option value="efectivo">Efectivo-contado</option>
-            <option value="credito">Crédito</option>
 
-            @if (this.formGroup.controls.payment.hasError('required')) {
-            <p class="text-danger">Por favor, selecciona un metodo de pago</p>
-            }
-          </select>
+          <div class="mb-3">
+            <label for="payments" class="form-label">Métodos de pago: </label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="payments"
+              formControlName="payment"
+              (change)="onPaymentChange($event)"
+            >
+              <option value="" disabled selected>
+                Selecciona un medio de pago
+              </option>
+              <option
+                *ngFor="let method of paymentMethods.formas_de_pago"
+                [value]="method.id_forma_de_pago"
+              >
+                {{ method.descripcion }}
+              </option>
+            </select>
+            <p
+              class="text-danger"
+              *ngIf="formGroup.controls.payment.hasError('required')"
+            >
+              Por favor, selecciona un metodo de pago
+            </p>
+          </div>
+
+          <div class="mb-3" *ngIf="selectedPaymentMethod === 3">
+            <label for="creditCards" class="form-label">
+              Tarjetas de crédito:
+            </label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="creditCards"
+              formControlName="creditCards"
+              (change)="onCardSelectChange($event)"
+            >
+              <option value="" disabled selected>
+                Seleccioná una tarjeta de crédito
+              </option>
+              <option
+                *ngFor="let card of paymentMethods.tarjetas"
+                [value]="card.id_tarjeta"
+              >
+                {{ card.nombre_tarjeta }}
+              </option>
+            </select>
+            <p
+              class="text-danger"
+              *ngIf="formGroup.controls.creditCards.hasError('required')"
+            >
+              Por favor, seleccioná una tarjeta de crédito
+            </p>
+          </div>
 
           <div class="my-3 form-check">
             <input
@@ -130,19 +149,19 @@
               id="checkTerms"
               formControlName="terms"
             />
-
-            <label class="form-check-label" for="checkTerms"
-              >Acepto los
+            <label class="form-check-label" for="checkTerms">
+              Acepto los
               <a href="#" class="text-decoration-underline link-offset-3"
                 >términos y condiciones de compra</a
-              >.</label
+              >.
+            </label>
+            <p
+              class="text-danger"
+              *ngIf="formGroup.controls.terms.hasError('required')"
             >
-            @if (this.formGroup.controls.terms.hasError('required')) {
-            <p class="text-danger">
-              Por favor, para realizar la comprar acepta los terminos y
+              Por favor, para realizar la compra acepta los términos y
               condiciones
             </p>
-            }
           </div>
           <div class="mt-5 d-flex flex-row justify-content-evenly">
             <button
