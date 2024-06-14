@@ -23,15 +23,6 @@ APIs REST: Desarrollamos APIs REST para la manipulación de productos, autentica
 Autenticación JWT: Implementamos la autenticación basada en JWT para proteger las rutas y garantizar la seguridad de la aplicación.
 Script SQL: Creamos un script SQL para insertar datos mínimos y necesarios en la base de datos para pruebas, facilitando la validación del backend.
 
-ENPOINTS
-- de prueba con mockapi:
-
-	Pasarela de pago: https://664d5d12ede9a2b556534efe.mockapi.io/payments
-	
-	Usuarios: https://66525119813d78e6d6d53814.mockapi.io/users
-	
-	Pedidos: https://6656d1989f970b3b36c6a331.mockapi.io/pedidos
-
 Gestión de Proyecto:
 
 El equipo trabajó mediante la estructura de scrum, utilizamos las herramientas de github para ello. Definimos reuniónes de planning, Issues a partir de las historias de usuario. Implementamos esquema de branching para la gestión del código, promoviendo la organización y el control de versiones. Creamos un Milestone para cada sprint, mantuvimos actualizado el kanban del proyecto, documentamos el proyecto basandonos en el standart IEEE830, Y registramos todas nuestras reuniones en una bitacoria propia del equipo. Documentamos las ceremonias de planning, review y retrospective en la wiki
