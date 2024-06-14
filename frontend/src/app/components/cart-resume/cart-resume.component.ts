@@ -1,11 +1,14 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   inject,
   Input,
   OnChanges,
   Output,
+  Renderer2,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
@@ -31,6 +34,7 @@ export class CartResumeComponent implements OnChanges {
     tarjetas: [],
   };
   @Output() clearCartEvent = new EventEmitter<void>();
+  @ViewChild('modalForm') modalForm!: ElementRef;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['cartResume']) {
@@ -47,11 +51,12 @@ export class CartResumeComponent implements OnChanges {
 
   formBuilder = inject(FormBuilder);
   apiService = inject(ApiService);
+  renderer = inject(Renderer2);
 
   formGroup = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     payment: ['', Validators.required],
-    creditCards: ['', Validators.required],
+    creditCards: [''],
     terms: [false, Validators.requiredTrue],
   });
 
@@ -61,10 +66,17 @@ export class CartResumeComponent implements OnChanges {
   onPaymentChange(event: Event): void {
     const selectedPayment = (event.target as HTMLSelectElement).value;
     this.selectedPaymentMethod = parseInt(selectedPayment, 10);
-    // console.log(this.selectedPaymentMethod);
-    if (this.selectedPaymentMethod !== 3) {
-      this.selectedCreditCard = null;
+
+    const creditCardControl = this.formGroup.get('creditCards');
+
+    if (this.selectedPaymentMethod === 3) {
+      creditCardControl?.setValidators([Validators.required]);
+    } else {
+      creditCardControl?.clearValidators();
     }
+    creditCardControl?.updateValueAndValidity();
+
+    // console.log(this.selectedPaymentMethod);
   }
 
   onCardSelectChange(event: Event): void {
@@ -122,14 +134,24 @@ export class CartResumeComponent implements OnChanges {
 
     this.apiService.postWithAuth<CartOrder>(this.ordersUrl, order).subscribe({
       next: (createdOrder) => {
-        alert('Order created successfully!');
+        alert('¡Pedido creado exitosamente!');
+        this.dismissModal();
         this.clearCart();
       },
       error: (error) => {
-        console.error('Error creating order:', error);
-        alert('Failed to create order.');
+        // console.error('Error creating order:', error);
+        alert('¡Error al crear el pedido!');
       },
     });
+  }
+
+  dismissModal(): void {
+    this.renderer.setAttribute(
+      this.modalForm.nativeElement,
+      'data-bs-dismiss',
+      'modal'
+    );
+    this.modalForm.nativeElement.click();
   }
 
   clearCart(): void {

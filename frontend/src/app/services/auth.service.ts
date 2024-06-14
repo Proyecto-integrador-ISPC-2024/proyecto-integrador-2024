@@ -68,7 +68,7 @@ export class AuthService {
     providedIn: 'root',
   })
   export class AuthService {
-    private url = 'http://127.0.0.1:8000'; // URL base de tu backend Django
+    private url = 'http://127.0.0.1:8000';
     private refreshTokenInProgress = false;
     private refreshTokenSubject: BehaviorSubject<any> =
       new BehaviorSubject<any>(null);
@@ -82,7 +82,7 @@ export class AuthService {
     login(credentials: { email: string; password: string }): Observable<any> {
       return this.http.post<any>(`${this.url}/login/`, credentials).pipe(
         map((response) => {
-          console.log('Respuesta del servidor:', response);
+          // console.log('Respuesta del servidor:', response);
           if (response && response.token) {
             localStorage.setItem('access_token', response.token);
             localStorage.setItem('refresh_token', response.refresh_token);

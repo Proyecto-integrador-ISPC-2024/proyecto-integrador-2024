@@ -33,7 +33,9 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <div class="d-flex flex-row justify-content-between align-items-center w-100">
+        <div
+          class="d-flex flex-row justify-content-between align-items-center w-100"
+        >
           <ul class="navbar-nav mx-5 list-unstyled">
             <li class="navItem nav-item my-0 mx-1 p-0">
               <a
@@ -79,13 +81,14 @@
             <!-- Botón de logout -->
             <!-- Botón de logout -->
             <li class="p-0 my-0 mx-1 navItem nav-item" id="logoutBtn">
-              <a
-                class="material-icons button"
+              <button
+                type="button"
+                class="material-icons button d-none"
                 data-bs-toggle="modal"
                 data-bs-target="#logoutModal"
-              >
+              > <!-- Remove d-none class at next version for dynamic rendering -->
                 logout
-              </a>
+              </button>
             </li>
 
             <li class="p-0 my-0 mx-1 navItem nav-item">
@@ -131,7 +134,12 @@
               </div>
             </li>
             <li id="togglerBtnDM" class="p-0 my-0 mx-1 navItem nav-item">
-              <button class="material-icons align-middle border border-0" (click)="toggleTheme($event)">dark_mode</button>
+              <button
+                class="material-icons align-middle border border-0 bg-transparent"
+                (click)="toggleTheme($event)"
+              >
+                dark_mode
+              </button>
             </li>
           </ul>
         </div>
@@ -146,4 +154,42 @@
 
 <section *ngIf="modalFormVisible">
   <app-register-form></app-register-form>
+</section>
+
+<section>
+  <div
+    class="modal fade"
+    id="logoutModal"
+    tabindex="-1"
+    aria-labelledby="logoutModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="logoutModalLabel">Cerrar sesión</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro/a que querés finalizar tu sesión?
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-danger">Cerrar sesión</button>
+          <!--Agregar (click)="logout()" -->
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

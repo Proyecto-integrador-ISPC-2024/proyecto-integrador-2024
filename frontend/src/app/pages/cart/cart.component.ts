@@ -6,11 +6,12 @@ import { Product } from '../../../interfaces/product';
 import { CartService } from '../../../services/cart.service';
 import { ApiService } from '../../../services/api.service';
 import { PaymentMethodData } from '../../../interfaces/paymentMethodData';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [PaymentsComponent, CartResumeComponent, CartListComponent],
+  imports: [PaymentsComponent, CartResumeComponent, CartListComponent, RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
