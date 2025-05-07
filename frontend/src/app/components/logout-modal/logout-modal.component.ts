@@ -15,8 +15,15 @@ export class LogoutModalComponent  {
   constructor(private authService: AuthService, private router: Router) { }
 
   logout() {
-    this.authService.logout();
-    alert('Sesión cerrada');
-    this.router.navigate(['login']);
+    this.authService.logout().subscribe({
+      next: () => {
+        alert('Sesión cerrada');
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error('Error al cerrar sesión:', err);
+        this.router.navigate(['/']);
+      }
+    });
   }
 }
