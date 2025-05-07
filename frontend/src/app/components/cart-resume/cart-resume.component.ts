@@ -1,29 +1,32 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   inject,
   Input,
   OnChanges,
   Output,
+  Renderer2,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
+import { Product } from '../../interfaces/product';
+import { CartOrder } from '../../interfaces/cartOrder';
+import { PaymentMethodData } from '../../interfaces/paymentMethodData';
+import { UserLocalStoraged } from '../../interfaces/user';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { ApiService } from '../../../services/api.service';
-import { Product } from '../../../interfaces/product';
-import { CartOrder } from '../../../interfaces/cartOrder';
-import { PaymentMethodData } from '../../../interfaces/paymentMethodData';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-cart-resume',
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, NgSwitch, NgSwitchCase, NgIf],
+  imports: [ReactiveFormsModule, NgFor, NgIf],
   templateUrl: './cart-resume.component.html',
   styleUrl: './cart-resume.component.css',
 })
 export class CartResumeComponent implements OnChanges {
   private ordersUrl = 'http://localhost:8000/pedidos/';
-  // private ordersUrl = 'https://664d5d12ede9a2b556534efe.mockapi.io/products';
   @Input() cartResume: Product[] = [];
   @Input() totalPrice: number = 0;
   @Input() paymentMethods: PaymentMethodData = {
@@ -31,6 +34,7 @@ export class CartResumeComponent implements OnChanges {
     tarjetas: [],
   };
   @Output() clearCartEvent = new EventEmitter<void>();
+  @ViewChild('modalForm') modalForm!: ElementRef;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['cartResume']) {
@@ -47,63 +51,41 @@ export class CartResumeComponent implements OnChanges {
 
   formBuilder = inject(FormBuilder);
   apiService = inject(ApiService);
+  renderer = inject(Renderer2);
 
   formGroup = this.formBuilder.nonNullable.group({
-    name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     payment: ['', Validators.required],
+    creditCards: [''],
     terms: [false, Validators.requiredTrue],
-
-    // Additional fields for different payment methods
-    /* bankName: [''],
-    paymentLocation: [''],
-    cardNumber: [''],
-    cardExpiry: [''],
-    cardCVV: [''], */
   });
 
   selectedPaymentMethod: number | null = null;
+  selectedCreditCard: number | null = null;
 
   onPaymentChange(event: Event): void {
     const selectedPayment = (event.target as HTMLSelectElement).value;
     this.selectedPaymentMethod = parseInt(selectedPayment, 10);
-    console.log('Selected Payment Method:', this.selectedPaymentMethod);
-    // this.updateFormValidators();
+
+    const creditCardControl = this.formGroup.get('creditCards');
+
+    if (this.selectedPaymentMethod === 3) {
+      creditCardControl?.setValidators([Validators.required]);
+    } else {
+      creditCardControl?.clearValidators();
+    }
+    creditCardControl?.updateValueAndValidity();
+
+    // console.log(this.selectedPaymentMethod);
   }
 
-  /* private updateFormValidators(): void {
-    this.formGroup.get('bankName')?.clearValidators();
-    this.formGroup.get('paymentLocation')?.clearValidators();
-    this.formGroup.get('cardNumber')?.clearValidators();
-    this.formGroup.get('cardExpiry')?.clearValidators();
-    this.formGroup.get('cardCVV')?.clearValidators();
-
-    if (this.selectedPaymentMethod === 'transferencia') {
-      this.formGroup.get('bankName')?.setValidators([Validators.required]);
-    } else if (this.selectedPaymentMethod === 'efectivo') {
-      this.formGroup
-        .get('paymentLocation')
-        ?.setValidators([Validators.required]);
-    } else if (this.selectedPaymentMethod === 'credito') {
-      this.formGroup
-        .get('cardNumber')
-        ?.setValidators([Validators.required, Validators.pattern(/^\d{16}$/)]);
-      this.formGroup
-        .get('cardExpiry')
-        ?.setValidators([
-          Validators.required,
-          Validators.pattern(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/),
-        ]);
-      this.formGroup
-        .get('cardCVV')
-        ?.setValidators([Validators.required, Validators.pattern(/^\d{3,4}$/)]);
-    }
-    this.formGroup.get('bankName')?.updateValueAndValidity();
-    this.formGroup.get('paymentLocation')?.updateValueAndValidity();
-    this.formGroup.get('cardNumber')?.updateValueAndValidity();
-    this.formGroup.get('cardExpiry')?.updateValueAndValidity();
-    this.formGroup.get('cardCVV')?.updateValueAndValidity();
-  } */
+  onCardSelectChange(event: Event): void {
+    const selectedCard = (event.target as HTMLSelectElement).value;
+    this.selectedCreditCard = parseInt(selectedCard, 10);
+    /* console.log(
+      this.selectedCreditCard
+    ); */
+  }
 
   clickRegister(): void {
     const formValues = this.formGroup.value;
@@ -112,8 +94,17 @@ export class CartResumeComponent implements OnChanges {
     }
   }
 
+  getUserId(): number {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      const userData: UserLocalStoraged = JSON.parse(user);
+      return userData.id_usuario;
+    }
+    return 0;
+  }
+
   createOrder(formValues: any): void {
-    const userId = 1; // This should be dynamically set based on logged in user
+    const userId = this.getUserId();
     const paymentMethod = this.paymentMethods.formas_de_pago.find(
       (pm) => pm.id_forma_de_pago === this.selectedPaymentMethod
     );
@@ -136,27 +127,31 @@ export class CartResumeComponent implements OnChanges {
         {
           id_forma_de_pago: paymentMethod.id_forma_de_pago,
           id_tarjeta:
-            this.selectedPaymentMethod ===
-            this.paymentMethods.formas_de_pago.find(
-              (pm) => pm.descripcion === 'Tarjeta de crédito'
-            )?.id_forma_de_pago
-              ? this.paymentMethods.tarjetas?.find((card) => card.id_tarjeta)
-                  ?.id_tarjeta
-              : null,
+            this.selectedPaymentMethod === 3 ? this.selectedCreditCard : null,
         },
       ],
     };
 
     this.apiService.postWithAuth<CartOrder>(this.ordersUrl, order).subscribe({
       next: (createdOrder) => {
-        alert('Order created successfully!');
+        alert('¡Pedido creado exitosamente!');
+        this.dismissModal();
         this.clearCart();
       },
       error: (error) => {
-        console.error('Error creating order:', error);
-        alert('Failed to create order.');
+        // console.error('Error creating order:', error);
+        alert('¡Error al crear el pedido!');
       },
     });
+  }
+
+  dismissModal(): void {
+    this.renderer.setAttribute(
+      this.modalForm.nativeElement,
+      'data-bs-dismiss',
+      'modal'
+    );
+    this.modalForm.nativeElement.click();
   }
 
   clearCart(): void {

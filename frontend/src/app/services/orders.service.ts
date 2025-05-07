@@ -1,10 +1,10 @@
-import { AuthService } from './../app/services/auth.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { DashboardOrder } from '../interfaces/order';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -13,7 +13,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 export class OrdersService {
   private ordersUrl = 'http://127.0.0.1:8000/pedidos/';
 
-  constructor(private apiService: ApiService, private authService: AuthService, private HttpClient: HttpClient) {} 
+  constructor(private apiService: ApiService, private authService: AuthService, private HttpClient: HttpClient) {}
 
   getAllOrders<T>(): Observable<DashboardOrder[]> {
     const token = this.authService.getToken();
@@ -37,7 +37,7 @@ export class OrdersService {
       catchError(this.handleError<DashboardOrder>('cancelOrder'))
     );
   }
-  
+
   private handleError<T>(operation = 'operation', result?: T) {
       return (error: any): Observable<T> => {
         return of(result as T);

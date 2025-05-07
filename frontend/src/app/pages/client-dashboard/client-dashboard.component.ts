@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { OrdersSummaryComponent } from '../../components/orders-summary/orders-summary.component';
 import { ProductsSuggestComponent } from '../../components/products-suggest/products-suggest.component';
 import { OrderManagementComponent } from '../../components/order-management/order-management.component';
-import { OrdersService } from '../../../services/orders.service';
-import { DashboardOrder } from '../../../interfaces/order';
-import { catchError, of, switchMap, Observable } from 'rxjs';
+import { DashboardOrder } from '../../interfaces/order';
+import { catchError, of, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { OrdersService } from '../../services/orders.service';
 
 @Component({
   selector: 'app-client-dashboard',
@@ -30,7 +30,7 @@ export class ClientDashboardComponent implements OnInit {
       this.id_usuario = NaN;
     }
   }
-  
+
   ngOnInit() {
     this.loadOrders().subscribe({
       next: (orders) => {
@@ -39,7 +39,7 @@ export class ClientDashboardComponent implements OnInit {
       error: (error) => console.error('Error loading orders:', error)
     });
   }
-  
+
   loadOrders(): Observable<DashboardOrder[]> {
     return this.ordersService.getAllOrders().pipe(
       catchError(error => {
@@ -56,8 +56,8 @@ export class ClientDashboardComponent implements OnInit {
       })
     );
   }
-  
-  
+
+
   searchOrderById(id: number) {
     if (id) {
       const order = this.orders.find(order => order.id_pedido === id);
@@ -79,7 +79,7 @@ export class ClientDashboardComponent implements OnInit {
       this.filteredOrders = [...this.orders];
     }
   }
-  
+
   selectOrder(id: number) {
     const order = this.orders.find(order => order.id_pedido === id);
     if (order) {
@@ -87,13 +87,13 @@ export class ClientDashboardComponent implements OnInit {
       this.filteredOrders = [order, ...this.orders.filter(o => o.id_pedido !== order.id_pedido && o.id_usuario === this.id_usuario)];
     }
   }
-  
+
   toggleOrderHistory(isHistory: boolean) {
     this.filteredOrders = isHistory
       ? this.orders
       : this.orders.filter(order => order.estado !== 'CANCELADO');
   }
-  
+
   onCancelOrder(id_pedido: number): void {
     this.ordersService.cancelOrder(id_pedido).subscribe({
       next: () => {

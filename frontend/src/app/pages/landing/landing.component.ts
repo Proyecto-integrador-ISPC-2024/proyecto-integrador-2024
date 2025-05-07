@@ -7,7 +7,7 @@ import { ProductsComponent } from '../products/products.component';
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule,CarouselComponent, LandingCardComponent, ProductsComponent],
+  imports: [CommonModule,CarouselComponent, LandingCardComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })

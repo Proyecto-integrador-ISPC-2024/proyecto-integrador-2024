@@ -1,15 +1,25 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ThemeButtonComponent } from '../../components/theme-button/theme-button.component';
-import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 import { ModalService } from '../../services/modalstatus.service';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
+import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ThemeButtonComponent,RegisterFormComponent, RouterLink, CommonModule, RouterLinkActive,LoginFormComponent],
+  imports: [
+    RegisterFormComponent,
+    RouterLink,
+    CommonModule,
+    LoginFormComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -27,7 +37,7 @@ export class HeaderComponent implements OnInit {
         this.updateNavbarLinks(currentUrl);
       }
     });
-    this.modalService.registerModalVisible$.subscribe(visible => {
+    this.modalService.registerModalVisible$.subscribe((visible) => {
       this.modalFormVisible = visible;
     });
   }
@@ -43,7 +53,7 @@ export class HeaderComponent implements OnInit {
     this.showProductsLink = !currentUrl.includes('/products');
   }
 
-  toggleTheme(event: Event){
-    console.log(event)
+  toggleTheme(event: Event) {
+    console.log(event);
   }
 }

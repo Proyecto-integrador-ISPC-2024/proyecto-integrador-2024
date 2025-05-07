@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product } from '../../../interfaces/product';
+import { Product } from '../../interfaces/product';
 import { CommonModule, NgIf } from '@angular/common';
-import { CartService } from '../../../services/cart.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-card-product',
@@ -38,6 +38,7 @@ export class CardProductComponent {
     this.selectedSize_id = size_id;
     this.product.id_talleSeleccionado = size_id;
     this.selectedSize = size;
+    this.product.talleSeleccionado = size;
     this.selectedStock = stock;
     this.product.stockSeleccionado = stock;
   }
