@@ -60,7 +60,7 @@ export class AuthService {
   import { Injectable } from '@angular/core';
   import { HttpClient, HttpHandler, HttpRequest } from '@angular/common/http';
   import { BehaviorSubject, Observable, throwError } from 'rxjs';
-  import { User } from '../../interfaces/user';
+  import { User } from '../interfaces/user';
   import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
   // import { Token } from '@angular/compiler';
 

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardOrder } from '../../../interfaces/order';
+import { DashboardOrder } from '../../interfaces/order';
 
 @Component({
   selector: 'app-order-management',
@@ -15,7 +15,7 @@ export class OrderManagementComponent {
   @Input() orders: DashboardOrder[] = [];
   @Output() cancelOrder = new EventEmitter<number>();
   @Output() searchOrderById = new EventEmitter<number>();
-  
+
   showOrderHistory: boolean = false;
   tabs = [
     { title: 'Resumen de pedidos', isHistory: false, active: true },
@@ -35,7 +35,7 @@ export class OrderManagementComponent {
       if (a.estado !== 'CANCELADO' && b.estado === 'CANCELADO') return -1;
       return 0;
     });
-  
+
     return sortedOrders;
   }
 
@@ -45,7 +45,7 @@ export class OrderManagementComponent {
       this.searchOrderById.emit(orderId);
     }
   }
-  
+
   onCancelOrder(id_pedido: number) {
     this.cancelOrder.emit(id_pedido);
   }
@@ -57,10 +57,10 @@ export class OrderManagementComponent {
       active: tab.isHistory === isHistory
     })).sort((a, b) => b.active ? 1 : -1);
   }
-  
+
   formatFormasDePago(forma_de_pago: { forma_de_pago_descripcion: string }[]): string {
     if (!forma_de_pago) return '';
     return forma_de_pago.map(fp => fp.forma_de_pago_descripcion).join(', ');
   }
-  
+
 }

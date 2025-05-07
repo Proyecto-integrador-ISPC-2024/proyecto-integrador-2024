@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CartItemComponent } from '../cart-item/cart-item.component';
-import { Product } from '../../../interfaces/product';
-import { NgForOf, NgIf } from '@angular/common';
+import { Product } from '../../interfaces/product';
 
 @Component({
   selector: 'app-cart-list',
   standalone: true,
-  imports: [CartItemComponent, NgForOf, NgIf],
+  imports: [CartItemComponent],
   templateUrl: './cart-list.component.html',
   styleUrls: ['./cart-list.component.css'],
 })

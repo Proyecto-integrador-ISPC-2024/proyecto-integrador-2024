@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product } from '../../../interfaces/product';
+import { Product } from '../../interfaces/product';
 import { CommonModule, NgIf } from '@angular/common';
-import { CartService } from '../../../services/cart.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-card-product',

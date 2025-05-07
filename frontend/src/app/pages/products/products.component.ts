@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
-import { CardProductComponent } from '../../components/card-product/card-product.component';
-import { ApiService } from '../../../services/api.service';
-import { Product } from '../../../interfaces/product';
-import { CartService } from '../../../services/cart.service';
-import { RouterLink } from '@angular/router';
+import { Product } from '../../interfaces/product';
 import { LoadingSpinnerComponent } from '../../components/spinner/spinner.component';
+import { ApiService } from '../../services/api.service';
+import { CartService } from '../../services/cart.service';
+import { CardProductComponent } from '../../components/card-product/card-product.component';
 
 @Component({
   selector: 'app-products',
@@ -15,17 +14,17 @@ import { LoadingSpinnerComponent } from '../../components/spinner/spinner.compon
     CardProductComponent,
     NgForOf,
     NgIf,
-    RouterLink,
     LoadingSpinnerComponent,
   ],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
+  readonly cdr = Inject(ChangeDetectorRef);
+
   constructor(
     private apiService: ApiService,
-    private cartService: CartService,
-    private cdr: ChangeDetectorRef
+    private cartService: CartService
   ) {}
 
   private urlProductos = 'http://localhost:8000/productos/';
