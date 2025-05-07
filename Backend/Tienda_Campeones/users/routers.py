@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from users.usuarioapi.api import *
+from users.usuarioapi.UsuarioView import *
 
 router2 = DefaultRouter()
 router2.register(r'usuarios', UsuarioViewSet, basename='usuarios')

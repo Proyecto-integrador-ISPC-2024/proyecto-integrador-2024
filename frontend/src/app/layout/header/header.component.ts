@@ -42,10 +42,6 @@ export class HeaderComponent implements OnInit {
     this.showAboutLink = !currentUrl.includes('/about');
     this.showProductsLink = !currentUrl.includes('/products');
   }
-  //modalFormVisible = false;
-  //modalRegisterForm() {
-  //  this.modalFormVisible = true;
- // }
 
   toggleTheme(event: Event){
     console.log(event)

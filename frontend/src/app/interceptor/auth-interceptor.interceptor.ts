@@ -1,28 +1,3 @@
-// FiX HERE CUANDO TENGAMOS LA AUTENTICACIÓN CON TOKEN DESDE EL BACKEND.
-
-/* import { HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
-  // obtener el token del --> servicio de autenticación.
-  const token = authService.getToken();
-
-  if (token) {
-    // Clonamos la solicitud
-    const clonedReq = req.clone({
-      // agregamos el token en la cabecera de autorización si el token está.
-      setHeaders: { Authorization: `Bearer ${token}` },
-    });
-    return next(clonedReq);
-  }
-
-  return next(req);
-}; */
-
-
-/* -------------------------------------------- */
 
 import {
   HttpInterceptor,
