@@ -4,10 +4,10 @@ import {
   NavigationEnd,
   Router,
   RouterLink,
-  RouterLinkActive,
 } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ModalService } from '../../services/modalstatus.service';
+import { LogoutModalComponent } from '../../components/logout-modal/logout-modal.component';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 
@@ -19,6 +19,7 @@ import { RegisterFormComponent } from '../../components/register-form/register-f
     RouterLink,
     CommonModule,
     LoginFormComponent,
+    LogoutModalComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',

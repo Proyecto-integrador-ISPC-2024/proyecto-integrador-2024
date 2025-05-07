@@ -79,11 +79,10 @@
               </button>
             </li>
             <!-- Botón de logout -->
-            <!-- Botón de logout -->
             <li class="p-0 my-0 mx-1 navItem nav-item" id="logoutBtn">
               <button
                 type="button"
-                class="material-icons button d-none"
+                class="material-icons button"
                 data-bs-toggle="modal"
                 data-bs-target="#logoutModal"
               > <!-- Remove d-none class at next version for dynamic rendering -->
@@ -157,39 +156,5 @@
 </section>
 
 <section>
-  <div
-    class="modal fade"
-    id="logoutModal"
-    tabindex="-1"
-    aria-labelledby="logoutModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="logoutModalLabel">Cerrar sesión</h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          ¿Estás seguro/a que querés finalizar tu sesión?
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Cancelar
-          </button>
-          <button type="button" class="btn btn-danger">Cerrar sesión</button>
-          <!--Agregar (click)="logout()" -->
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-logout-modal></app-logout-modal>
 </section>
