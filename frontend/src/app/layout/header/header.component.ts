@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ThemeButtonComponent } from '../../components/theme-button/theme-button.component';
+import { AuthService } from '../../services/auth.service';
 import {
   NavigationEnd,
   Router,
@@ -28,10 +29,14 @@ export class HeaderComponent implements OnInit {
   showHomeLink = true;
   showAboutLink = true;
   showProductsLink = true;
+  isAuthenticated: boolean = false;
 
-  constructor(private router: Router, private modalService: ModalService) {}
+  constructor(private router: Router, private modalService: ModalService,private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.authService.isAuthenticated$.subscribe((status) => {
+      this.isAuthenticated = status;
+    });
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const currentUrl = event.urlAfterRedirects;

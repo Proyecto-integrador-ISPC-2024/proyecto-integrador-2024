@@ -67,7 +67,11 @@
             class="list-unstyled mx-2 my-0 d-flex flex-row align-items-center"
           >
             <!-- Botón de login -->
-            <li class="p-0 my-0 mx-1 navItem nav-item d-block" id="log">
+            <li
+            class="p-0 my-0 mx-1 navItem nav-item d-block"
+            id="log"
+            *ngIf="!isAuthenticated"
+          >
               <button
                 type="button"
                 class="material-icons button text-decoration-none"
@@ -79,7 +83,11 @@
               </button>
             </li>
             <!-- Botón de logout -->
-            <li class="p-0 my-0 mx-1 navItem nav-item" id="logoutBtn">
+            <li
+            class="p-0 my-0 mx-1 navItem nav-item"
+            id="logoutBtn"
+            *ngIf="isAuthenticated"
+            >
               <button
                 type="button"
                 class="material-icons button"

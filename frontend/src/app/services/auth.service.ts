@@ -11,9 +11,8 @@
   })
   export class AuthService {
     private url = 'http://127.0.0.1:8000';
-    private refreshTokenInProgress = false;
-    private refreshTokenSubject: BehaviorSubject<any> =
-      new BehaviorSubject<any>(null);
+    private authStatus = new BehaviorSubject<boolean>(this.hasToken());
+    public isAuthenticated$ = this.authStatus.asObservable();
 
     constructor(private http: HttpClient) {}
 
@@ -24,14 +23,13 @@
     login(credentials: { email: string; password: string }): Observable<any> {
       return this.http.post<any>(`${this.url}/login/`, credentials).pipe(
         map((response) => {
-          // console.log('Respuesta del servidor:', response);
-          if (response && response.token) {
+          if (response?.token && response?.refresh_token) {
             localStorage.setItem('access_token', response.token);
             localStorage.setItem('refresh_token', response.refresh_token);
             localStorage.setItem(
               'currentUser',
-              JSON.stringify(response.usuario)
-            );
+              JSON.stringify(response.usuario));
+              this.authStatus.next(true);
           }
           return response;
         })
@@ -40,21 +38,32 @@
 
     logout(): Observable<any> {
       const currentUser = this.getCurrentUser();
+      const token = localStorage.getItem('access_token');
     
-      if (!currentUser?.email) {
+      if (!currentUser?.email || !token) {
         this.clearLocalStorage();
-        return throwError(() => new Error('Usuario no encontrado en localStorage'));
+        this.authStatus.next(false);
+        return throwError(() => new Error('Usuario o token no encontrado en localStorage'));
       }
     
+      // Enviar el token en el encabezado Authorization
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+      };
+    
       return this.http
-        .post(`${this.url}/logout/`, { email: currentUser.email })
-        .pipe(
-          tap(() => this.clearLocalStorage()),
-          catchError((error) => {
-            this.clearLocalStorage();
-            return throwError(() => error);
-          })
-        );
+      .post(`${this.url}/logout/`, { email: currentUser.email }, { headers })
+      .pipe(
+        tap(() => {
+          this.clearLocalStorage();
+          this.authStatus.next(false);
+        }),
+        catchError((error) => {
+          this.clearLocalStorage();
+          this.authStatus.next(false);
+          return throwError(() => error);
+        })
+      );
     }
     
     private clearLocalStorage(): void {
@@ -73,62 +82,34 @@
       return localStorage.getItem('access_token');
     }
 
+    private hasToken(): boolean {
+      return !!this.getToken();
+    }
+
     getRefreshToken(): string | null {
       return localStorage.getItem('refresh_token');
     }
 
-    refreshToken(): Observable<any> {
-      const refreshToken = this.getRefreshToken();
+    refreshToken(): Observable<string> {
+      const refresh = this.getRefreshToken();
       return this.http
-        .post<any>(`${this.url}/api/token/refresh/`, { refresh: refreshToken })
+        .post<{ access: string }>(`${this.url}/api/token/refresh/`, { refresh })
         .pipe(
-          tap((response) => {
-            if (response && response.access) {
-              localStorage.setItem('access_token', response.access); /* Fix here */
-            }
+          map(res => {
+            if (!res.access) throw new Error('No vino access token');
+            localStorage.setItem('access_token', res.access);
+            return res.access;
+          }),
+          catchError(err => {
+            console.error('AuthService.refreshToken ERROR', err);
+            this.clearLocalStorage();
+            return throwError(() => err);
           })
         );
     }
 
     isLoggedIn(): boolean {
-      // Verificamos si el usuario está autenticado comprobando la presencia del token.
       return !!this.getToken();
     }
 
-    handle401Error(
-      request: HttpRequest<any>,
-      next: HttpHandler
-    ): Observable<HttpEvent<any>> {
-      if (!this.refreshTokenInProgress) {
-        this.refreshTokenInProgress = true;
-        this.refreshTokenSubject.next(null);
-    
-        return this.refreshToken().pipe(
-          switchMap((token) => {
-            this.refreshTokenInProgress = false;
-            this.refreshTokenSubject.next(token.access);
-            return next.handle(this.addToken(request, token.access));
-          }),
-          catchError((err) => {
-            this.refreshTokenInProgress = false;
-            this.logout();
-            return throwError(() => err);
-          })
-        );
-      } else {
-        return this.refreshTokenSubject.pipe(
-          filter((token) => token != null),
-          take(1),
-          switchMap((token) => next.handle(this.addToken(request, token!)))
-        );
-      }
-    }
-
-    private addToken(request: HttpRequest<any>, token: string) {
-      return request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    }
   }
