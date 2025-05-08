@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ThemeButtonComponent } from '../../components/theme-button/theme-button.component';
 import { AuthService } from '../../services/auth.service';
 import {
