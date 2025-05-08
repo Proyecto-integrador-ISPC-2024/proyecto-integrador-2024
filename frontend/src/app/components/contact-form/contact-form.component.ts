@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-contact-form',
@@ -13,10 +13,9 @@ export class ContactFormComponent {
   formGroup = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
     lastName: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email], []],
+    email: ['', [Validators.required, Validators.email]],
     message: ['', Validators.required]
-  })
-
+  });
 
   clickRegister(): void {
     const name = this.formGroup.controls.name.value;
@@ -29,17 +28,15 @@ export class ContactFormComponent {
     console.log(message);
   }
 
-
   onEnviar(event: Event) {
-    console.log(this.formGroup.value)
-    event.preventDefault;
+    console.log(this.formGroup.value);
+    event.preventDefault();
     if (this.formGroup.valid) {
-      alert("Enviando formulario al servidor...")
+      alert("Enviando formulario al servidor...");
     }
     else {
-      this.formGroup.markAllAsTouched(),
-        alert("Por favor, complete todos los campos.");
+      this.formGroup.markAllAsTouched();
+      alert("Por favor, complete todos los campos.");
     }
   }
-
 }

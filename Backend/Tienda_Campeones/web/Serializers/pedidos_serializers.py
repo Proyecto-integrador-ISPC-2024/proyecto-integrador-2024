@@ -34,22 +34,11 @@ class PedidosPaymentsSerializer(serializers.ModelSerializer):
  
 class DescripcionpagoSerializer(serializers.ModelSerializer):
     forma_de_pago_descripcion = serializers.CharField(source='id_forma_de_pago.descripcion', read_only=True)
-    # tarjeta_nombre = serializers.SerializerMethodField()
+    tarjeta_nombre = serializers.CharField(source='id_tarjeta.nombre_tarjeta', read_only=True, required=False)
     class Meta:
         model = FormasDepagoPedidos
-        fields = ['forma_de_pago_descripcion']
-        
-    # def get_tarjeta_nombre(self, obj):
-    #     tarjeta = obj.id_tarjeta
-    #     if tarjeta:
-    #         return tarjeta.nombre_tarjeta
-    #     return None
-    # def to_representation(self, instance):
-    #     data = super().to_representation(instance)
-    #     if data['tarjeta_nombre'] is None:
-    #         del data['tarjeta_nombre']
-    #     return data 
-        
+        fields = ['forma_de_pago_descripcion','tarjeta_nombre']
+           
 class PedidosSerializer(serializers.ModelSerializer):
     detalles=DetallesPedidoSerializer (many=True)
     forma_de_pago=PedidosPaymentsSerializer(many=True)
@@ -74,8 +63,6 @@ class PedidosSerializer(serializers.ModelSerializer):
                 talle= detalle_data['id_talle']
                 producto_id = detalle_data['id_producto']
                 cantidad = detalle_data['cantidad']
-                
-                 # Obtengo el stock del producto y el talle correspondiente para verificar la disponibilidad
                 producto_talle = ProductosTalles.objects.filter(id_producto=producto_id, id_talle_id=talle.id_talle).first()
                 if not producto_talle or producto_talle.stock < cantidad:
                     raise serializers.ValidationError(f"Lo sentimos,No hay suficiente stock para este producto con el talle '{talle.talle}'.")
@@ -93,31 +80,20 @@ class PedidosSerializer(serializers.ModelSerializer):
                 producto_talle.save()
                 
             for forma_pago_data in formaspago:
-             descripcion_buscada = forma_pago_data['id_forma_de_pago'].descripcion  
-        
-            forma_pago = FormasDePago.objects.filter(descripcion=descripcion_buscada).first()
-            
-            if not forma_pago:
-                raise serializers.ValidationError(f"No se encontró la forma de pago '{descripcion_buscada}'")
-            
-            # Si la forma de pago es Credito, busco el ID de la tarjeta
-            id_tarjeta = None
-            if descripcion_buscada == "Credito":
-                nombre_tarjeta = detalle_data.get('nombre_tarjeta')
-                if nombre_tarjeta:
-                    tarjeta = Tarjetas.objects.filter(nombre=nombre_tarjeta).first()
-                    if tarjeta:
-                        id_tarjeta = tarjeta.id_tarjeta
-            
-            # Crear la relacion de forma de pago y pedido
-            FormasDepagoPedidos.objects.create(
-                id_pedido=pedido,
-                id_forma_de_pago=forma_pago,
-                id_tarjeta=id_tarjeta
-            )
-        
-            return pedido
-
+                forma_pago = forma_pago_data['id_forma_de_pago'] 
+                id_forma_de_pago = forma_pago.id_forma_de_pago  
+                
+                id_tarjeta = None
+                if forma_pago.descripcion.lower() == 'credito': 
+                    id_tarjeta_data = forma_pago_data.get('id_tarjeta', None)
+                    if id_tarjeta_data:
+                        id_tarjeta = Tarjetas.objects.get(id_tarjeta=id_tarjeta_data.id_tarjeta)
+                FormasDepagoPedidos.objects.create(
+                    id_pedido=pedido,
+                    id_forma_de_pago_id=id_forma_de_pago, 
+                    id_tarjeta=id_tarjeta
+                )
+        return pedido
     
 class MetodoPagoListSerializer(serializers.ModelSerializer):
     Tarjetas = TarjetaSerializer(read_only=True, many=True)
@@ -177,8 +153,9 @@ class ProductodetailSerializer(serializers.ModelSerializer):
 
 class PedidosListSerializer(serializers.ModelSerializer):
     forma_de_pago=DescripcionpagoSerializer(many=True, read_only=True)
+    tarjeta=TarjetaSerializer(many=True, read_only=True)
     detalles = ProductodetailSerializer(many=True, read_only=True)
     class Meta:
         model = Pedidos
-        fields = ( 'id_pedido', 'fecha', 'total', 'id_usuario','estado', 'detalles','forma_de_pago' )
+        fields = ( 'id_pedido', 'fecha', 'total', 'id_usuario','estado', 'detalles','forma_de_pago','tarjeta') 
 

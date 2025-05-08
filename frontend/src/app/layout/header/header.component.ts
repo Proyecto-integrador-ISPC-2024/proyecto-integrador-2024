@@ -1,15 +1,27 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ThemeButtonComponent } from '../../components/theme-button/theme-button.component';
-import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+} from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 import { ModalService } from '../../services/modalstatus.service';
+import { LogoutModalComponent } from '../../components/logout-modal/logout-modal.component';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
+import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ThemeButtonComponent,RegisterFormComponent, RouterLink, CommonModule, RouterLinkActive,LoginFormComponent],
+  imports: [
+    RegisterFormComponent,
+    RouterLink,
+    CommonModule,
+    LoginFormComponent,
+    LogoutModalComponent
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -17,17 +29,21 @@ export class HeaderComponent implements OnInit {
   showHomeLink = true;
   showAboutLink = true;
   showProductsLink = true;
+  isAuthenticated: boolean = false;
 
-  constructor(private router: Router, private modalService: ModalService) {}
+  constructor(private router: Router, private modalService: ModalService,private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.authService.isAuthenticated$.subscribe((status) => {
+      this.isAuthenticated = status;
+    });
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const currentUrl = event.urlAfterRedirects;
         this.updateNavbarLinks(currentUrl);
       }
     });
-    this.modalService.registerModalVisible$.subscribe(visible => {
+    this.modalService.registerModalVisible$.subscribe((visible) => {
       this.modalFormVisible = visible;
     });
   }
@@ -42,12 +58,8 @@ export class HeaderComponent implements OnInit {
     this.showAboutLink = !currentUrl.includes('/about');
     this.showProductsLink = !currentUrl.includes('/products');
   }
-  //modalFormVisible = false;
-  //modalRegisterForm() {
-  //  this.modalFormVisible = true;
- // }
 
-  toggleTheme(event: Event){
-    console.log(event)
+  toggleTheme(event: Event) {
+    console.log(event);
   }
 }

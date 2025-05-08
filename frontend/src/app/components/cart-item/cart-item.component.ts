@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Product } from '../../../interfaces/product';
+import { Product } from '../../interfaces/product';
 import { CommonModule } from '@angular/common';
 
 @Component({

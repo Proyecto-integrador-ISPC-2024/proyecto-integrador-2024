@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardOrder } from '../../../interfaces/order';
+import { DashboardOrder } from '../../interfaces/order';
 
 @Component({
   selector: 'app-orders-summary',
@@ -19,5 +19,5 @@ export class OrdersSummaryComponent {
 
   selectOrder(id: number) {
     this.selectedOrder.emit(id);
-  }  
+  }
 }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Product } from '../interfaces/product';
 import { User } from '../interfaces/user';
 import { CartOrder } from '../interfaces/cartOrder';
-import { AuthService } from '../app/services/auth.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
