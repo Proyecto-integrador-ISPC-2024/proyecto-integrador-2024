@@ -60,7 +60,7 @@ REST_FRAMEWORK = {
 }
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'id_usuario',
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=45),  
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
