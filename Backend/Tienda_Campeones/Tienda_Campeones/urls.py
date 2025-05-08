@@ -10,8 +10,6 @@ urlpatterns = [
     path('productos/',include('web.routers')),
     path('pedidos/',include('web.routers')),
     path('', include(router2.urls)),
-    path('usuarios/', include('users.routers')),
-    path('administrador/', include('users.routers')),
     path('logout/', Logout.as_view(), name = 'logout'),
     path('login/',Login.as_view(), name = 'login'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
