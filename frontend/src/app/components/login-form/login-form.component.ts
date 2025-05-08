@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-login-form',
@@ -25,7 +26,6 @@ export class LoginFormComponent {
         next: (response) => {
           if (response && response.token) {
             alert('Autenticación exitosa');
-            this.router.navigateByUrl('dashboard');
           } else {
             alert('Error de autenticación: Respuesta del servidor incompleta');
           }

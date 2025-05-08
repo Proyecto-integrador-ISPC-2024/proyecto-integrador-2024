@@ -1,76 +1,163 @@
 <section>
-  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="registerModal"
+    tabindex="-1"
+    aria-labelledby="registerModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
       <div class="modal-content" id="registerForm">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="registerModalLabel">Registrarse</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <form [formGroup]="form" class="form" (submit)="onEnviar($event)">
-
             <div class="m-3">
               <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" id="nombre" class="form-control" formControlName="nombre">
-              <div *ngIf="form.controls['nombre'].hasError('required') && form.controls['nombre'].touched">
+              <input
+                type="text"
+                id="nombre"
+                class="form-control"
+                formControlName="nombre"
+              />
+              <div
+                *ngIf="
+                  form.controls['nombre'].hasError('required') &&
+                  form.controls['nombre'].touched
+                "
+              >
                 <p class="text-danger">Por favor, ingresa tu nombre.</p>
               </div>
             </div>
 
             <div class="m-3">
               <label for="apellido" class="form-label">Apellido</label>
-              <input type="text" id="apellido" class="form-control" formControlName="apellido">
-              <div *ngIf="form.controls['apellido'].hasError('required') && form.controls['apellido'].touched">
+              <input
+                type="text"
+                id="apellido"
+                class="form-control"
+                formControlName="apellido"
+              />
+              <div
+                *ngIf="
+                  form.controls['apellido'].hasError('required') &&
+                  form.controls['apellido'].touched
+                "
+              >
                 <p class="text-danger">Por favor, ingresa tu apellido.</p>
               </div>
             </div>
 
             <div class="m-3">
               <label for="email" class="form-label">Correo Electrónico</label>
-              <input type="email" id="email" class="form-control" formControlName="email">
-              <div *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched">
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                formControlName="email"
+              />
+              <div
+                *ngIf="
+                  form.controls['email'].hasError('required') &&
+                  form.controls['email'].touched
+                "
+              >
                 <p class="text-danger">Por favor, ingresa un mail válido.</p>
               </div>
             </div>
 
             <div class="m-3">
-            <label for="domicilio" class="form-label">Domicilio</label>
-            <input type="text" id="domicilio" class="form-control" formControlName="domicilio">
-            <div *ngIf="form.controls['domicilio'].hasError('required') && form.controls['domicilio'].touched">
-              <p class="text-danger">Por favor, ingresa tu domicilio.</p>
+              <label for="domicilio" class="form-label">Domicilio</label>
+              <input
+                type="text"
+                id="domicilio"
+                class="form-control"
+                formControlName="domicilio"
+              />
+              <div
+                *ngIf="
+                  form.controls['domicilio'].hasError('required') &&
+                  form.controls['domicilio'].touched
+                "
+              >
+                <p class="text-danger">Por favor, ingresa tu domicilio.</p>
+              </div>
             </div>
-            </div>
-
 
             <div class="m-3">
               <label for="password1" class="form-label">Contraseña</label>
-              <input type="password" id="password1" class="form-control" formControlName="password1">
-              <div *ngIf="form.controls['password1'].hasError('required') && form.controls['password1'].touched">
-                <p class="text-danger">Por favor, ingresa tu contraseña, deberá contener al menos 8 caracteres,
-                  1 mayúscula, 1 minúscula, 1 número y 1 caracter especial.</p>
+              <input
+                type="password"
+                id="password1"
+                class="form-control"
+                formControlName="password1"
+              />
+              <div
+                *ngIf="
+                  form.controls['password1'].hasError('required') &&
+                  form.controls['password1'].touched
+                "
+              >
+                <p class="text-danger">
+                  Por favor, ingresa tu contraseña, deberá contener al menos 8
+                  caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 caracter
+                  especial.
+                </p>
               </div>
             </div>
 
             <div class="m-3">
-              <label for="password2" class="form-label">Confirmar Contraseña</label>
-              <input type="password" id="password2" class="form-control" formControlName="password2">
-              <div *ngIf="form.controls['password2'].hasError('required') && form.controls['password2'].touched">
+              <label for="password2" class="form-label"
+                >Confirmar Contraseña</label
+              >
+              <input
+                type="password"
+                id="password2"
+                class="form-control"
+                formControlName="password2"
+              />
+              <div
+                *ngIf="
+                  form.controls['password2'].hasError('required') &&
+                  form.controls['password2'].touched
+                "
+              >
                 <p class="text-danger">Por favor, confirma tu contraseña.</p>
               </div>
-              <div *ngIf="form.errors?.['passwordsMismatch'] && form.controls['password2'].touched">
+              <div
+                *ngIf="form.errors?.['passwordsMismatch'] && form.controls['password2'].touched"
+              >
                 <p class="text-danger">Las contraseñas no coinciden.</p>
               </div>
             </div>
 
             <div class="m-3">
-              <button class="btn btn-primary btn-success mt-3" id="registerBtn"
-                [disabled]="form.invalid" [disabled]="isSubmitting">Registrarme</button>
+              <button
+                class="btn btn-primary btn-success mt-3"
+                id="registerBtn"
+                [disabled]="form.invalid || isSubmitting"
+                data-bs-dismiss="modal"
+              >
+                Registrarme
+              </button>
             </div>
           </form>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-dark" data-bs-dismiss="modal" data-bs-targer="#loginModal">
+          <button
+            type="button"
+            class="btn btn-dark"
+            data-bs-dismiss="modal"
+            data-bs-targer="#loginModal"
+          >
             Volver
           </button>
           <!-- <button type="submit" class="btn btn-success" id="registerBtn">
